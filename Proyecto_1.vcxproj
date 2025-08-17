@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="Clientes.cpp" />
     <ClCompile Include="Ejercicio.cpp" />
+    <ClCompile Include="Instructor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sistema.cpp" />
     <ClCompile Include="Sucursal.cpp" />
@@ -133,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="Ejercicio.h" />
+    <ClInclude Include="Instructor.h" />
     <ClInclude Include="Sistema.h" />
     <ClInclude Include="Sucursal.h" />
     <ClInclude Include="Utiles.h" />
