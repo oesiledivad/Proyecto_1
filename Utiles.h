@@ -1,0 +1,22 @@
+#ifndef UTILES_H
+#define UTILES_H
+#include <iostream>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+void imprimeCadena(string cadena);
+void limpiaPantalla();
+string leerCadena();
+int leerEntero(); // Marcado
+void esperandoEnter();
+
+int leerEnteroRango(int min, int max); // Marcado
+float leerFlotante(); // Marcado
+float leerFlotanteRango(float min, float max); // Marcado
+char leerSexo();
+string leerEmail();
+string leerFecha();
+
+#endif
