@@ -7,34 +7,53 @@ class Rutina; //TODO
 class Instructor; //TODO
 
 const int MAX_MEDICIONES = 10;
+
 const int MAX_CLASES_INSCRITAS = 3;
 
 class Cliente {
 private:
 	string cedula;
+
 	string nombre;
+
 	string telefono;
+
 	string correo;
+
 	string fecha_nacimiento;
+
 	char sexo;
+
 	string fecha_inscripcion;
-	Medicion* historial_mediciones;
+
+	Medicion* historial_mediciones[MAX_MEDICIONES]; // Se cuenta el historial de mediciones como un arreglo 
+
 	Rutina* rutina_asignada;
+
 	Instructor* instructor_asignado;
+
 	Sucursal* sucursal;
+
 	ClaseGrupal* clases_inscritas[MAX_CLASES_INSCRITAS];
+
 	int cantidad_clases_inscritas;
+
 	int cantidad_mediciones;
+
 public:
 	Cliente(string ced, string nom, string tel, string correo, string fecha_n, char sex, string fecha_i, Sucursal* suc);
+
 	~Cliente();
 
 	bool agregarMedicion(Medicion* medicion);
+
 	void mostrarHistorialMediciones();
+
 	Medicion* getUltimaMedicion();
 
 	void asignarRutina();
 
 	string toString();
 };
-#endif // !CLIENTE_H
+
+#endif // !CLIENTE.H
