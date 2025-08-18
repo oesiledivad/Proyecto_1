@@ -29,7 +29,7 @@ void Cliente::mostrarHistorialMediciones() {
 	//TODO
 }
 
-Medicion* Cliente::obtenerUltimaMedicion() {
+Medicion* Cliente::getUltimaMedicion() {
 	return nullptr;
 }
 

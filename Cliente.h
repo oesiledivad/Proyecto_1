@@ -31,7 +31,7 @@ public:
 
 	bool agregarMedicion(Medicion* medicion);
 	void mostrarHistorialMediciones();
-	Medicion* obtenerUltimaMedicion();
+	Medicion* getUltimaMedicion();
 
 	void asignarRutina();
 
