@@ -30,6 +30,8 @@ private:
 	int capacidad_clases;
 public:
 	Sucursal(string cod, string prov, string canto, string corr, string tel);
+	Sucursal(); 
+	void ingresarSucursal(); // Metodo para ingresar la sucursal
 	~Sucursal();
 
 	string getCodigo();

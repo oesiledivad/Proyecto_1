@@ -1,5 +1,8 @@
 #include "Sucursal.h"
 
+Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono ("") {
+}
+
 Sucursal::Sucursal(string cod, string prov, string canto, string corr, string tel):
 codigo(cod), provincia(prov), canton(canto), correo(corr), telefono(tel), 
 cantidad_clientes(0), cantidad_instructores(0), cantidad_clases(0), 
@@ -69,6 +72,32 @@ string Sucursal::getCodigo() {
 
 string Sucursal::toString() {
 	stringstream s;
-	s << "Sin implementar." << endl;
+
+	s << "Ingrese el codigo: " << codigo << endl;
+
+	s << "Ingrese la provincia: " << provincia << endl;
+
+	s << "Ingrese el canton: " << canton << endl;
+
+	s << "Ingrese el correo electronico: " << endl; 
+
+	s << "Ingrese el telefono: " << telefono << endl; 
+
 	return s.str();
+}
+
+void Sucursal:: ingresarSucursal() { // Se crea metodo provicional para ingresar una sucursal
+
+	system("cls"); 
+
+	cout << "  INGRESE LOS DATOS DE LA SUCURSAL \n " << endl; 
+
+	string codigo, provincia, canton, correo, telefono;
+	cin.ignore();
+	cout << "Codigo: "; getline(cin, codigo);
+	cout << "Provincia: "; getline(cin, provincia);
+	cout << "Canton: "; getline(cin, canton);
+	cout << "Correo: "; getline(cin, correo);
+	cout << "Teléfono: "; getline(cin, telefono);
+	cout << "\n Sucursal registrada.\n"; system("pause");
 }

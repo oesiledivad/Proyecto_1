@@ -62,8 +62,49 @@ void Sistema::listarEjercicios() {
 	//TODO
 }
 
-void Sistema::iniciarAplicacion() {
+void Sistema::iniciarAplicacion() { // Pantalla basica para ingresar los datos del sistema
 	//TODO
 	cout << "V 0.01" << endl;
-	cout << "Nada implementado" << endl;
-} 
+
+	int opcion = 0;
+
+	Sucursal e1;
+
+	do {
+		system("cls");
+
+		cout << "===========================================================================================\n";
+
+		cout << "   BIENVENIDO AL SISTEMA POWERLAB  \n";
+
+		cout << "===========================================================================================\n";
+
+		cout << "[1] -> Ingresar nueva Sucursal: \n "; 
+
+		cout << "[0] -> Salir \n ";
+
+		cout << "------------------------------------------------------------------------------------------- \n";
+
+		cout << "Seleccione una opcion: ";
+
+
+		cin >> opcion; 
+
+
+		switch (opcion) {
+
+		case 1:
+			e1.ingresarSucursal();
+
+			break;
+
+		case 0:
+			cout << "Gracias por usar POWERLAB \n";
+			break;
+
+		default: cout << "Opcion invalida \n"; 
+		}
+
+	} while (opcion != 0);
+
+}
