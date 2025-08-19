@@ -1,15 +1,10 @@
 #include <iostream>
-#include "Sistema.h"
-#include "Instructor.h"
-#include "Sucursal.h"
+#include "Controlador.h"
 using namespace std;
 
 int main() {
-
-	Sistema::iniciarAplicacion(); // Se crea pantalla basica para ingresar la sucursal
-
-
-
-
+	Controlador* app = new Controlador();
+	app->ejecutar();
+	delete app;
 	return 0;
 }  

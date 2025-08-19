@@ -31,10 +31,13 @@ Sistema::~Sistema() {
 	delete[] ejercicios;
 }
 
-void Sistema::agregarSucursal(Sucursal* sucursal) {
+bool Sistema::agregarSucursal(Sucursal* sucursal) {
+	bool exitoso = false;
 	if (cantidad_sucursales < capacidad_sucursales) {
 		sucursales[cantidad_sucursales++] = sucursal;
+		exitoso = true;
 	}
+	return exitoso;
 }
 
 void Sistema::agregarEjercicio(Ejercicio* ejercicio) {
@@ -54,57 +57,53 @@ Ejercicio* Sistema::buscarEjercicio(string nombre) {
 	return nullptr;
 }
 
+// Esto podría ser un de tipo string
+// con stringstream
 void Sistema::listarSucursales() {
-	//TODO
+	limpiaPantalla();
+	if (cantidad_sucursales == 0) {
+		imprimeCadena("No hay sucursales que mostrar.\n");
+	}
+	else {
+		imprimeCadena("Listando las sucursales...\n");
+		for (int i = 0; i < cantidad_sucursales; i++) {
+			if (sucursales[i] != nullptr) {
+				cout << "Sucursal " << (i + 1) << "\n";
+				cout << "Codigo: " << sucursales[i]->getCodigo() << "\n";
+			}
+		}
+	}
+	esperandoEnter();
 }
 
 void Sistema::listarEjercicios() {
 	//TODO
 }
 
-void Sistema::iniciarAplicacion() { // Pantalla basica para ingresar los datos del sistema
-	//TODO
-	cout << "V 0.01" << endl;
+void Sistema::crearSucursal() {
+	// Esto de aca deberia de ir en Interfaz
+	// Por el momento se queda aca
+	limpiaPantalla();
+	imprimeCadena("Agregando sucursal...\n");
+	imprimeCadena("Ingrese el codigo: ");
+	string codigo = leerCadena();
+	imprimeCadena("Ingrese la provincia: ");
+	string provincia = leerCadena();
+	imprimeCadena("Ingrese el canton: ");
+	string canton = leerCadena();
+	imprimeCadena("Ingrese el correo: ");
+	string correo = leerEmail();
+	imprimeCadena("Ingrese el telefono: ");
+	string telefono = leerCadena();
+	
+	Sucursal* nueva = new Sucursal(codigo, provincia, canton, correo, telefono);
 
-	int opcion = 0;
-
-	Sucursal e1;
-
-	do {
-		system("cls");
-
-		cout << "===========================================================================================\n";
-
-		cout << "   BIENVENIDO AL SISTEMA POWERLAB  \n";
-
-		cout << "===========================================================================================\n";
-
-		cout << "[1] -> Ingresar nueva Sucursal: \n "; 
-
-		cout << "[0] -> Salir \n ";
-
-		cout << "------------------------------------------------------------------------------------------- \n";
-
-		cout << "Seleccione una opcion: ";
-
-
-		cin >> opcion; 
-
-
-		switch (opcion) {
-
-		case 1:
-			e1.ingresarSucursal();
-
-			break;
-
-		case 0:
-			cout << "Gracias por usar POWERLAB \n";
-			break;
-
-		default: cout << "Opcion invalida \n"; 
-		}
-
-	} while (opcion != 0);
-
+	if (agregarSucursal(nueva)) {
+		imprimeCadena("Sucursal agregada con exito!\n");
+	}
+	else {
+		imprimeCadena("Error: capacidad de maxima de sucursales alcanzada.\n");
+		delete nueva;
+	}
+	esperandoEnter();
 }

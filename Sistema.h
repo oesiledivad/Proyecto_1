@@ -18,12 +18,13 @@ private:
 public:
 	Sistema();
 	~Sistema();
-	void agregarSucursal(Sucursal*);
+
+	bool agregarSucursal(Sucursal*);
+	void crearSucursal();
 	Sucursal* buscarSucursal(string codigo);
 	void listarSucursales();
 	void agregarEjercicio(Ejercicio*);
 	Ejercicio* buscarEjercicio(string nombre);
 	void listarEjercicios();
-	static void iniciarAplicacion();
 };
 #endif 
