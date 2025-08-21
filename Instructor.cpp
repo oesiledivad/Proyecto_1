@@ -23,18 +23,19 @@ Instructor::~Instructor() {
 	delete[] especialidades;
 }
 
-//void Instructor::setTipoEspecialidad(string esp){
+bool Instructor::agregarEspecialidad(string esp){
 
-	//tipoEspecialidad = esp; 
-//}
-
-void Instructor::agregarEspecialidad(string esp){
-
-	if (numEspecialides < capacidad) {
-		especialidades[numEspecialides++] = esp;
+	if (tieneEspecialidad(esp)) {
+		cout << "La especialidad ya existe"; 
+		return false; // No duplicados 
 	}
+		else if (numEspecialides < capacidad) {
+			especialidades[numEspecialides++] = esp;
+			return true;  // se agrego la especialidad
+		}
 	else {
 		cout << "El numero de especialides sobrepaso la capacidad." << endl; 
+		return false;  // sobrepaso el limite
 	}
 
 }
@@ -43,14 +44,28 @@ bool Instructor::tieneEspecialidad(string esp){
 		if (especialidades[i] == esp) {
 			return true; // Se encontro la especialidad
 		}
-		else {
-			return false; 
-		}
 	}
+	return false; // si termino el bucle y no encontro nada
 }
-void Instructor::listarEspecialidades(){
+string Instructor::listarEspecialidades(){
+	string resultado = ""; 
 	for (int i = 0; i < numEspecialides; i++) {
-		cout << " - " << especialidades[i] << "" << endl;
+		resultado += " - " + especialidades[i] + "" + "\n";
 	}
-
+	return resultado; 
 }
+
+// Getters 
+string Instructor::getNombre() { return nombre; }
+
+string  Instructor::getNumeroCedula() { return numeroCed; }
+
+int  Instructor::getTelefono() { return telefono; }
+
+string  Instructor::getCorreo() { return correo; }
+
+string  Instructor::getfecha_Nacimiento() { return fecha_Nacimiento; }
+
+int  Instructor::getNumEspecialidades() { return numEspecialides; }
+
+int  Instructor::getCapacidad() { return capacidad; }

@@ -54,6 +54,22 @@ public:
 	void asignarRutina();
 
 	string toString();
+
+	string getcedula();
+
+	string getnombre();
+
+	string gettelefono();
+
+	string getcorreo();
+
+	string getfecha_nacimiento();
+
+	char getsexo();
+
+	string getfecha_inscripcion();
+
+
 };
 
 #endif // !CLIENTE.H

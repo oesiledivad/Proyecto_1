@@ -1,4 +1,5 @@
 #include "Ejercicio.h"
+#include "Instructor.h"
 
 Ejercicio::Ejercicio(string nom, string tip, string grupo):
 nombre(nom), tipo(tip), grupo_muscular(grupo) {}

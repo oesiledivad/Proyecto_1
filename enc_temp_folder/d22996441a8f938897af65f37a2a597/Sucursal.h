@@ -39,8 +39,8 @@ public:
 	string toString();
 
 	bool agregarCliente(Cliente* cliente);
-	bool agregarInstructor(Instructor* instructor);
-	bool agregarClaseGrupal(ClaseGrupal* clase);
+	void agregarInstructor(Instructor* instructor);
+	void agregarClaseGrupal(ClaseGrupal* clase);
 	Cliente* buscarClientePorCedula(string);
 };
 

@@ -49,3 +49,38 @@ void Cliente::asignarRutina() {
 	//TODO
 }
 
+string Cliente::getcedula()
+{
+	return cedula;
+}
+
+string Cliente::getnombre()
+{
+	return nombre;
+}
+
+string Cliente::gettelefono()
+{
+	return telefono;
+}
+
+string Cliente::getcorreo()
+{
+	return correo;
+}
+
+string Cliente::getfecha_nacimiento()
+{
+	return fecha_nacimiento;
+}
+
+char Cliente::getsexo()
+{
+	return sexo;
+}
+
+string Cliente::getfecha_inscripcion()
+{
+	return fecha_inscripcion;
+}
+

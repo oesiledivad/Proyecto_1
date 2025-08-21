@@ -51,32 +51,30 @@ Sucursal::~Sucursal() {
 bool Sucursal::agregarCliente(Cliente* cliente) {
 
 	for (int i = 0; i < capacidad_clientes; i++) {
-		if (clientes[i] != nullptr && clientes[i]->getcedula() == cliente ->getcedula()) {
-			return false; // Se encontro el cliente no se puede duplicar
+		if (clientes[i] == cliente) {
+			return true; // Se encontro el cliente no se puede duplicar
 		}
+		return false;// Sigue sin el duplicado, no lo encontro
 	}
 
 	if (cantidad_clientes < capacidad_clientes) {
 		clientes[cantidad_clientes++] = cliente;
 		return true; // se agrega el cliente
 	}
-	else {
-		cout << "Se alcanzo el maximo de clientes" << endl;
-		return false; // No se agrego 
-	}
+	return false; // No se agrego 
 }
 
 
-bool Sucursal::agregarInstructor(Instructor* instructor) {
+void Sucursal::agregarInstructor(Instructor* instructor) {
 
 	if (cantidad_instructores < capacidad_instructores) {
 		instructores[cantidad_instructores++] = instructor;
 	}
-	else {
+	else if (cantidad_instructores >= capacidad_instructores) {
 		cout << "Se ha alcanzado el maximo de instructores permitido" << endl; 
 	}
 }
-bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
+void Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
 	if (cantidad_clases < capacidad_clases) {
 		clases_grupales[cantidad_clases] = clase;
 	}

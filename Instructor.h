@@ -10,7 +10,6 @@ private:
 	string fecha_Nacimiento;
 	string *especialidades;
 	int numEspecialides;
-	//string tipoEspecialidad;
 	const int capacidad;
 
 public:
@@ -20,14 +19,24 @@ public:
 
 	Instructor(string, string, int, string, string, string);
 
-	void agregarEspecialidad(string); 
+	bool agregarEspecialidad(string); 
 
 	bool tieneEspecialidad(string);
 
-	void listarEspecialidades(); 
+	string listarEspecialidades(); 
 
-	//void setTipoEspecialidad(string); 
+	string getNombre();
+
+	string getNumeroCedula();
+
+	int getTelefono();
 	
-	//string getTipoEspecialidad(string); 
+	string getCorreo();
+
+	string getfecha_Nacimiento();
+
+	int getNumEspecialidades(); 
+
+	int getCapacidad();
 };
 
