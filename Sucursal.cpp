@@ -1,4 +1,5 @@
 #include "Sucursal.h"
+#include "ClaseGrupal.h"
 
 Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono ("") {
 }
@@ -94,8 +95,30 @@ Cliente* Sucursal::buscarClientePorCedula(string cedu) {
 }
 
 
+ClaseGrupal::ClaseGrupal()
+{
+}
+
+ClaseGrupal::ClaseGrupal(string, int, string, Instructor*, string)
+{
+}
+
+ClaseGrupal::~ClaseGrupal()
+{
+}
+
 string Sucursal::getCodigo() {
 	return codigo;
+}
+
+string ClaseGrupal::getSalon()
+{
+	return string();
+}
+
+string ClaseGrupal::getHorario()
+{
+	return string();
 }
 
 string Sucursal::toString() {

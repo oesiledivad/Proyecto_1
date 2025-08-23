@@ -84,3 +84,25 @@ string Cliente::getfecha_inscripcion()
 	return fecha_inscripcion;
 }
 
+string Cliente :: toString(){
+
+	stringstream x;
+
+
+	x << "Cedula: " << cedula << endl;
+
+	x << "Nombre: " << nombre << endl;
+
+	x << "Telefono: " << telefono << endl;
+
+	x << "Correo: " << correo << endl;
+
+	x << "Fecha de nacimiento: " << fecha_nacimiento << endl;
+
+	x << "Sexo: " << sexo << endl;
+
+	x << "Fecha de inscripcion: " << fecha_inscripcion << endl;
+
+	return x.str(); 
+
+}

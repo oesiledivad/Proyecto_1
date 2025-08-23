@@ -55,6 +55,31 @@ string Instructor::listarEspecialidades(){
 	return resultado; 
 }
 
+// Tostring
+
+string Instructor::toString() {
+
+	stringstream x;
+
+
+	x << "|Numero de cedula: | " << numeroCed << endl;
+
+	x << "|Nombre del instructor: | " << nombre << endl;
+
+	x << "|Telefono: | " << telefono << endl;
+
+	x << "|Correo: | " << correo << endl;
+
+	x << "|Fecha de nacimiento | " << fecha_Nacimiento << endl;
+
+	x << "|Especialidades: | " << * especialidades << endl;
+
+	x << "|Numero de especialidades: | " << numEspecialides << endl;
+
+
+	return x.str(); 
+}
+
 // Getters 
 string Instructor::getNombre() { return nombre; }
 
@@ -69,3 +94,5 @@ string  Instructor::getfecha_Nacimiento() { return fecha_Nacimiento; }
 int  Instructor::getNumEspecialidades() { return numEspecialides; }
 
 int  Instructor::getCapacidad() { return capacidad; }
+
+string Instructor::getEspecialidades() { return *especialidades; }

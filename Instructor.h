@@ -34,9 +34,13 @@ public:
 	string getCorreo();
 
 	string getfecha_Nacimiento();
+	
+	string getEspecialidades();
 
 	int getNumEspecialidades(); 
 
 	int getCapacidad();
+
+	string toString(); 
 };
 
