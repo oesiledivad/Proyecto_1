@@ -1,8 +1,7 @@
 #include "Ejercicio.h"
 #include "Instructor.h"
 
-Ejercicio::Ejercicio(string nom, string tip, string grupo):
-nombre(nom), tipo(tip), grupo_muscular(grupo) {}
+Ejercicio::Ejercicio(string nom, int series, int repeticiones, double peso): nombre(nom), series(series), repeticiones(repeticiones), peso(peso) {}
 
 Ejercicio::~Ejercicio() {}
 
@@ -10,16 +9,27 @@ string Ejercicio::getNombre() {
 	return nombre;
 }
 
-string Ejercicio::getTipo() {
-	return tipo;
+int Ejercicio::getSeries() {
+	return series;
 }
 
-string Ejercicio::getGrupoMuscular() {
-	return grupo_muscular;
+int Ejercicio::getRepeticiones() {
+	return repeticiones;
 }
 
+double Ejercicio::getPeso() {
+	return peso; 
+}
 string Ejercicio::toString() {
+
 	stringstream s;
-	s << "Sin implementacion" << endl;
+
+	s << nombre << " - " << endl;
+
+	s << series << "x" << repeticiones <<endl;
+
+	if (peso > 0) {
+		s << " (" << peso << "kg)" << endl;
+	}
 	return s.str();
 }

@@ -3,6 +3,8 @@
 // Punto h del instructor 
 class Instructor {
 private:
+
+	//Datos basicos del instructor 
 	string numeroCed;
 	string nombre;
 	int telefono;
@@ -13,17 +15,25 @@ private:
 	const int capacidad;
 
 public:
-	Instructor();
+	
+	// Constructor sin parametros
+	Instructor(); 
 
+	//Desctructor
 	~Instructor(); 
 
+
+	// Constructor con parametros 
 	Instructor(string, string, int, string, string, string);
 
+	// Metodos varios
 	bool agregarEspecialidad(string); 
 
 	bool tieneEspecialidad(string);
 
 	string listarEspecialidades(); 
+
+	// Getters y toString
 
 	string getNombre();
 

@@ -1,4 +1,5 @@
 #include "Cliente.h"
+#include "Medicion.h" // Agregado para evitar warnings de tipo incompleto
 
 Cliente::Cliente(string ced, string nom, string tel, string correo, string fecha_n, char sex,
 	string fecha_i, Sucursal* suc) : cedula(ced), nombre(nom), 
@@ -21,6 +22,7 @@ Cliente::~Cliente() {
 		if (historial_mediciones [i] != nullptr) { // Se implementa el destructor del historial de mediciones del cliente
 			delete historial_mediciones[i];
 		}
+		delete[]historial_mediciones; 
 	}
 
 	for (int i = 0; i < MAX_CLASES_INSCRITAS; i++) { // El cliente no puede destruir las "clases grupales" puesto que no son suyas, se dejan en nullptr
@@ -84,7 +86,12 @@ string Cliente::getfecha_inscripcion()
 	return fecha_inscripcion;
 }
 bool Cliente::getHaceEjercicio() {
-	return haceEjercicio; 
+	return haceEjercicio(); 
+}
+
+bool Cliente::haceEjercicio() {
+    // Implementación provisional, puedes cambiar la lógica después
+    return false;
 }
 
 string Cliente :: toString(){

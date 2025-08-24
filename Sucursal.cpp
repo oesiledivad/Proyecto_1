@@ -1,8 +1,8 @@
 #include "Sucursal.h"
 #include "ClaseGrupal.h"
 
-Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono ("") {
-}
+//Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono ("") {
+//}
 
 Sucursal::Sucursal(string cod, string prov, string canto, string corr, string tel):
 codigo(cod), provincia(prov), canton(canto), correo(corr), telefono(tel), 
@@ -69,18 +69,22 @@ bool Sucursal::agregarCliente(Cliente* cliente) {
 
 
 bool Sucursal::agregarInstructor(Instructor* instructor) {
-
-	if (cantidad_instructores < capacidad_instructores) {
-		instructores[cantidad_instructores++] = instructor;
-	}
-	else {
-		cout << "Se ha alcanzado el maximo de instructores permitido" << endl; 
-	}
+    if (cantidad_instructores < capacidad_instructores) {
+        instructores[cantidad_instructores++] = instructor;
+        return true;
+    } else {
+        cout << "Se ha alcanzado el maximo de instructores permitido" << endl;
+        return false;
+    }
 }
+
 bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
-	if (cantidad_clases < capacidad_clases) {
-		clases_grupales[cantidad_clases] = clase;
-	}
+    if (cantidad_clases < capacidad_clases) {
+        clases_grupales[cantidad_clases++] = clase;
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
@@ -94,31 +98,8 @@ Cliente* Sucursal::buscarClientePorCedula(string cedu) {
 	return nullptr; 
 }
 
-
-ClaseGrupal::ClaseGrupal()
-{
-}
-
-ClaseGrupal::ClaseGrupal(string, int, string, Instructor*, string)
-{
-}
-
-ClaseGrupal::~ClaseGrupal()
-{
-}
-
 string Sucursal::getCodigo() {
 	return codigo;
-}
-
-string ClaseGrupal::getSalon()
-{
-	return string();
-}
-
-string ClaseGrupal::getHorario()
-{
-	return string();
 }
 
 string Sucursal::toString() {

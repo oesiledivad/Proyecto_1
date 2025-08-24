@@ -1,5 +1,6 @@
 #include "ClaseGrupal.h"
 
+
 ClaseGrupal::ClaseGrupal(string codigo, string salon, string horario,Instructor * ins,int capacidad ): 
 codigo(codigo), salon(salon), horario(horario), capacidad_maxima(capacidad), cantidad_matriculados(0)  {
 
@@ -28,6 +29,10 @@ int ClaseGrupal::getCapacidad_Maxima() { return capacidad_maxima; }
 int ClaseGrupal::getCantidad_Matriculados() { return cantidad_matriculados; }
 
 int ClaseGrupal::getCupos_Disponibles() { return capacidad_maxima - cantidad_matriculados; }
+
+Instructor* ClaseGrupal::getInstructor() { return nullptr; }
+
+Cliente** ClaseGrupal::getCliente() { return nullptr; } // Verificar metodo 
 
 bool ClaseGrupal :: inscribirCliente(Cliente* c1) {
 
