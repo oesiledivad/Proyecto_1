@@ -83,6 +83,9 @@ string Cliente::getfecha_inscripcion()
 {
 	return fecha_inscripcion;
 }
+bool Cliente::getHaceEjercicio() {
+	return haceEjercicio; 
+}
 
 string Cliente :: toString(){
 
