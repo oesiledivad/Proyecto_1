@@ -3,6 +3,8 @@
 // Punto h del instructor 
 class Instructor {
 private:
+
+	//Datos basicos del instructor 
 	string numeroCed;
 	string nombre;
 	int telefono;
@@ -10,24 +12,45 @@ private:
 	string fecha_Nacimiento;
 	string *especialidades;
 	int numEspecialides;
-	//string tipoEspecialidad;
 	const int capacidad;
 
 public:
-	Instructor();
+	
+	// Constructor sin parametros
+	Instructor(); 
 
+	//Desctructor
 	~Instructor(); 
 
+
+	// Constructor con parametros 
 	Instructor(string, string, int, string, string, string);
 
-	void agregarEspecialidad(string); 
+	// Metodos varios
+	bool agregarEspecialidad(string); 
 
 	bool tieneEspecialidad(string);
 
-	void listarEspecialidades(); 
+	string listarEspecialidades(); 
 
-	//void setTipoEspecialidad(string); 
+	// Getters y toString
+
+	string getNombre();
+
+	string getNumeroCedula();
+
+	int getTelefono();
 	
-	//string getTipoEspecialidad(string); 
+	string getCorreo();
+
+	string getfecha_Nacimiento();
+	
+	string getEspecialidades();
+
+	int getNumEspecialidades(); 
+
+	int getCapacidad();
+
+	string toString(); 
 };
 

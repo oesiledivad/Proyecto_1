@@ -62,11 +62,5 @@
     <ClInclude Include="Instructor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaz.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Controlador.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

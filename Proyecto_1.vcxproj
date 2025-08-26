@@ -123,17 +123,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClaseGrupal.cpp" />
     <ClCompile Include="Clientes.cpp" />
     <ClCompile Include="Controlador.cpp" />
     <ClCompile Include="Ejercicio.cpp" />
     <ClCompile Include="Instructor.cpp" />
     <ClCompile Include="Interfaz.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Medicion.cpp" />
+    <ClCompile Include="Rutina.cpp" />
     <ClCompile Include="Sistema.cpp" />
     <ClCompile Include="Sucursal.cpp" />
     <ClCompile Include="Utiles.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClaseGrupal.h" />
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="Controlador.h" />
     <ClInclude Include="Ejercicio.h" />

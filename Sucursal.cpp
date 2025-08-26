@@ -1,7 +1,8 @@
 #include "Sucursal.h"
+#include "ClaseGrupal.h"
 
-Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono ("") {
-}
+//Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono ("") {
+//}
 
 Sucursal::Sucursal(string cod, string prov, string canto, string corr, string tel):
 codigo(cod), provincia(prov), canton(canto), correo(corr), telefono(tel), 
@@ -48,22 +49,53 @@ Sucursal::~Sucursal() {
 	delete[] clases_grupales;
 }
 
-void Sucursal::agregarCliente(Cliente* cliente) {
+bool Sucursal::agregarCliente(Cliente* cliente) {
+
+	for (int i = 0; i < capacidad_clientes; i++) {
+		if (clientes[i] != nullptr && clientes[i]->getcedula() == cliente ->getcedula()) {
+			return false; // Se encontro el cliente no se puede duplicar
+		}
+	}
+
 	if (cantidad_clientes < capacidad_clientes) {
 		clientes[cantidad_clientes++] = cliente;
+		return true; // se agrega el cliente
+	}
+	else {
+		cout << "Se alcanzo el maximo de clientes" << endl;
+		return false; // No se agrego 
 	}
 }
 
-void Sucursal::agregarInstructor(Instructor* instructor) {
-	if (cantidad_instructores < capacidad_instructores) {
-		instructores[cantidad_instructores++] = instructor;
-	}
+
+bool Sucursal::agregarInstructor(Instructor* instructor) {
+    if (cantidad_instructores < capacidad_instructores) {
+        instructores[cantidad_instructores++] = instructor;
+        return true;
+    } else {
+        cout << "Se ha alcanzado el maximo de instructores permitido" << endl;
+        return false;
+    }
 }
 
-void Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
-	if (cantidad_clases < capacidad_clases) {
-		clases_grupales[cantidad_clases] = clase;
+bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
+    if (cantidad_clases < capacidad_clases) {
+        clases_grupales[cantidad_clases++] = clase;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+Cliente* Sucursal::buscarClientePorCedula(string cedu) {
+
+	for (int i = 0; i < cantidad_clientes; i++) {
+		if (clientes[i]!= nullptr && clientes[i]->getcedula() == cedu) {
+			return clientes[i]; 
+		}
 	}
+	return nullptr; 
 }
 
 string Sucursal::getCodigo() {

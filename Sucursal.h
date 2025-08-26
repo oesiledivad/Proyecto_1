@@ -1,6 +1,44 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #ifndef SUCURSAL_H
 #define SUCURSAL_H
 #include "Utiles.h"
+#include "Cliente.h"
 
 class Cliente;
 class Instructor;
@@ -37,9 +75,10 @@ public:
 	string getCodigo();
 	string toString();
 
-	void agregarCliente(Cliente* cliente);
-	void agregarInstructor(Instructor* instructor);
-	void agregarClaseGrupal(ClaseGrupal* clase);
+	bool agregarCliente(Cliente* cliente);
+	bool agregarInstructor(Instructor* instructor);
+	bool agregarClaseGrupal(ClaseGrupal* clase);
+	Cliente* buscarClientePorCedula(string);
 };
 
 #endif // !SUCURSAL_H

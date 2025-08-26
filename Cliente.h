@@ -1,10 +1,15 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
+#include <string>
 #include "Utiles.h"
-#include "Sucursal.h"
+// #include "Sucursal.h" // Eliminado para evitar dependencia circular
 class Medicion; //TODO
 class Rutina; //TODO
 class Instructor; //TODO
+class ClaseGrupal; // Declaración adelantada agregada
+class Sucursal; // Declaración adelantada agregada
+
+using std::string;
 
 const int MAX_MEDICIONES = 10;
 
@@ -40,6 +45,8 @@ private:
 
 	int cantidad_mediciones;
 
+	bool haceEjercicio();
+
 public:
 	Cliente(string ced, string nom, string tel, string correo, string fecha_n, char sex, string fecha_i, Sucursal* suc);
 
@@ -54,6 +61,24 @@ public:
 	void asignarRutina();
 
 	string toString();
+
+	string getcedula();
+
+	string getnombre();
+
+	string gettelefono();
+
+	string getcorreo();
+
+	string getfecha_nacimiento();
+
+	char getsexo();
+
+	string getfecha_inscripcion();
+
+	bool getHaceEjercicio();
+
+
 };
 
 #endif // !CLIENTE.H
