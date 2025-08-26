@@ -143,6 +143,8 @@
     <ClInclude Include="Ejercicio.h" />
     <ClInclude Include="Instructor.h" />
     <ClInclude Include="Interfaz.h" />
+    <ClInclude Include="Medicion.h" />
+    <ClInclude Include="Rutina.h" />
     <ClInclude Include="Sistema.h" />
     <ClInclude Include="Sucursal.h" />
     <ClInclude Include="Utiles.h" />
