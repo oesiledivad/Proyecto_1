@@ -125,8 +125,10 @@
   <ItemGroup>
     <ClCompile Include="ClaseGrupal.cpp" />
     <ClCompile Include="Clientes.cpp" />
+    <ClCompile Include="Controlador.cpp" />
     <ClCompile Include="Ejercicio.cpp" />
     <ClCompile Include="Instructor.cpp" />
+    <ClCompile Include="Interfaz.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Medicion.cpp" />
     <ClCompile Include="Rutina.cpp" />
@@ -137,8 +139,10 @@
   <ItemGroup>
     <ClInclude Include="ClaseGrupal.h" />
     <ClInclude Include="Cliente.h" />
+    <ClInclude Include="Controlador.h" />
     <ClInclude Include="Ejercicio.h" />
     <ClInclude Include="Instructor.h" />
+    <ClInclude Include="Interfaz.h" />
     <ClInclude Include="Medicion.h" />
     <ClInclude Include="Rutina.h" />
     <ClInclude Include="Sistema.h" />

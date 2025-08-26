@@ -31,10 +31,17 @@ Sistema::~Sistema() {
 	delete[] ejercicios;
 }
 
-void Sistema::agregarSucursal(Sucursal* sucursal) {
+bool Sistema::agregarSucursal(Sucursal* sucursal) {
+	if (buscarSucursal(sucursal->getCodigo()) != nullptr) {
+		return false;
+	}
+
 	if (cantidad_sucursales < capacidad_sucursales) {
 		sucursales[cantidad_sucursales++] = sucursal;
+		return true;
 	}
+
+	return false;
 }
 
 void Sistema::agregarEjercicio(Ejercicio* ejercicio) {
@@ -43,9 +50,25 @@ void Sistema::agregarEjercicio(Ejercicio* ejercicio) {
 	}
 }
 
+int Sistema::getCantidadSucursales() {
+	return cantidad_sucursales;
+}
+
+int Sistema::getCantidadEjercicios() {
+	return cantidad_ejercicios;
+}
 
 Sucursal* Sistema::buscarSucursal(string codigo) {
-	//TODO
+	if (cantidad_sucursales == 0) {
+		return nullptr;
+	}
+
+	for (int i = 0; i < cantidad_sucursales; i++) {
+		if (sucursales[i] != nullptr && sucursales[i]->getCodigo() == codigo) {
+			return sucursales[i];
+		}
+	}
+
 	return nullptr;
 }
 
@@ -54,57 +77,24 @@ Ejercicio* Sistema::buscarEjercicio(string nombre) {
 	return nullptr;
 }
 
-void Sistema::listarSucursales() {
-	//TODO
+string Sistema::listarSucursales() {
+	stringstream s;
+	if (cantidad_sucursales == 0) {
+		s << "No hay sucursales que mostrar.\n";
+	}
+	else {
+		s << "=== LISTADO DE SUCURSALES ===\n";
+		for (int i = 0; i < cantidad_sucursales; i++) {
+			if (sucursales[i] != nullptr) {
+				s << sucursales[i]->getCodigo() << " ";
+				s << sucursales[i]->getProvincia() << " - " << sucursales[i]->getCanton() << "\n";
+			}
+		}
+	}
+	return s.str();
 }
 
 void Sistema::listarEjercicios() {
 	//TODO
 }
 
-void Sistema::iniciarAplicacion() { // Pantalla basica para ingresar los datos del sistema
-	//TODO
-	cout << "V 0.01" << endl;
-
-	int opcion = 0;
-
-	Sucursal e1;
-
-	do {
-		system("cls");
-
-		cout << "===========================================================================================\n";
-
-		cout << "   BIENVENIDO AL SISTEMA POWERLAB  \n";
-
-		cout << "===========================================================================================\n";
-
-		cout << "[1] -> Ingresar nueva Sucursal: \n "; 
-
-		cout << "[0] -> Salir \n ";
-
-		cout << "------------------------------------------------------------------------------------------- \n";
-
-		cout << "Seleccione una opcion: ";
-
-
-		cin >> opcion; 
-
-
-		switch (opcion) {
-
-		case 1:
-			e1.ingresarSucursal();
-
-			break;
-
-		case 0:
-			cout << "Gracias por usar POWERLAB \n";
-			break;
-
-		default: cout << "Opcion invalida \n"; 
-		}
-
-	} while (opcion != 0);
-
-}
