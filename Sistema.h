@@ -19,10 +19,12 @@ public:
 	Sistema();
 	~Sistema();
 
+	int getCantidadSucursales();
+	int getCantidadEjercicios();
+
 	bool agregarSucursal(Sucursal*);
-	void crearSucursal();
 	Sucursal* buscarSucursal(string codigo);
-	void listarSucursales();
+	string listarSucursales();
 	void agregarEjercicio(Ejercicio*);
 	Ejercicio* buscarEjercicio(string nombre);
 	void listarEjercicios();

@@ -48,7 +48,7 @@ bool ClaseGrupal :: inscribirCliente(Cliente* c1) {
 bool ClaseGrupal::retirarCliente(Cliente* c1) {
 
 	for (int i = 0; i < cantidad_matriculados; i++) {
-		if (clientes_inscritos[i] != nullptr && clientes_inscritos[i]->getcedula() == c1->getcedula()) {
+		if (clientes_inscritos[i] != nullptr && clientes_inscritos[i]->getCedula() == c1->getCedula()) {
 			
 			// retroceder una posicion atras a los clientes 
 			for (int j = i; j < cantidad_matriculados - 1; j++) {

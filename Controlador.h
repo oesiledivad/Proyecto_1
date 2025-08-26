@@ -1,24 +1,58 @@
 #ifndef CONTROLADOR_H
 #define CONTROLADOR_H
+
 #include "Interfaz.h"
 #include "Sistema.h"
 
 class Controlador {
 private:
-	Sistema* sistema;
-	Interfaz* ui;
-	bool ejecutando;
+    Sistema* sistema;
+    Interfaz* ui;
+    bool ejecutando;
+
 public:
-	Controlador();
-	~Controlador();
+    Controlador();
+    ~Controlador();
 
-	void ejecutar();
+    void ejecutar();
 
-	void gestionarSucursales();
-	//void gestionarClientes();
+    // Menús
+    void gestionarSucursales();
+    void gestionarClientes();
+    void gestionarInstructores();
+    void gestionarClasesGrupales();
 
+    // Sucursales
+    void ingresarSucursal();
+    void mostrarSucursales();
+    void reporteIMCPorSucursal();
 
-	// Para no estar copiando lo mismo
-	void sinImplementar();
+    // Clientes
+    void incluirCliente();
+    void asignarInstructorACliente();
+    void listaClientesPorSucursal();
+    void detalleCliente();
+
+    // Instructores
+    void incluirInstructor();
+    void listaInstructoresPorSucursal();
+    void detalleInstructor();
+    void instructoresPorEspecialidad();
+    void clientesPorInstructor();
+    void generarMedicionACliente();
+    void historialMediciones();
+    void ingresarEjercicioBateria();
+    void generarRutina();
+    void visualizacionRutina();
+
+    // Clases grupales
+    void crearClaseGrupal();
+    void mostrarClasesGrupales();
+    void matricularClienteEnClaseGrupal();
+    void clasesMatriculadasPorCliente();
+
+    // Auxiliar
+    void sinImplementar();
 };
-#endif // !CONTROLADOR_H
+
+#endif

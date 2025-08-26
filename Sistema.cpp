@@ -32,12 +32,16 @@ Sistema::~Sistema() {
 }
 
 bool Sistema::agregarSucursal(Sucursal* sucursal) {
-	bool exitoso = false;
+	if (buscarSucursal(sucursal->getCodigo()) != nullptr) {
+		return false;
+	}
+
 	if (cantidad_sucursales < capacidad_sucursales) {
 		sucursales[cantidad_sucursales++] = sucursal;
-		exitoso = true;
+		return true;
 	}
-	return exitoso;
+
+	return false;
 }
 
 void Sistema::agregarEjercicio(Ejercicio* ejercicio) {
@@ -46,9 +50,25 @@ void Sistema::agregarEjercicio(Ejercicio* ejercicio) {
 	}
 }
 
+int Sistema::getCantidadSucursales() {
+	return cantidad_sucursales;
+}
+
+int Sistema::getCantidadEjercicios() {
+	return cantidad_ejercicios;
+}
 
 Sucursal* Sistema::buscarSucursal(string codigo) {
-	//TODO
+	if (cantidad_sucursales == 0) {
+		return nullptr;
+	}
+
+	for (int i = 0; i < cantidad_sucursales; i++) {
+		if (sucursales[i] != nullptr && sucursales[i]->getCodigo() == codigo) {
+			return sucursales[i];
+		}
+	}
+
 	return nullptr;
 }
 
@@ -57,53 +77,24 @@ Ejercicio* Sistema::buscarEjercicio(string nombre) {
 	return nullptr;
 }
 
-// Esto podría ser un de tipo string
-// con stringstream
-void Sistema::listarSucursales() {
-	limpiaPantalla();
+string Sistema::listarSucursales() {
+	stringstream s;
 	if (cantidad_sucursales == 0) {
-		imprimeCadena("No hay sucursales que mostrar.\n");
+		s << "No hay sucursales que mostrar.\n";
 	}
 	else {
-		imprimeCadena("Listando las sucursales...\n");
+		s << "=== LISTADO DE SUCURSALES ===\n";
 		for (int i = 0; i < cantidad_sucursales; i++) {
 			if (sucursales[i] != nullptr) {
-				cout << "Sucursal " << (i + 1) << "\n";
-				cout << "Codigo: " << sucursales[i]->getCodigo() << "\n";
+				s << sucursales[i]->getCodigo() << " ";
+				s << sucursales[i]->getProvincia() << " - " << sucursales[i]->getCanton() << "\n";
 			}
 		}
 	}
-	esperandoEnter();
+	return s.str();
 }
 
 void Sistema::listarEjercicios() {
 	//TODO
 }
 
-void Sistema::crearSucursal() {
-	// Esto de aca deberia de ir en Interfaz
-	// Por el momento se queda aca
-	limpiaPantalla();
-	imprimeCadena("Agregando sucursal...\n");
-	imprimeCadena("Ingrese el codigo: ");
-	string codigo = leerCadena();
-	imprimeCadena("Ingrese la provincia: ");
-	string provincia = leerCadena();
-	imprimeCadena("Ingrese el canton: ");
-	string canton = leerCadena();
-	imprimeCadena("Ingrese el correo: ");
-	string correo = leerEmail();
-	imprimeCadena("Ingrese el telefono: ");
-	string telefono = leerCadena();
-	
-	Sucursal* nueva = new Sucursal(codigo, provincia, canton, correo, telefono);
-
-	if (agregarSucursal(nueva)) {
-		imprimeCadena("Sucursal agregada con exito!\n");
-	}
-	else {
-		imprimeCadena("Error: capacidad de maxima de sucursales alcanzada.\n");
-		delete nueva;
-	}
-	esperandoEnter();
-}

@@ -2,7 +2,7 @@
 #define CLIENTE_H
 #include <string>
 #include "Utiles.h"
-// #include "Sucursal.h" // Eliminado para evitar dependencia circular
+#include "Sucursal.h" // Eliminado para evitar dependencia circular
 class Medicion; //TODO
 class Rutina; //TODO
 class Instructor; //TODO
@@ -62,23 +62,21 @@ public:
 
 	string toString();
 
-	string getcedula();
+	string getCedula();
 
-	string getnombre();
+	string getNombre();
 
-	string gettelefono();
+	string getTelefono();
 
-	string getcorreo();
+	string getCorreo();
 
-	string getfecha_nacimiento();
+	string getFecha_nacimiento();
 
-	char getsexo();
+	char getSexo();
 
-	string getfecha_inscripcion();
+	string getFecha_inscripcion();
 
 	bool getHaceEjercicio();
-
-
 };
 
 #endif // !CLIENTE.H

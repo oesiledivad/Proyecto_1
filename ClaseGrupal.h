@@ -28,7 +28,7 @@ private:
 public:
 
 	// Constructor sin parametros 
-	ClaseGrupal(); // No se ha implementado en el cpp
+	//ClaseGrupal(); // No se ha implementado en el cpp
 
 	// Constructor con parametros
 
