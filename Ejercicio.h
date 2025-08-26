@@ -9,12 +9,11 @@ private:
 	int repeticiones;
 	double peso;
 public:
-	Ejercicio(string nom, int, int, double);
+	Ejercicio(string, int, int, double);
+
 	~Ejercicio();
 
 	string getNombre();
-	string getTipo();
-	string getGrupoMuscular();
 
 	string toString();
 
