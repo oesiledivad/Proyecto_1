@@ -1,8 +1,8 @@
 #ifndef CONTROLADOR_H
 #define CONTROLADOR_H
 
-#include "Interfaz.h"
-#include "Sistema.h"
+class Interfaz;
+class Sistema;
 
 class Controlador {
 private:

@@ -1,7 +1,5 @@
 #ifndef SUCURSAL_H
 #define SUCURSAL_H
-#include "Utiles.h"
-#include "Cliente.h"
 
 class Cliente;
 class Instructor;
@@ -41,10 +39,20 @@ public:
 	string getTelefono();
 	string toString();
 
+	int getCantidadClientes();
+	int getCantidadInstructores();
+	int getCantidadClasesGrupales();
+
 	bool agregarCliente(Cliente* cliente);
 	bool agregarInstructor(Instructor* instructor);
 	bool agregarClaseGrupal(ClaseGrupal* clase);
-	Cliente* buscarClientePorCedula(string);
+
+
+	Cliente* buscarClientePorCedula(string cedu);
+	Instructor* buscarInstructorPorCedula(string cedu);
+
+	string listarClientes();
+	string listarInstructores();
 };
 
 #endif // !SUCURSAL_H

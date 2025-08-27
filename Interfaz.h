@@ -1,7 +1,5 @@
 #ifndef INTERFAZ_H
 #define INTERFAZ_H
-
-#include <string>
 #include "Utiles.h"
 using namespace std;
 

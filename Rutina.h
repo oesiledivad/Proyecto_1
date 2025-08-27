@@ -1,8 +1,11 @@
-#pragma once
-#include "Ejercicio.h"
-#include "Cliente.h"
-#include "Instructor.h"
-class Rutina{
+#ifndef RUTINA_H
+#define RUTINA_H
+
+class Ejercicio;
+class Cliente;
+class Instructor;
+
+class Rutina {
 
 private:
 
@@ -43,10 +46,10 @@ public:
 
 	Cliente* getCliente();
 
-	Instructor* getInstructor(); 
+	Instructor* getInstructor();
 
-	string listarRutina(); 
+	string listarRutina();
 
 	string toString();
 };
-
+#endif // !RUTINA_H

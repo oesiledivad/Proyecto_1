@@ -1,7 +1,10 @@
-#pragma once
-#include "Cliente.h"
-#include "Instructor.h"
-class Medicion{
+#ifndef MEDICION_H
+#define MEDICION_H
+
+class Cliente;
+class Instructor;
+
+class Medicion {
 
 
 private:
@@ -33,7 +36,7 @@ private:
 
 public:
     // Constructor
-    Medicion(string,double,double,double,double,int, double, double, double, double, double, Cliente*, Instructor*);
+    Medicion(string, double, double, double, double, int, double, double, double, double, double, Cliente*, Instructor*);
 
     // Getters
     string getFecha();
@@ -57,13 +60,13 @@ public:
 
     string clasificacionIMC();
 
-    string clasificacionPaciente(); 
+    string clasificacionPaciente();
 
-    double calcularProteina(char, bool); 
+    double calcularProteina(char, bool);
 
-    double calcularAgua(); 
+    double calcularAgua();
 
     string reporteMedicion();
 
 };
-
+#endif // !MEDICION_H

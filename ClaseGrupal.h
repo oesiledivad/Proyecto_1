@@ -1,11 +1,12 @@
-#pragma once
+#ifndef CLASEGRUPAL_H
+#define CLASEGRUPAL_H
 using namespace std;
 #include <sstream>
-#include "Instructor.h"
-#include "Cliente.h"
+
+class Instructor;
+class Cliente;
+
 class ClaseGrupal {
-
-
 private:
 
 	string codigo; // Codigo de la clase
@@ -32,7 +33,7 @@ public:
 
 	// Constructor con parametros
 
-	ClaseGrupal(string, string, string,Instructor*, int);
+	ClaseGrupal(string, string, string, Instructor*, int);
 
 	// Descructor
 	~ClaseGrupal();
@@ -44,7 +45,7 @@ public:
 
 	string getHorario();
 
-	Instructor* getInstructor(); 
+	Instructor* getInstructor();
 
 	Cliente** getCliente(); // Verificar si es posible declarlo asi 
 
@@ -62,8 +63,9 @@ public:
 
 	string listarClientes();
 
-	string toString(); 
+	string toString();
 
 
 };
 
+#endif // !"CLASEGRUPAL_H"

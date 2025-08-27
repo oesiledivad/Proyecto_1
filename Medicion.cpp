@@ -1,4 +1,7 @@
+#include "Utiles.h"
 #include "Medicion.h"
+#include "Cliente.h"
+#include "Instructor.h"
 
 Medicion::Medicion(string fecha, double peso, double estatura, double grasaCorp, double musculo, int metabolica, double cintura,
     double cadera, double pecho, double muslo, double grasaVis, Cliente* c1, Instructor* ins1) :

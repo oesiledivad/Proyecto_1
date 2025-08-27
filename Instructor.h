@@ -1,6 +1,9 @@
-#pragma once
+#ifndef INSTRUCTOR_H
+#define INSTRUCTOR_H
 #include "Sucursal.h"
 // Punto h del instructor 
+class Sucursal;
+
 class Instructor {
 private:
 
@@ -10,28 +13,28 @@ private:
 	int telefono;
 	string correo;
 	string fecha_Nacimiento;
-	string *especialidades;
+	string* especialidades;
 	int numEspecialides;
 	const int capacidad;
 
 public:
-	
+
 	// Constructor sin parametros
-	Instructor(); 
+	Instructor();
 
 	//Desctructor
-	~Instructor(); 
+	~Instructor();
 
 
 	// Constructor con parametros 
 	Instructor(string, string, int, string, string, string);
 
 	// Metodos varios
-	bool agregarEspecialidad(string); 
+	bool agregarEspecialidad(string);
 
 	bool tieneEspecialidad(string);
 
-	string listarEspecialidades(); 
+	string listarEspecialidades();
 
 	// Getters y toString
 
@@ -40,17 +43,19 @@ public:
 	string getNumeroCedula();
 
 	int getTelefono();
-	
+
 	string getCorreo();
 
 	string getfecha_Nacimiento();
-	
+
 	string getEspecialidades();
 
-	int getNumEspecialidades(); 
+	int getNumEspecialidades();
 
 	int getCapacidad();
 
-	string toString(); 
+	string toString();
 };
 
+
+#endif // !INSTRUCTOR_H
