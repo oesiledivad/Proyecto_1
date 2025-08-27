@@ -1,4 +1,5 @@
 #include "Sistema.h"
+
 Sistema::Sistema() :
 	cantidad_sucursales(0), cantidad_ejercicios(0),
 	capacidad_sucursales(MAX_SUCURSALES), capacidad_ejercicios(MAX_EJERCICIOS) {

@@ -1,5 +1,8 @@
+#include "Utiles.h"
 #include "Sucursal.h"
 #include "ClaseGrupal.h"
+#include "Instructor.h"
+#include "Cliente.h"
 
 Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono (""),cantidad_clientes(0),
 cantidad_instructores(0), cantidad_clases(0),
@@ -118,6 +121,48 @@ Cliente* Sucursal::buscarClientePorCedula(string cedu) {
 	return nullptr; 
 }
 
+
+Instructor* Sucursal::buscarInstructorPorCedula(string cedu) {
+	for (int i = 0; i < cantidad_instructores; i++) {
+		if (instructores[i] != nullptr && instructores[i]->getNumeroCedula() == cedu) {
+			return instructores[i];
+		}
+	}
+	return nullptr;
+}
+
+string Sucursal::listarClientes() {
+	stringstream s;
+	if (cantidad_clientes == 0) {
+		s << "No hay clientes registrados en esta sucursal.\n";
+	}
+	else {
+		s << "=== LISTADO DE CLIENTES ===\n";
+		for (int i = 0; i < cantidad_clientes; i++) {
+			if (clientes[i] != nullptr) {
+				s << "Cedula: " << clientes[i]->getCedula() << " | Nombre: " << clientes[i]->getNombre() << "\n";
+			}
+		}
+	}
+	return s.str();
+}
+
+string Sucursal::listarInstructores() {
+	stringstream s;
+	if (cantidad_instructores == 0) {
+		s << "No hay instructores en esta sucursal. Puedes seleccionar la opcion de 'Sin instructor'.\n";
+	}
+	else {
+		s << "=== LISTADO DE INSTRUCTORES ===\n";
+		for (int i = 0; i < cantidad_instructores; i++) {
+			if (instructores[i] != nullptr) {
+				s << (i + 1) << "- Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
+			}
+		}
+	}
+	return s.str();
+}
+
 string Sucursal::getCodigo() {
 	return codigo;
 }
@@ -135,7 +180,19 @@ string Sucursal::getCorreo() {
 }
 
 string Sucursal::getTelefono() {
-	return correo;
+	return telefono;
+}
+
+int Sucursal::getCantidadInstructores() {
+	return cantidad_instructores;
+}
+
+int Sucursal::getCantidadClientes() {
+	return cantidad_clientes;
+}
+
+int Sucursal::getCantidadClasesGrupales() {
+	return cantidad_clases;
 }
 
 string Sucursal::toString() {

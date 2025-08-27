@@ -1,4 +1,8 @@
+#include "Utiles.h"
 #include "Rutina.h"
+#include "Ejercicio.h"
+#include "Cliente.h"
+#include "Instructor.h"
 
 Rutina::Rutina(Cliente* c, Instructor* i): cliente(c), instructor(i), 
 cant_Pecho(0),cap_Pecho(10), cant_Tricep(0), cap_Tricep(10), cant_Bicep(0), cap_Bicep(10),

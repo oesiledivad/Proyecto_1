@@ -1,5 +1,6 @@
 #include "ClaseGrupal.h"
-
+#include "Instructor.h"
+#include "Cliente.h"
 
 ClaseGrupal::ClaseGrupal(string codigo, string salon, string horario,Instructor * ins,int capacidad ): 
 codigo(codigo), salon(salon), horario(horario), capacidad_maxima(capacidad), cantidad_matriculados(0)  {
