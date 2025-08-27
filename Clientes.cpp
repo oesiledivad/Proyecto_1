@@ -51,37 +51,37 @@ void Cliente::asignarRutina() {
 	//TODO
 }
 
-string Cliente::getcedula()
+string Cliente::getCedula()
 {
 	return cedula;
 }
 
-string Cliente::getnombre()
+string Cliente::getNombre()
 {
 	return nombre;
 }
 
-string Cliente::gettelefono()
+string Cliente::getTelefono()
 {
 	return telefono;
 }
 
-string Cliente::getcorreo()
+string Cliente::getCorreo()
 {
 	return correo;
 }
 
-string Cliente::getfecha_nacimiento()
+string Cliente::getFecha_nacimiento()
 {
 	return fecha_nacimiento;
 }
 
-char Cliente::getsexo()
+char Cliente::getSexo()
 {
 	return sexo;
 }
 
-string Cliente::getfecha_inscripcion()
+string Cliente::getFecha_inscripcion()
 {
 	return fecha_inscripcion;
 }

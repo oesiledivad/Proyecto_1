@@ -1,40 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #ifndef SUCURSAL_H
 #define SUCURSAL_H
 #include "Utiles.h"
@@ -68,11 +31,14 @@ private:
 	int capacidad_clases;
 public:
 	Sucursal(string cod, string prov, string canto, string corr, string tel);
-	Sucursal(); 
-	void ingresarSucursal(); // Metodo para ingresar la sucursal
+	//Sucursal(); 
 	~Sucursal();
 
 	string getCodigo();
+	string getProvincia();
+	string getCanton();
+	string getCorreo();
+	string getTelefono();
 	string toString();
 
 	bool agregarCliente(Cliente* cliente);

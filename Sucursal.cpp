@@ -68,32 +68,34 @@ Sucursal::~Sucursal() {
 }
 
 bool Sucursal::agregarCliente(Cliente* cliente) {
-
-	for (int i = 0; i < capacidad_clientes; i++) {
-		if (clientes[i] != nullptr && clientes[i]->getcedula() == cliente ->getcedula()) {
-			return false; // Se encontro el cliente no se puede duplicar
+	for (int i = 0; i < cantidad_clientes; i++) {
+		if (clientes[i] != nullptr && clientes[i]->getCedula() == cliente->getCedula()) {
+			return false;
 		}
 	}
 
 	if (cantidad_clientes < capacidad_clientes) {
 		clientes[cantidad_clientes++] = cliente;
-		return true; // se agrega el cliente
+		return true;
 	}
-	else {
-		cout << "Se alcanzo el maximo de clientes" << endl;
-		return false; // No se agrego 
-	}
+
+	return false;
 }
 
-
 bool Sucursal::agregarInstructor(Instructor* instructor) {
-    if (cantidad_instructores < capacidad_instructores) {
-        instructores[cantidad_instructores++] = instructor;
-        return true;
-    } else {
-        cout << "Se ha alcanzado el maximo de instructores permitido" << endl;
-        return false;
-    }
+	for (int i = 0; i < cantidad_instructores; i++) {
+		if (instructores[i] != nullptr && instructores[i]->getNumeroCedula() == instructor->getNumeroCedula()) {
+			return false;
+		}
+	}
+
+	if (cantidad_instructores < capacidad_instructores) {
+		instructores[cantidad_instructores++] = instructor;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
@@ -109,7 +111,7 @@ bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
 Cliente* Sucursal::buscarClientePorCedula(string cedu) {
 
 	for (int i = 0; i < cantidad_clientes; i++) {
-		if (clientes[i]!= nullptr && clientes[i]->getcedula() == cedu) {
+		if (clientes[i]!= nullptr && clientes[i]->getCedula() == cedu) {
 			return clientes[i]; 
 		}
 	}
@@ -120,34 +122,34 @@ string Sucursal::getCodigo() {
 	return codigo;
 }
 
+string Sucursal::getProvincia() {
+	return provincia;
+}
+
+string Sucursal::getCanton() {
+	return canton;
+}
+
+string Sucursal::getCorreo() {
+	return correo;
+}
+
+string Sucursal::getTelefono() {
+	return correo;
+}
+
 string Sucursal::toString() {
 	stringstream s;
 
-	s << "Ingrese el codigo: " << codigo << endl;
+	s << "Codigo: " << getCodigo() << endl;
 
-	s << "Ingrese la provincia: " << provincia << endl;
+	s << "Provincia: " << getProvincia() << endl;
 
-	s << "Ingrese el canton: " << canton << endl;
+	s << "Canton: " << getCanton() << endl;
 
-	s << "Ingrese el correo electronico: " << endl; 
+	s << "Correo: " << getCorreo() <<endl; 
 
-	s << "Ingrese el telefono: " << telefono << endl; 
+	s << "Telefono: " << getTelefono() << endl; 
 
 	return s.str();
-}
-
-void Sucursal:: ingresarSucursal() { // Se crea metodo provicional para ingresar una sucursal
-
-	system("cls"); 
-
-	cout << "  INGRESE LOS DATOS DE LA SUCURSAL \n " << endl; 
-
-	string codigo, provincia, canton, correo, telefono;
-	cin.ignore();
-	cout << "Codigo: "; getline(cin, codigo);
-	cout << "Provincia: "; getline(cin, provincia);
-	cout << "Canton: "; getline(cin, canton);
-	cout << "Correo: "; getline(cin, correo);
-	cout << "Teléfono: "; getline(cin, telefono);
-	cout << "\n Sucursal registrada.\n"; system("pause");
 }

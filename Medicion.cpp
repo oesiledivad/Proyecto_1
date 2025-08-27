@@ -181,7 +181,7 @@ string Medicion::reporteMedicion() {
 
     x << "Cantidad de vasos de agua recomendados: " << calcularAgua() << endl;
 
-    x << "Ingesta calorica recomendada: " << calcularProteina(cliente->getsexo(), cliente->getHaceEjercicio()) << endl;
+    x << "Ingesta calorica recomendada: " << calcularProteina(cliente->getSexo(), cliente->getHaceEjercicio()) << endl;
 
     x << "Riesgo del paciente segun su IMC: " << clasificacionPaciente() << endl; 
 

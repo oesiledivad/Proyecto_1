@@ -10,7 +10,9 @@ void limpiaPantalla() {
 
 string leerCadena() {
 	string s;
-	getline(cin, s);
+	do {
+		getline(cin, s);
+	} while (s.find_first_not_of("") == string::npos);
 	return s;
 }
 
