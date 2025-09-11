@@ -17,10 +17,8 @@ private:
 
 	int cant_ejercicios;
 	int cap_ejercicios;
-
 public:
 
-	Rutina(); 
 	Rutina(Cliente*, Instructor*);
 
 	~Rutina();
@@ -29,7 +27,8 @@ public:
 
 	int getCapacidad(); 
 
-	bool agregarEjercicio(Ejercicio * ejercicio);
+
+	bool agregarEjercicio(string nombre, Ejercicio* ejercicio);
 
 	Cliente* getCliente();
 
