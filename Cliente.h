@@ -54,9 +54,15 @@ public:
     char getSexo();
     string getFecha_inscripcion();
     bool getHaceEjercicio();
+    int getCantidadClasesInscritas();
+    void matriculado();
 
     Rutina* getRutinaAsignada();
     Instructor* getInstructorAsignado();
+
+    string mostrarClasesInscritas();
+    bool puedeInscribirse();
+    bool agregarClaseInscrita(ClaseGrupal* clase);
 };
 
 #endif // CLIENTE_H

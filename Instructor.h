@@ -1,61 +1,64 @@
-#ifndef INSTRUCTOR_H
+﻿#ifndef INSTRUCTOR_H
 #define INSTRUCTOR_H
-#include "Sucursal.h"
-// Punto h del instructor 
-class Sucursal;
+
+#include <string>
+using namespace std;
+
+// Enumeraci�n de especialidades
+enum Especialidad {
+    CROSSFIT = 1,
+    HIIT,
+    TRX,
+    PESAS,
+    SPINNING,
+    CARDIO,
+    YOGA,
+    ZUMBA
+};
 
 class Instructor {
 private:
+    // Datos b�sicos del instructor 
+    string numeroCed;
+    string nombre;
+    string telefono;
+    string correo;
+    string fecha_Nacimiento;
 
-	//Datos basicos del instructor 
-	string numeroCed;
-	string nombre;
-	int telefono;
-	string correo;
-	string fecha_Nacimiento;
-	string* especialidades;
-	int numEspecialides;
-	const int capacidad;
+    // Especialidades en forma de c�digos num�ricos
+    int* especialidades;
+    int numEspecialidades;
+    int capacidad;
 
 public:
+    // Constructor sin par�metros
+    Instructor();
 
-	// Constructor sin parametros
-	Instructor();
+    // Constructor con par�metros b�sicos
+    Instructor(string ced, string nom, string tel, string cor, string fecha, int capacidad);
 
-	//Desctructor
-	~Instructor();
+    // Destructor
+    ~Instructor();
 
+    // M�todos para especialidades
+    bool agregarEspecialidad(int codigo);
+    bool tieneEspecialidad(int codigo);
+    string listarEspecialidades();
 
-	// Constructor con parametros 
-	Instructor(string, string, int, string, string, string);
+    // Getters
+    string getNombre();
+    string getNumeroCedula();
+    string getTelefono();
+    string getCorreo();
+    string getFechaNacimiento();
+    int getNumEspecialidades();
+    int getCapacidad();
 
-	// Metodos varios
-	bool agregarEspecialidad(string);
-
-	bool tieneEspecialidad(string);
-
-	string listarEspecialidades();
-
-	// Getters y toString
-
-	string getNombre();
-
-	string getNumeroCedula();
-
-	int getTelefono();
-
-	string getCorreo();
-
-	string getfecha_Nacimiento();
-
-	string getEspecialidades();
-
-	int getNumEspecialidades();
-
-	int getCapacidad();
-
-	string toString();
+    // Utilidad
+    string toString();
 };
 
+// Funci�n auxiliar global para traducir c�digo a texto
+string nombreEspecialidad(int codigo);
 
-#endif // !INSTRUCTOR_H
+#endif // INSTRUCTOR_H

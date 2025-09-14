@@ -40,6 +40,8 @@ public:
     int pedirCapacidad();
     int pedirCantidadEspecialidades();
     string pedirDescripcionEjercicio();
+
+    string mostrarEspecialidades();
 };
 
 #endif

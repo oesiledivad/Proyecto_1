@@ -84,6 +84,12 @@ bool Sucursal::agregarInstructor(Instructor* instructor) {
 }
 
 bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
+	for (int i = 0; i < cantidad_clases; i++) {
+		if (clases_grupales[i] != nullptr && clases_grupales[i]->getCodigo() == clase->getCodigo()) {
+			return false;
+		}
+	}
+
     if (cantidad_clases < capacidad_clases) {
         clases_grupales[cantidad_clases++] = clase;
         return true;
@@ -109,6 +115,22 @@ Instructor* Sucursal::buscarInstructorPorCedula(string cedu) {
 		if (instructores[i] != nullptr && instructores[i]->getNumeroCedula() == cedu) {
 			return instructores[i];
 		}
+	}
+	return nullptr;
+}
+
+ClaseGrupal* Sucursal::buscarClaseGrupalPorCodigo(string codigo) {
+	for (int i = 0; i < cantidad_clases; i++) {
+		if (clases_grupales[i] != nullptr && clases_grupales[i]->getCodigo() == codigo) {
+			return clases_grupales[i];
+		}
+	}
+	return nullptr;
+}
+
+ClaseGrupal* Sucursal::buscarClaseGrupalPorPosicion(int pos) {
+	if (pos > 0 && pos <= cantidad_clases) {
+		return clases_grupales[pos - 1];
 	}
 	return nullptr;
 }
@@ -142,6 +164,42 @@ string Sucursal::listarInstructores() {
 			}
 		}
 	}
+	return s.str();
+}
+
+string Sucursal::listarClasesGrupales() {
+	stringstream s;
+	if (cantidad_clases == 0) {
+		s << "\nNo hay clases grupales en esta sucursal.\n";
+	}
+	else {
+		s << "\n=== LISTA DE CLASES EXISTENTES EN LA SUCURSAL ===\n";
+		for (int i = 0; i < cantidad_clases; i++) {
+			if (clases_grupales[i] != nullptr) {
+				s << (i + 1) << ". " << clases_grupales[i]->getCodigo() << "\n";
+			}
+		}
+	}
+	return s.str();
+}
+
+string Sucursal::mostrarInstructoresPorEspecialidad(int especialidad) {
+	stringstream s;
+	string especialidadValidada = validarEspecialidad(especialidad);
+	bool encontrado = false;
+	s << "\nInstructores con la especialidad " + especialidadValidada << endl;
+	
+	for (int i = 0; i < cantidad_instructores && !encontrado; i++) {
+		if (instructores[i] != nullptr && instructores[i]->tieneEspecialidad(especialidad)) {
+			s << instructores[i]->getNumeroCedula() << " " << instructores[i]->getNombre() << endl;
+			encontrado = true;
+		}
+	}
+	
+	if (!encontrado) {
+		s << "\nNo se encontraron instructores con esa especialidad" << endl;
+	}
+
 	return s.str();
 }
 

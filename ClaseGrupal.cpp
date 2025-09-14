@@ -35,16 +35,31 @@ Instructor* ClaseGrupal::getInstructor() { return nullptr; }
 
 Cliente** ClaseGrupal::getCliente() { return nullptr; } // Verificar metodo 
 
-bool ClaseGrupal :: inscribirCliente(Cliente* c1) {
+bool ClaseGrupal::inscribirCliente(Cliente* c1) {
+	bool resultado = true;
 
 	if (cantidad_matriculados >= capacidad_maxima) {
-		return false; // NO hay cupos 
+		resultado = false;
 	}
-	else {
+
+	for (int i = 0; i < cantidad_matriculados && resultado; i++) {
+		if (clientes_inscritos[i] != nullptr && clientes_inscritos[i]->getCedula() == c1->getCedula()) {
+			resultado = false;
+		}
+	}
+
+	if (resultado && !c1->puedeInscribirse()) {
+		resultado = false;
+	}
+
+	if (resultado) {
 		clientes_inscritos[cantidad_matriculados++] = c1;
-		return true; // hay espacio 
+		c1->agregarClaseInscrita(this);
 	}
+
+	return resultado;
 }
+
 
 bool ClaseGrupal::retirarCliente(Cliente* c1) {
 
@@ -68,13 +83,12 @@ string ClaseGrupal::listarClientes() {
 	stringstream x;
 
 	for (int i = 0; i < cantidad_matriculados; i++) {
-		x << i+1 << ") "<< clientes_inscritos[i]->toString() << "\n" << endl;
+		x << i+1 << "- "<< clientes_inscritos[i]->getCedula() << " " << clientes_inscritos[i]->getNombre() << "\n" << endl;
 	}
 	return x.str(); 
 }
 
 string ClaseGrupal::toString() {
-
 	stringstream s;
 
 	s << "Clase: " << codigo << endl;

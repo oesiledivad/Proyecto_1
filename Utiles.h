@@ -19,4 +19,6 @@ char leerSexo();
 string leerEmail();
 string leerFecha();
 
+string validarEspecialidad(int codigo);
+
 #endif

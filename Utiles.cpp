@@ -153,3 +153,37 @@ string leerFecha() {
 	}
 	return fecha;
 }
+
+
+string validarEspecialidad(int codigo) {
+	string especialidad = "";
+	switch (codigo) {
+	case 1:
+		especialidad = "CrossFit";
+		break;
+	case 2:
+		especialidad = "HIIT";
+		break;
+	case 3:
+		especialidad = "TRX";
+		break;
+	case 4:
+		especialidad = "Pesas";
+		break;
+	case 5:
+		especialidad = "Spinning";
+		break;
+	case 6:
+		especialidad = "Cardio";
+		break;
+	case 7:
+		especialidad = "Yoga";
+		break;
+	case 8:
+		especialidad = "Zumba";
+		break;
+	default:
+		especialidad = "";
+	}
+	return especialidad;
+}

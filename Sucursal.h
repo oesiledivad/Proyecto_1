@@ -50,9 +50,14 @@ public:
 
 	Cliente* buscarClientePorCedula(string cedu);
 	Instructor* buscarInstructorPorCedula(string cedu);
+	ClaseGrupal* buscarClaseGrupalPorCodigo(string codigo);
+	ClaseGrupal* buscarClaseGrupalPorPosicion(int pos);
 
 	string listarClientes();
 	string listarInstructores();
+	string listarClasesGrupales();
+
+	string mostrarInstructoresPorEspecialidad(int especialidad);
 };
 
 #endif // !SUCURSAL_H

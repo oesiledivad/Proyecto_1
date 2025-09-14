@@ -92,8 +92,48 @@ Instructor* Cliente::getInstructorAsignado() {
     return instructor_asignado; 
 }
 
+string Cliente::mostrarClasesInscritas() {
+    stringstream s;
+    if (cantidad_clases_inscritas == 0) {
+        s << "El cliente no está inscrito en ninguna clase grupal." << endl;
+    }
+    else {
+        s << "Clases matriculadas por cliente: " << endl;
+        for (int i = 0; i < cantidad_clases_inscritas; i++) {
+            s << i + 1 << "- " << clases_inscritas[i]->getCodigo() << endl;
+        }
+    }
+    return s.str();
+}
+
+bool Cliente::puedeInscribirse() {
+    return cantidad_clases_inscritas < MAX_CLASES_INSCRITAS;
+}
+
+bool Cliente::agregarClaseInscrita(ClaseGrupal* clase) {
+    bool inscrito = false;
+    for (int i = 0; i < cantidad_clases_inscritas && !inscrito; i++) {
+        if (clases_inscritas[i] == clase) {
+            inscrito = true;
+        }
+    }
+    clases_inscritas[cantidad_clases_inscritas] = clase;
+    cantidad_clases_inscritas++;
+    return inscrito;
+}
+
+int Cliente::getCantidadClasesInscritas() {
+    return cantidad_clases_inscritas;
+}
+
 bool Cliente::haceEjercicio() {
     return cantidad_mediciones > 0;
+}
+
+void Cliente::matriculado() {
+    if (cantidad_clases_inscritas < MAX_CLASES_INSCRITAS) {
+        cantidad_clases_inscritas++;
+    }
 }
 
 string Cliente::toString() {
