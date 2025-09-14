@@ -21,13 +21,14 @@ private:
 public:
 
 	Rutina(); 
-	Rutina(Cliente*, Instructor*);
+
+	Rutina(Cliente*, Instructor*, int capacidad);
 
 	~Rutina();
 
-	int getCantidad();
+	int getCantidadEjercicios();
 
-	int getCapacidad(); 
+	int getCapacidadEjercicios(); 
 
 	bool agregarEjercicio(Ejercicio * ejercicio);
 

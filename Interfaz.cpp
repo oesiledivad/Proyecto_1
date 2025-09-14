@@ -153,27 +153,28 @@ string Interfaz::pedirNombreCompleto() {
     return pedirTexto("Digite nombre completo: ");
 }
 
-int Interfaz::pedirEspecialidad() {
+int Interfaz::pedirEspecialidad() { 
     cout << "Especialidades disponibles:" << endl;
-    cout << "1. CrossFit" << endl;
-    cout << "2. HIIT" << endl;
-    cout << "3. TRX" << endl;
-    cout << "4. Pesas" << endl;
+    cout << "1. CrossFit" << endl; 
+    cout << "2. HIIT" << endl; 
+    cout << "3. TRX" << endl; 
+    cout << "4. Pesas" << endl; 
     cout << "5. Spinning" << endl;
-    cout << "6. Cardio" << endl;
-    cout << "7. Yoga" << endl;
-    cout << "8. Zumba" << endl;
+    cout << "6. Cardio" << endl; 
+    cout << "7. Yoga" << endl; 
+    cout << "8. Zumba" << endl; 
     return pedirEnteroRango("Digite la especialidad deseada: ", 1, 8);
 }
 
-int Interfaz::pedirZonaMuscular() {
+
+int Interfaz::pedirZonaMuscular() { 
     cout << "Zonas musculares disponibles:" << endl;
-    cout << "1. Pecho" << endl;
-    cout << "2. Tríceps" << endl;
+    cout << "1. Pecho" << endl; 
+    cout << "2. Tríceps" << endl; 
     cout << "3. Bíceps" << endl;
-    cout << "4. Piernas" << endl;
-    cout << "5. Espalda" << endl;
-    return pedirEnteroRango("Digite zona muscular: ", 1, 5);
+    cout << "4. Piernas" << endl; 
+    cout << "5. Espalda" << endl; 
+    return pedirEnteroRango("Digite zona muscular: ", 1, 5); 
 }
 
 string Interfaz::pedirHorario() {

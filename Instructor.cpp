@@ -2,98 +2,98 @@
 #include "Instructor.h"
 #include "Sucursal.h"
 
-
-// Instructor con sus metodos basicos y un set para ingresar su especialidad y ser guardada en sistema 
-
-Instructor::Instructor() : numeroCed(""), nombre(""), telefono(0), correo(""),
-
-fecha_Nacimiento(""), especialidades(nullptr), numEspecialides(0), capacidad(8){
-
-	especialidades = new string[capacidad]; 
+// ===== Función auxiliar =====
+string nombreEspecialidad(int codigo) {
+    switch (codigo) {
+    case CROSSFIT: return "CrossFit";
+    case HIIT: return "HIIT";
+    case TRX: return "TRX";
+    case PESAS: return "Pesas";
+    case SPINNING: return "Spinning";
+    case CARDIO: return "Cardio";
+    case YOGA: return "Yoga";
+    case ZUMBA: return "Zumba";
+    default: return "Desconocido";
+    }
 }
-Instructor::Instructor(string numCed, string nom, int tel, string gmail, string fechaN, string espInicial) :
-	numeroCed(numCed), nombre(nom), telefono(tel), correo(gmail), fecha_Nacimiento(fechaN), especialidades(nullptr),
-	numEspecialides(0), capacidad(8)
-{
-	especialidades = new string[capacidad];
 
-	agregarEspecialidad(espInicial);
-
+// ===== Constructores =====
+Instructor::Instructor() {
+    numeroCed = "";
+    nombre = "";
+    telefono = "";
+    correo = "";
+    fecha_Nacimiento = "";
+    capacidad = 5; // capacidad inicial para especialidades
+    numEspecialidades = 0;
+    especialidades = new int[capacidad];
 }
+
+Instructor::Instructor(string ced, string nom, string tel, string cor, string fecha, int cap) {
+    numeroCed = ced;
+    nombre = nom;
+    telefono = tel;
+    correo = cor;
+    fecha_Nacimiento = fecha;
+    capacidad = cap;
+    numEspecialidades = 0;
+    especialidades = new int[capacidad];
+}
+
+// ===== Destructor =====
 Instructor::~Instructor() {
-	delete[] especialidades;
+    delete[] especialidades;
 }
 
-bool Instructor::agregarEspecialidad(string esp){
-
-	if (tieneEspecialidad(esp)) {
-		cout << "La especialidad ya existe"; 
-		return false; // No duplicados 
-	}
-		else if (numEspecialides < capacidad) {
-			especialidades[numEspecialides++] = esp;
-			return true;  // se agrego la especialidad
-		}
-	else {
-		cout << "El numero de especialides sobrepaso la capacidad." << endl; 
-		return false;  // sobrepaso el limite
-	}
-
-}
-bool Instructor::tieneEspecialidad(string esp){
-	for (int i = 0; i < numEspecialides; i++) {
-		if (especialidades[i] == esp) {
-			return true; // Se encontro la especialidad
-		}
-	}
-	return false; // si termino el bucle y no encontro nada
-}
-string Instructor::listarEspecialidades(){
-	string resultado = ""; 
-	for (int i = 0; i < numEspecialides; i++) {
-		resultado += " - " + especialidades[i] + "" + "\n";
-	}
-	return resultado; 
+// ===== Métodos =====
+bool Instructor::agregarEspecialidad(int codigo) {
+    // Verificar si ya existe
+    for (int i = 0; i < numEspecialidades; i++) {
+        if (especialidades[i] == codigo) {
+            return false; // ya la tiene
+        }
+    }
+    // Agregar si hay espacio
+    if (numEspecialidades < capacidad) {
+        especialidades[numEspecialidades++] = codigo;
+        return true;
+    }
+    return false; // no hay espacio
 }
 
-// Tostring
-
-string Instructor::toString() {
-
-	stringstream x;
-
-
-	x << "|Numero de cedula: | " << numeroCed << endl;
-
-	x << "|Nombre del instructor: | " << nombre << endl;
-
-	x << "|Telefono: | " << telefono << endl;
-
-	x << "|Correo: | " << correo << endl;
-
-	x << "|Fecha de nacimiento | " << fecha_Nacimiento << endl;
-
-	x << "|Especialidades: | " << * especialidades << endl;
-
-	x << "|Numero de especialidades: | " << numEspecialides << endl;
-
-
-	return x.str(); 
+bool Instructor::tieneEspecialidad(int codigo) {
+    for (int i = 0; i < numEspecialidades; i++) {
+        if (especialidades[i] == codigo) {
+            return true;
+        }
+    }
+    return false;
 }
 
-// Getters 
+string Instructor::listarEspecialidades() {
+    stringstream x;
+
+    for (int i = 0; i < numEspecialidades; i++) {
+            x << "- " << nombreEspecialidad(especialidades[i]) << "\n";
+        }
+    return x.str(); 
+}
+
+// ===== Getters =====
 string Instructor::getNombre() { return nombre; }
+string Instructor::getNumeroCedula() { return numeroCed; }
+string Instructor::getTelefono() { return telefono; }
+string Instructor::getCorreo() { return correo; }
+string Instructor::getFechaNacimiento() { return fecha_Nacimiento; }
+int Instructor::getNumEspecialidades() { return numEspecialidades; }
+int Instructor::getCapacidad() { return capacidad; }
 
-string  Instructor::getNumeroCedula() { return numeroCed; }
-
-int  Instructor::getTelefono() { return telefono; }
-
-string  Instructor::getCorreo() { return correo; }
-
-string  Instructor::getfecha_Nacimiento() { return fecha_Nacimiento; }
-
-int  Instructor::getNumEspecialidades() { return numEspecialides; }
-
-int  Instructor::getCapacidad() { return capacidad; }
-
-string Instructor::getEspecialidades() { return *especialidades; }
+// ===== toString =====
+string Instructor::toString() {
+    stringstream ss;
+    ss << "Instructor: " << nombre << " (" << numeroCed << ")\n";
+    ss << "Tel: " << telefono << " | Correo: " << correo << "\n";
+    ss << "Fecha de nacimiento: " << fecha_Nacimiento << "\n";
+    ss << "Especialidades: " << listarEspecialidades();
+    return ss.str();
+}
