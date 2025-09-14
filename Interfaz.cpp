@@ -154,17 +154,23 @@ string Interfaz::pedirNombreCompleto() {
 }
 
 int Interfaz::pedirEspecialidad() { 
-    cout << "Especialidades disponibles:" << endl;
-    cout << "1. CrossFit" << endl; 
-    cout << "2. HIIT" << endl; 
-    cout << "3. TRX" << endl; 
-    cout << "4. Pesas" << endl; 
+    cout << "\n=== LISTA DE ESPECIALIDADES ===" << endl;
+    cout << "1. CrossFit" << endl;
+    cout << "2. HIIT" << endl;
+    cout << "3. TRX" << endl;
+    cout << "4. Pesas" << endl;
     cout << "5. Spinning" << endl;
-    cout << "6. Cardio" << endl; 
-    cout << "7. Yoga" << endl; 
-    cout << "8. Zumba" << endl; 
-    return pedirEnteroRango("Digite la especialidad deseada: ", 1, 8);
+    cout << "6. Cardio" << endl;
+    cout << "7. Yoga" << endl;
+    cout << "8. Zumba" << endl;
+    cout << "0. Terminar seleccion" << endl;
+    cout << "Seleccione una opcion: ";
+
+    int opcion;
+    cin >> opcion;
+    return opcion; // el usuario ingresa un número (0..8)
 }
+
 
 
 int Interfaz::pedirZonaMuscular() { 

@@ -435,12 +435,39 @@ void Controlador::incluirInstructor() {
     string telefono = ui->pedirTelefono();
     string correo = ui->pedirEmail();
     string fechaNacimiento = ui->pedirFecha();
-    int especialidades = ui->pedirEspecialidad(); 
+    
+    Instructor* nuevoInstructor = new Instructor(cedula, nombre, telefono, correo, fechaNacimiento, 8);
 
-    Instructor* nuevoInstructor = new Instructor(cedula, nombre, telefono, correo, fechaNacimiento, especialidades); 
+    // ===== Agregar múltiples especialidades =====
 
+    ui->imprimir ("\n Ingrese una o varias especialidades (digite 0 para finalizar\n"); 
+
+    ui->imprimir("\nSeleccione las especialidades del instructor:\n");
+
+    while (true) {
+        int codigoEsp = ui->pedirEspecialidad();
+
+        if (codigoEsp == 0) {
+            // Preguntar si realmente quiere terminar
+            char opcion;
+            cout << "¿Desea terminar la selección de especialidades? (S/N): ";
+            cin >> opcion;
+            if (opcion == 'S' || opcion == 's') {
+                ui->esperaEnter(); 
+                break; 
+            }
+            else {
+                continue;
+            }
+        }
+
+        if (!nuevoInstructor->agregarEspecialidad(codigoEsp)) {
+            ui->imprimir("Advertencia: No se pudo agregar la especialidad (ya existe o no hay espacio).\n");
+        }
+    }
+    // ===== Registrar en sucursal =====
     if (sucursalSeleccionada->agregarInstructor(nuevoInstructor)) {
-        ui->imprimir("Instructor registrado correctamente\n");
+        ui->imprimir("Instructor registrado correctamente!!!!!!!\n");
     }
     else {
         ui->imprimir("Error: El instructor ya existe o la sucursal ha alcanzado su capacidad maxima.\n");
@@ -449,6 +476,7 @@ void Controlador::incluirInstructor() {
 
     ui->esperaEnter();
 }
+
 
 void Controlador::listaInstructoresPorSucursal() {
     ui->limpiarPantalla();
@@ -491,7 +519,7 @@ void Controlador::detalleInstructor() {
             string cedulaBuscar = ui->pedirTexto("Digite la cédula del instructor que quiere visualizar: ");
             Instructor* instructorSeleccionado = sucursalSeleccionada->buscarInstructorPorCedula(cedulaBuscar);
             if (instructorSeleccionado != nullptr) {
-                ui->imprimir("\n--- Detalle de cliente ---\n");
+                ui->imprimir("\n--- Detalle del instructor ---\n");
                 ui->imprimir(instructorSeleccionado->toString());
             }
             else {
@@ -508,9 +536,27 @@ void Controlador::detalleInstructor() {
 
 void Controlador::instructoresPorEspecialidad() {
     ui->limpiarPantalla();
-    cout << "=== INSTRUCTORES POR ESPECIALIDAD ===" << endl;
-    // TODO
-    sinImplementar();
+    cout << "=== LISTA INSTRUCTORES POR ESPECIALIDAD ===" << endl;
+    string listaSucursales = sistema->listarSucursales();
+    ui->imprimir("Lista de sucursales existentes:\n" + listaSucursales);
+
+    string codigoSucursal = ui->pedirCodigoSucursal();
+
+    Sucursal* sucursalSeleccionada = sistema->buscarSucursal(codigoSucursal);
+
+    if (sucursalSeleccionada == nullptr) {
+        ui->imprimir("Error: No se encontro una sucursal con ese codigo.\n");
+        ui->esperaEnter();
+        return;
+    }
+    else {
+        ui->imprimir("Digite la especialidad para conocer los instructores \n"); 
+
+        int especialidad = ui->pedirEspecialidad();
+
+        sucursalSeleccionada->mostrarInstructoresPorEspecialidad(especialidad);
+    }
+    ui->esperaEnter();
 }
 
 void Controlador::clientesPorInstructor() {

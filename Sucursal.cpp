@@ -113,6 +113,25 @@ Instructor* Sucursal::buscarInstructorPorCedula(string cedu) {
 	return nullptr;
 }
 
+void Sucursal::mostrarInstructoresPorEspecialidad(int especialidad) {
+	bool encontrado = false;
+
+	cout << "\n--- Instructores con la especialidad: "
+		<< nombreEspecialidad(especialidad) << " ---\n";
+
+	for (int i = 0; i < cantidad_instructores; i++) {
+		if (instructores[i] != nullptr && instructores[i]->tieneEspecialidad(especialidad)) {
+			cout << "Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
+			encontrado = true;
+		}
+	}
+
+	if (!encontrado) {
+		cout << "No existen instructores con esta especialidad en la sucursal.\n";
+	}
+}
+
+
 string Sucursal::listarClientes() {
 	stringstream s;
 	if (cantidad_clientes == 0) {

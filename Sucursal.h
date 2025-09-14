@@ -51,6 +51,8 @@ public:
 	Cliente* buscarClientePorCedula(string cedu);
 	Instructor* buscarInstructorPorCedula(string cedu);
 
+	void mostrarInstructoresPorEspecialidad(int especialidad);
+
 	string listarClientes();
 	string listarInstructores();
 };

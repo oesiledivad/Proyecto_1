@@ -5,14 +5,15 @@
 // ===== Función auxiliar =====
 string nombreEspecialidad(int codigo) {
     switch (codigo) {
-    case CROSSFIT: return "CrossFit";
-    case HIIT: return "HIIT";
-    case TRX: return "TRX";
-    case PESAS: return "Pesas";
-    case SPINNING: return "Spinning";
-    case CARDIO: return "Cardio";
-    case YOGA: return "Yoga";
-    case ZUMBA: return "Zumba";
+    case 1: CROSSFIT: return "CrossFit";
+        break;
+    case 2: HIIT: return "HIIT";
+    case 3: TRX: return "TRX";
+    case 4: PESAS: return "Pesas";
+    case 5: SPINNING: return "Spinning";
+    case 6: CARDIO: return "Cardio";
+    case 7: YOGA: return "Yoga";
+    case 8: ZUMBA: return "Zumba";
     default: return "Desconocido";
     }
 }
@@ -24,7 +25,7 @@ Instructor::Instructor() {
     telefono = "";
     correo = "";
     fecha_Nacimiento = "";
-    capacidad = 5; // capacidad inicial para especialidades
+    capacidad = 8; // capacidad inicial para especialidades
     numEspecialidades = 0;
     especialidades = new int[capacidad];
 }
