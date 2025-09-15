@@ -62,56 +62,22 @@ bool Instructor::agregarEspecialidad(int codigo) {
     return false; // no hay espacio
 }
 
+bool Instructor::tieneEspecialidad(int codigo) {
+    for (int i = 0; i < numEspecialidades; i++) {
+        if (especialidades[i] == codigo) {
+            return true;
+        }
+    }
+    return false;
 }
-bool Instructor::tieneEspecialidad(string esp){
-	for (int i = 0; i < numEspecialides; i++) {
-		if (especialidades[i] == esp) {
-			return true; // Se encontro la especialidad
-		}
-	}
-	return false; // si termino el bucle y no encontro nada
-}
-string Instructor::listarEspecialidades(){
-	string resultado = ""; 
-	for (int i = 0; i < numEspecialides; i++) {
+
+string Instructor::listarEspecialidades() {
+    stringstream x;
+
     for (int i = 0; i < numEspecialidades; i++) {
         x << "- " << nombreEspecialidad(especialidades[i]) << "\n";
     }
     return x.str();
-
-	x << "|Telefono: | " << telefono << endl;
-
-	x << "|Correo: | " << correo << endl;
-
-	x << "|Fecha de nacimiento | " << fecha_Nacimiento << endl;
-
-	x << "|Especialidades: | " << * especialidades << endl;
-
-	x << "|Numero de especialidades: | " << numEspecialides << endl;
-
-
-	return x.str(); 
-
-	x << "|Telefono: | " << telefono << endl;
-
-	x << "|Correo: | " << correo << endl;
-
-	x << "|Fecha de nacimiento | " << fecha_Nacimiento << endl;
-
-	x << "|Especialidades: | " << * especialidades << endl;
-
-	x << "|Numero de especialidades: | " << numEspecialides << endl;
-
-
-	return x.str(); 
-	x << "|Fecha de nacimiento | " << fecha_Nacimiento << endl;
-
-	x << "|Especialidades: | " << * especialidades << endl;
-
-	x << "|Numero de especialidades: | " << numEspecialides << endl;
-
-
-	return x.str(); 
 }
 
 // ===== Getters =====
