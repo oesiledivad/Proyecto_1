@@ -17,7 +17,11 @@ float leerFlotante(); // Marcado
 float leerFlotanteRango(float min, float max); // Marcado
 char leerSexo();
 string leerEmail();
-string leerFecha();
+string leerFecha(const string& mensaje);
+string leerCedula(const string& mensaje);            
+string leerNumeroTelefono(const string& mensaje);
+bool leerOpcionSN(const string& mensaje);
+
 
 string validarEspecialidad(int codigo);
 

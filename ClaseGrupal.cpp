@@ -3,7 +3,7 @@
 #include "Cliente.h"
 
 ClaseGrupal::ClaseGrupal(string codigo, string salon, string horario,Instructor * ins,int capacidad ): 
-codigo(codigo), salon(salon), horario(horario), capacidad_maxima(capacidad), cantidad_matriculados(0)  {
+codigo(codigo), salon(salon), horario(horario), ins1(ins), capacidad_maxima(capacidad), cantidad_matriculados(0) {
 
 	clientes_inscritos = new Cliente * [capacidad_maxima]; 
 
@@ -14,9 +14,7 @@ codigo(codigo), salon(salon), horario(horario), capacidad_maxima(capacidad), can
 }
 
 ClaseGrupal::~ClaseGrupal() {
-	
 	delete[] clientes_inscritos; 
-
 }
 
 string ClaseGrupal::getCodigo() { return codigo; }

@@ -116,11 +116,16 @@ string Interfaz::pedirEmail() {
     return leerEmail();
 }
 
-string Interfaz::pedirFecha() {
-    return leerFecha();
+string Interfaz::pedirFecha(const string& mensaje) {
+    return leerFecha(mensaje);
+}
+
+bool Interfaz::pedirOpcionSN(const string& mensaje) {
+    return leerOpcionSN(mensaje);
 }
 
 void Interfaz::esperaEnter() {
+    imprimir("\n");
     esperandoEnter();
 }
 
@@ -134,7 +139,7 @@ string Interfaz::pedirCodigoSucursal() {
 }
 
 string Interfaz::pedirCedula() {
-    return pedirTexto("Digite cédula: ");
+    return leerCedula("Digite la cédula: ");
 }
 
 string Interfaz::pedirProvincia() {
@@ -146,7 +151,7 @@ string Interfaz::pedirCanton() {
 }
 
 string Interfaz::pedirTelefono() {
-    return pedirTexto("Digite teléfono: ");
+    return leerNumeroTelefono("Digite el número de télefono: ");
 }
 
 string Interfaz::pedirNombreCompleto() {
@@ -184,11 +189,11 @@ int Interfaz::pedirZonaMuscular() {
 }
 
 string Interfaz::pedirHorario() {
-    return pedirTexto("Digite horario: _");
+    return pedirTexto("Digite horario: ");
 }
 
 string Interfaz::pedirSalon() {
-    return pedirTexto("Digite salón: _");
+    return pedirTexto("Digite salón: ");
 }
 
 int Interfaz::pedirCapacidad() {

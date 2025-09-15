@@ -126,11 +126,11 @@ string leerEmail() {
 	return email;
 }
 
-string leerFecha() {
+string leerFecha(const string& mensaje) {
 	string fecha;
 	bool valido = false;
 	while (!valido) {
-		imprimeCadena("Fecha (DD/MM/AAAA): ");
+		imprimeCadena(mensaje);
 		fecha = leerCadena();
 		valido = true;
 
@@ -154,6 +154,87 @@ string leerFecha() {
 	return fecha;
 }
 
+string leerCedula(const string& mensaje) {
+	string cedula;
+	bool valido = false;
+
+	while (!valido) {
+		imprimeCadena(mensaje);
+		cedula = leerCadena();
+
+		valido = true;
+
+		if (cedula.length() > 9 || cedula.empty()) {
+			valido = false;
+		}
+
+		for (char c : cedula) {
+			if (!isdigit(c)) {
+				valido = false;
+				break;
+			}
+		}
+
+		if (!valido) {
+			cerr << "Cedula invalida. Debe contener solo digitos (max 9).\n";
+		}
+	}
+
+	return cedula;
+}
+
+string leerNumeroTelefono(const string& mensaje) {
+	string numero;
+	bool valido = false;
+
+	while (!valido) {
+		imprimeCadena(mensaje);
+		numero = leerCadena();
+
+		valido = true;
+
+		if (numero.length() > 11 || numero.empty()) {
+			valido = false;
+		}
+
+		for (char c : numero) {
+			if (!isdigit(c)) {
+				valido = false;
+				break;
+			}
+		}
+
+		if (!valido) {
+			cerr << "Numero invalido. Debe contener solo digitos (max 11).\n";
+		}
+	}
+
+	return numero;
+}
+
+bool leerOpcionSN(const string& mensaje) {
+	string entrada;
+	bool valido = false;
+	char opcion;
+
+	while (!valido) {
+		imprimeCadena(mensaje);
+		entrada = leerCadena();
+
+		if (entrada.length() == 1) {
+			opcion = toupper(entrada[0]);
+			if (opcion == 'S' || opcion == 'N') {
+				valido = true;
+			}
+		}
+
+		if (!valido) {
+			cerr << "Entrada invalida. Solo se acepta 'S' o 'N'.\n";
+		}
+	}
+
+	return opcion == 'S';
+}
 
 string validarEspecialidad(int codigo) {
 	string especialidad = "";

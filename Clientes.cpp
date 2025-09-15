@@ -6,7 +6,6 @@
 #include "Sucursal.h"
 #include "ClaseGrupal.h"
 
-
 Cliente::Cliente(string ced, string nom, string tel, string corr, string fecha_n, char sex,
     string fecha_i, Sucursal* suc) : cedula(ced), nombre(nom),
     telefono(tel), correo(corr), fecha_nacimiento(fecha_n),

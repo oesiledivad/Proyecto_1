@@ -21,7 +21,8 @@ public:
     float pedirFlotanteRango(const string& mensaje, float min, float max);
     char pedirSexo();
     string pedirEmail();
-    string pedirFecha();
+    string pedirFecha(const string& mensaje);
+    bool pedirOpcionSN(const string& mensaje);
     void esperaEnter();
     void limpiarPantalla();
     void imprimir(const string& mensaje);

@@ -48,7 +48,7 @@ void Controlador::ejecutar() {
         case 0:
             ejecutando = false;
             ui->limpiarPantalla();
-            cout << "Gracias por usar el sistema PowerLab" << endl;
+            ui->imprimir("Gracias por usar el sistema PowerLab\n");
             break;
         default:
             ui->imprimir("Opcion invalida.\n");
@@ -218,11 +218,11 @@ void Controlador::mostrarSucursales() {
         string codigo_buscar = ui->pedirTexto("Digite el código de la sucursal a consultar: ");
         Sucursal* sucursalEncontrada = sistema->buscarSucursal(codigo_buscar);
         if (sucursalEncontrada != nullptr) {
-            cout << "--- Detalle de la Sucursal ---" << endl;
-            cout << sucursalEncontrada->toString();
+            ui->imprimir("--- Detalle de la Sucursal ---\n");
+            ui->imprimir(sucursalEncontrada->toString());
         }
         else {
-            cout << "Error: No se encontro una sucursal con ese codigo.\n" << endl;
+            ui->imprimir("ERROR: No se encontro una sucursal con ese código.\n");
         }
     }
 
@@ -259,8 +259,8 @@ void Controlador::incluirCliente() {
     string cedula = ui->pedirCedula();
     string telefono = ui->pedirTelefono();
     string correo = ui->pedirEmail();
-    string fechaNacimiento = ui->pedirFecha();
-    string fechaInscripcion = ui->pedirFecha();
+    string fechaNacimiento = ui->pedirFecha("Fecha de nacimiento (DD/MM/AAAA): ");
+    string fechaInscripcion = ui->pedirFecha("Fecha de inscripción (DD/MM/AAAA): ");
     char sexo = ui->pedirSexo();
 
     Instructor* instructorAsignado = nullptr;
@@ -436,7 +436,7 @@ void Controlador::incluirInstructor() {
     string cedula = ui->pedirCedula();
     string telefono = ui->pedirTelefono();
     string correo = ui->pedirEmail();
-    string fechaNacimiento = ui->pedirFecha();
+    string fechaNacimiento = ui->pedirFecha("Fecha de nacimiento (DD/MM/AAAA): ");
 
     Instructor* nuevoInstructor = new Instructor(cedula, nombre, telefono, correo, fechaNacimiento, 8);
 
@@ -450,11 +450,7 @@ void Controlador::incluirInstructor() {
         int codigoEsp = ui->pedirEspecialidad();
 
         if (codigoEsp == 0) {
-            // Preguntar si realmente quiere terminar
-            char opcion;
-            cout << "¿Desea terminar la selección de especialidades? (S/N): ";
-            cin >> opcion;
-            if (opcion == 'S' || opcion == 's') {
+            if (ui->pedirOpcionSN("¿Desea terminar la selección de especialidades? (S/N): ")) {
                 ui->esperaEnter();
                 break;
             }
@@ -545,7 +541,8 @@ void Controlador::visualizacionRutina() {
 // CLASES GRUPALES
 void Controlador::crearClaseGrupal() {
     ui->limpiarPantalla();
-    cout << "=== CREAR CLASE GRUPAL ===" << endl;
+    ui->imprimir("=== CREAR CLASE GRUPAL ===\n");
+
     string listaSucursales = sistema->listarSucursales();
     ui->imprimir("Lista de sucursales existentes:\n" + listaSucursales);
 
@@ -555,6 +552,7 @@ void Controlador::crearClaseGrupal() {
     if (sucursalSeleccionada == nullptr) {
         ui->imprimir("Error: No se encontro una sucursal con ese codigo.\n");
         ui->esperaEnter();
+        return;
     }
 
     if (sucursalSeleccionada->getCantidadInstructores() == 0) {
@@ -563,16 +561,27 @@ void Controlador::crearClaseGrupal() {
         ui->esperaEnter();
         return;
     }
-  
-    ui->imprimir("\nTipo de clases disponibles:\n");
-    ui->imprimir(ui->mostrarEspecialidades());
-    int codClase = ui->pedirEnteroRango("Digite código de clase: ", 1, 8);
+    int codClase;
+    do {
+        ui->imprimir("\nTipo de clases disponibles:\n");
+        ui->imprimir(ui->mostrarEspecialidades());
+        codClase = ui->pedirEnteroRango("Digite código de clase: ", 1, 8);
+
+        if (!sucursalSeleccionada->existenInstructoresConEspecialidad(codClase)) {
+            ui->imprimir("\nError: No hay instructores en esta sucursal con la especialidad seleccionada.");
+            ui->imprimir("Por favor, elija otra especialidad.\n");
+        }
+        else {
+            break; 
+        }
+    } while (true);
+
     string especialidadValidada = validarEspecialidad(codClase);
     ui->imprimir("\nClase " + especialidadValidada + " seleccionada!\n");
 
-    int capacidad_clases = ui->pedirEntero("Digite la capacidad máxima: ");
-    string salonClase = ui->pedirTexto("Digite salón: ");
-    string horarioClase = ui->pedirTexto("Digite horario: ");
+    int capacidad_clases = ui->pedirCapacidad();
+    string salonClase = ui->pedirSalon();
+    string horarioClase = ui->pedirHorario();;
     ui->imprimir("\nLista de instructores con la especialidad " + especialidadValidada + ":\n");
     ui->imprimir(sucursalSeleccionada->mostrarInstructoresPorEspecialidad(codClase));
 
@@ -580,24 +589,31 @@ void Controlador::crearClaseGrupal() {
     Instructor* instructorAsignado = sucursalSeleccionada->buscarInstructorPorCedula(cedInstructor);
 
     if (instructorAsignado != nullptr) {
-        ui->imprimir("\nInstructor seleccionado!\n");
-
-        ClaseGrupal* nuevaClaseGrup = new ClaseGrupal(especialidadValidada, salonClase, horarioClase, instructorAsignado, capacidad_clases);
-
-        if (sucursalSeleccionada->agregarClaseGrupal(nuevaClaseGrup)) {
-            ui->imprimir("\nClase grupal registrada correctamente!!!\n");
+        if (instructorAsignado->tieneEspecialidad(codClase)) {
+            ui->imprimir("\nInstructor seleccionado!\n");
+            ClaseGrupal* nuevaClaseGrup = new ClaseGrupal(especialidadValidada, salonClase, horarioClase, instructorAsignado, capacidad_clases);
+            if (sucursalSeleccionada->agregarClaseGrupal(nuevaClaseGrup)) {
+                ui->imprimir("\nClase grupal registrada correctamente!!!\n");
+            }
+            else {
+                ui->imprimir("\nERROR: La clase grupal ya existe o se ha alcanzado la máxima capacidad.\n");
+                delete nuevaClaseGrup;
+            }
         }
         else {
-            ui->imprimir("\nERROR: La clase grupal ya existe o se ha alcanzado la máxima capacidad.\n");
-            delete nuevaClaseGrup;
+            ui->imprimir("\nERROR: El instructor seleccionado no tiene la especialidad requerida para esta clase.\n");
         }
+    }
+    else {
+        ui->imprimir("\nERROR: No se encontró un instructor con esa cédula.\n");
     }
     ui->esperaEnter();
 }
 
 void Controlador::mostrarClasesGrupales() {
     ui->limpiarPantalla();
-    cout << "=== MOSTRAR CLASES GRUPALES ===" << endl;
+    ui->imprimir("=== MOSTRAR CLASES GRUPALES ===\n");
+
     string listaSucursales = sistema->listarSucursales();
     ui->imprimir("Lista de sucursales existentes:\n" + listaSucursales);
 
@@ -610,33 +626,31 @@ void Controlador::mostrarClasesGrupales() {
         return;
     }
 
-    int auxCantClasesSucursal = sucursalSeleccionada->getCantidadClasesGrupales();
-
-    if (auxCantClasesSucursal == 0) {
+    if (sucursalSeleccionada->getCantidadClasesGrupales() == 0) {
         ui->imprimir("\nERROR: No existen clases grupales a mostrar en esta sucursal.\n");
         ui->esperaEnter();
         return;
     }
 
     ui->imprimir(sucursalSeleccionada->listarClasesGrupales());
-
-    int posicionClase = ui->pedirEnteroRango("Digite el numero de la clase: ", 1, auxCantClasesSucursal);
+    int posicionClase = ui->pedirEnteroRango("Digite el numero de la clase: ", 1, sucursalSeleccionada->getCantidadClasesGrupales());
 
     ClaseGrupal* claseGrupalSeleccionada = sucursalSeleccionada->buscarClaseGrupalPorPosicion(posicionClase);
 
-    if (claseGrupalSeleccionada == nullptr) {
-        ui->imprimir("\nERROR: No se ha encontrado una clase con esa posicion.\n");
-    }
-    else {
+    if (claseGrupalSeleccionada != nullptr) {
         ui->imprimir("\n--- Detalle de la clase grupal---\n");
         ui->imprimir(claseGrupalSeleccionada->toString());
+    }
+    else {
+        ui->imprimir("\nERROR: No se ha encontrado una clase en esa posición. Intente de nuevo.\n");
     }
     ui->esperaEnter();
 }
 
 void Controlador::matricularClienteEnClaseGrupal() {
     ui->limpiarPantalla();
-    cout << "=== MATRICULAR CLIENTE EN CLASE GRUPAL ===" << endl;
+    ui->imprimir("=== MATRICULAR CLIENTE EN CLASE GRUPAL === \n");
+
     string listaSucursales = sistema->listarSucursales();
     ui->imprimir("Lista de sucursales existentes:\n" + listaSucursales);
 
@@ -692,8 +706,7 @@ void Controlador::matricularClienteEnClaseGrupal() {
             ui->imprimir("\nERROR: La clase ha alcanzado su cupo máximo de matriculados.\n");
         }
         else {
-            string respuesta = ui->pedirTexto("\nDesea matricular al cliente? (S/N): ");
-            if (respuesta == "S" || respuesta == "s") {
+            if (ui->pedirOpcionSN("\nDesea matricular al cliente? (S/N): ")) {
                 if (claseGrupalSeleccionada->inscribirCliente(clienteSeleccionado)) {
                     ui->imprimir("\nCliente matriculado correctamente!!\n");
                 }
@@ -708,7 +721,8 @@ void Controlador::matricularClienteEnClaseGrupal() {
 
 void Controlador::clasesMatriculadasPorCliente() {
     ui->limpiarPantalla();
-    cout << "=== CLASES MATRICULADAS POR CLIENTE ===" << endl;
+    ui->imprimir("=== CLASES MATRICULADAS POR CLIENTE ===\n");
+
     string listaSucursales = sistema->listarSucursales();
     ui->imprimir("Lista de sucursales existentes:\n" + listaSucursales);
 
@@ -749,6 +763,7 @@ void Controlador::clasesMatriculadasPorCliente() {
         ui->esperaEnter();
         return;
     }
+
     ui->imprimir("\nCliente encontrado: \n");
     ui->imprimir(clienteSeleccionado->getCedula() + " " + clienteSeleccionado->getNombre() + "\n");
 

@@ -98,6 +98,15 @@ bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
     }
 }
 
+bool Sucursal::existenInstructoresConEspecialidad(int codigoEspecialidad) {
+	bool existe = false;
+	for (int i = 0; i < cantidad_instructores && !existe; i++) {
+		if (instructores[i]->tieneEspecialidad(codigoEspecialidad)) {
+			existe = true;
+		}
+	}
+	return existe;
+}
 
 Cliente* Sucursal::buscarClientePorCedula(string cedu) {
 
