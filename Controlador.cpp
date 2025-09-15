@@ -478,15 +478,57 @@ void Controlador::incluirInstructor() {
 void Controlador::listaInstructoresPorSucursal() {
     ui->limpiarPantalla();
     cout << "=== LISTA INSTRUCTORES POR SUCURSAL ===" << endl;
-    // TODO
-    sinImplementar();
+    string listaSucursales = sistema->listarSucursales();
+    ui->imprimir("Lista de sucursales existentes:\n" + listaSucursales);
+
+    string codigoSucursal = ui->pedirCodigoSucursal();
+
+    Sucursal* sucursalSeleccionada = sistema->buscarSucursal(codigoSucursal);
+
+    if (sucursalSeleccionada == nullptr) {
+        ui->imprimir("Error: No se encontro una sucursal con ese codigo.\n");
+        ui->esperaEnter();
+        return;
+    }
+    else {
+        ui->imprimir(sucursalSeleccionada->listarInstructores());
+    }
+    ui->esperaEnter();
 }
 
 void Controlador::detalleInstructor() {
     ui->limpiarPantalla();
     cout << "=== DETALLE INSTRUCTOR ===" << endl;
-    // TODO
-    sinImplementar();
+    string listaSucursales = sistema->listarSucursales();
+    ui->imprimir("Lista de sucursales existentes:\n" + listaSucursales);
+
+    string codigoSucursal = ui->pedirCodigoSucursal();
+
+    Sucursal* sucursalSeleccionada = sistema->buscarSucursal(codigoSucursal);
+
+    if (sucursalSeleccionada == nullptr) {
+        ui->imprimir("Error: No se encontro una sucursal con ese codigo.\n");
+        ui->esperaEnter();
+    }
+    else {
+        if (sucursalSeleccionada->getCantidadInstructores() > 0) {
+            ui->imprimir(sucursalSeleccionada->listarInstructores());
+            string cedulaBuscar = ui->pedirTexto("Digite la cédula del instructor que quiere visualizar: ");
+            Instructor* instructorSeleccionado = sucursalSeleccionada->buscarInstructorPorCedula(cedulaBuscar);
+            if (instructorSeleccionado != nullptr) {
+                ui->imprimir("\n--- Detalle de cliente ---\n");
+                ui->imprimir(instructorSeleccionado->toString());
+            }
+            else {
+                ui->imprimir("Error: No existe el instructor con esa cédula.");
+            }
+        }
+        else {
+            ui->imprimir("Error: Esta sucursal no tiene instructores para mostrar.\n");
+        }
+    }
+
+    ui->esperaEnter();
 }
 
 void Controlador::instructoresPorEspecialidad() {

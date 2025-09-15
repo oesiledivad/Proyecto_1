@@ -4,23 +4,29 @@
 #include "Cliente.h"
 #include "Instructor.h"
 
-Rutina::Rutina(){
+Rutina::Rutina(){ // sin parametros 
 
     this->cliente = nullptr;
 
     this->instructor = nullptr; 
 
-    for (int i = 0; i < cap_ejercicios; i++) {
-        ejercicios[i] = nullptr; 
-    }
+    this->ejercicios = nullptr;
 
+    this->cant_ejercicios = 0; 
+
+    this->cap_ejercicios = 0; 
+   
 }
 
-Rutina::Rutina(Cliente* c, Instructor* i){
+Rutina::Rutina(Cliente* c, Instructor* i, int capacidad){ // con parametros 
 
     this->cliente = c; 
 
     this->instructor = i; 
+
+    this->cant_ejercicios = 0;
+
+    this->cap_ejercicios = capacidad; 
 
     ejercicios = new Ejercicio * [cap_ejercicios]; 
 
@@ -31,11 +37,22 @@ Rutina::Rutina(Cliente* c, Instructor* i){
 
 Rutina::~Rutina(){
     
-    for (int i = 0; i < cap_ejercicios; i++) {
-        delete ejercicios[i];
+    if (ejercicios != nullptr) {
+        for (int i = 0; i < cap_ejercicios; i++) {
+            delete ejercicios[i];
+        }
     }
     delete[]ejercicios; 
 }
+
+int Rutina::getCantidadEjercicios() {
+    return cant_ejercicios; 
+}
+
+int Rutina::getCapacidadEjercicios() {
+    return cap_ejercicios; 
+}
+
 
 bool Rutina::agregarEjercicio( Ejercicio * e1) {
   
@@ -51,6 +68,13 @@ bool Rutina::agregarEjercicio( Ejercicio * e1) {
     return false;
 }
 
+Cliente* Rutina::getCliente() {
+    return cliente; 
+}
+
+Instructor* Rutina :: getInstructor() {
+    return instructor; 
+}
 
 string Rutina::listarRutina() {
 
@@ -92,9 +116,7 @@ string Rutina::toString() {
 
 
     return s.str(); 
-
-
-
 }
+
 
        

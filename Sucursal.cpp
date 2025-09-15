@@ -169,7 +169,7 @@ string Sucursal::listarInstructores() {
 		s << "=== LISTADO DE INSTRUCTORES ===\n";
 		for (int i = 0; i < cantidad_instructores; i++) {
 			if (instructores[i] != nullptr) {
-				s << (i + 1) << "- Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
+				s << "Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
 			}
 		}
 	}
