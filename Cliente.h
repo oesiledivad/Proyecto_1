@@ -26,7 +26,7 @@ private:
     Medicion* historial_mediciones[MAX_MEDICIONES];
     Rutina* rutina_asignada;
     Instructor* instructor_asignado;
-    Sucursal* sucursal;
+    Sucursal* sucursal_asignada;
     ClaseGrupal* clases_inscritas[MAX_CLASES_INSCRITAS];
 
     int cantidad_clases_inscritas;
@@ -60,6 +60,7 @@ public:
 
     Rutina* getRutinaAsignada();
     Instructor* getInstructorAsignado();
+    Sucursal* getSucursalAsignada();
 
     string mostrarClasesInscritas();
     bool puedeInscribirse();

@@ -264,7 +264,7 @@ string validarEspecialidad(int codigo) {
 		especialidad = "Zumba";
 		break;
 	default:
-		especialidad = "";
+		especialidad = "Sin Definir";
 	}
 	return especialidad;
 }

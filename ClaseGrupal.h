@@ -5,6 +5,7 @@ using namespace std;
 
 class Instructor;
 class Cliente;
+class Sucursal;
 
 class ClaseGrupal {
 private:
@@ -13,12 +14,13 @@ private:
 	string horario;
 	Instructor* ins1;
 	Cliente** clientes_inscritos;
+	Sucursal* sucursal_asignada;
 	int capacidad_maxima;
 	int cantidad_matriculados;
 
 public:
 
-	ClaseGrupal(string, string, string, Instructor*, int);
+	ClaseGrupal(string, string, string, Instructor*,Sucursal*, int);
 	~ClaseGrupal();
 
 	string getCodigo();

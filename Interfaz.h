@@ -43,6 +43,7 @@ public:
     string pedirDescripcionEjercicio();
 
     string mostrarEspecialidades();
+    void mostrarTitulo(const string& titulo);
 };
 
 #endif

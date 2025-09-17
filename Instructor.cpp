@@ -1,23 +1,8 @@
-﻿#include "Utiles.h"
-#include "Instructor.h"
+﻿#include "Instructor.h"
+#include "Cliente.h"
 #include "Sucursal.h"
-
-// ===== Funci�n auxiliar =====
-string nombreEspecialidad(int codigo) {
-    switch (codigo) {
-    case 1: CROSSFIT: return "CrossFit";
-        break;
-    case 2: HIIT: return "HIIT";
-    case 3: TRX: return "TRX";
-    case 4: PESAS: return "Pesas";
-    case 5: SPINNING: return "Spinning";
-    case 6: CARDIO: return "Cardio";
-    case 7: YOGA: return "Yoga";
-    case 8: ZUMBA: return "Zumba";
-    default: return "Desconocido";
-    }
-}
-
+#include "Utiles.h"
+#include "Rutina.h"
 // ===== Constructores =====
 Instructor::Instructor() {
     numeroCed = "";
@@ -28,25 +13,94 @@ Instructor::Instructor() {
     capacidad = 8; // capacidad inicial para especialidades
     numEspecialidades = 0;
     especialidades = new int[capacidad];
+    sucursal_asignada = nullptr;
+    cantidad_clientes_asignados = 0;
+    capacidad_clientes_asignados = MAX_CLIENTES_ASIGNADOS;
+    clientes_asignados = new Cliente * [capacidad_clientes_asignados];
+
+    for (int i = 0; i < capacidad_clientes_asignados; i++) {
+        clientes_asignados[i] = nullptr;
+    }
 }
 
-Instructor::Instructor(string ced, string nom, string tel, string cor, string fecha, int cap) {
+Instructor::Instructor(string ced, string nom, string tel, string cor, string fecha, int cap_esp, Sucursal* suc) {
     numeroCed = ced;
     nombre = nom;
     telefono = tel;
     correo = cor;
     fecha_Nacimiento = fecha;
-    capacidad = cap;
+    capacidad = cap_esp;
     numEspecialidades = 0;
     especialidades = new int[capacidad];
+    sucursal_asignada = suc;
+
+    cantidad_clientes_asignados = 0;
+    capacidad_clientes_asignados = MAX_CLIENTES_ASIGNADOS;
+    clientes_asignados = new Cliente * [capacidad_clientes_asignados];
+
+    for (int i = 0; i < capacidad_clientes_asignados; i++) {
+        clientes_asignados[i] = nullptr;
+    }
 }
 
 // ===== Destructor =====
 Instructor::~Instructor() {
+    for (int i = 0; i < MAX_CLIENTES_ASIGNADOS; i++) {
+        if (clientes_asignados[i] != nullptr) {
+            delete clientes_asignados[i]->getRutinaAsignada(); // Instructor elimina la Rutina, no al Cliente 
+        }
+    }
+    delete[] clientes_asignados;
     delete[] especialidades;
+
+    sucursal_asignada = nullptr;
 }
 
-// ===== M�todos =====
+// ===== Métodos para Clientes =====
+bool Instructor::asignarCliente(Cliente* cliente) {
+    if (cantidad_clientes_asignados < capacidad_clientes_asignados) {
+        clientes_asignados[cantidad_clientes_asignados++] = cliente;
+        return true;
+    }
+    return false; // No hay espacio
+}
+
+bool Instructor::eliminarCliente(Cliente* cliente) {
+    for (int i = 0; i < cantidad_clientes_asignados; i++) {
+        if (clientes_asignados[i] == cliente) {
+            for (int j = i; j < cantidad_clientes_asignados - 1; j++) {
+                clientes_asignados[j] = clientes_asignados[j + 1];
+            }
+            clientes_asignados[cantidad_clientes_asignados - 1] = nullptr;
+            cantidad_clientes_asignados--;
+            return true;
+        }
+    }
+    return false;
+}
+
+string Instructor::listarClientesAsignados() {
+    stringstream s;
+    if (cantidad_clientes_asignados == 0) {
+        s << "No hay clientes asignados." << endl;
+    }
+    else {
+        for (int i = 0; i < cantidad_clientes_asignados; i++) {
+            if (clientes_asignados[i] != nullptr) {
+                s << clientes_asignados[i]->getCedula();
+                s << " - ";
+                s << clientes_asignados[i]->getNombre() << endl;
+            }
+        }
+    }
+    return s.str();
+}
+
+int Instructor::getCantidadClientesAsignados() {
+    return cantidad_clientes_asignados;
+}
+
+// ===== Métodos para especialidades =====
 bool Instructor::agregarEspecialidad(int codigo) {
     // Verificar si ya existe
     for (int i = 0; i < numEspecialidades; i++) {
@@ -73,9 +127,8 @@ bool Instructor::tieneEspecialidad(int codigo) {
 
 string Instructor::listarEspecialidades() {
     stringstream x;
-
     for (int i = 0; i < numEspecialidades; i++) {
-        x << "- " << nombreEspecialidad(especialidades[i]) << "\n";
+        x << "- " << validarEspecialidad(especialidades[i]) << "\n";
     }
     return x.str();
 }
@@ -91,10 +144,11 @@ int Instructor::getCapacidad() { return capacidad; }
 
 // ===== toString =====
 string Instructor::toString() {
-    stringstream ss;
-    ss << "Instructor: " << nombre << " (" << numeroCed << ")\n";
-    ss << "Tel: " << telefono << " | Correo: " << correo << "\n";
-    ss << "Fecha de nacimiento: " << fecha_Nacimiento << "\n";
-    ss << "Especialidades: " << listarEspecialidades();
-    return ss.str();
+    stringstream s;
+    s << "Instructor: " << nombre << " (" << numeroCed << ")\n";
+    s << "Tel: " << telefono << " | Correo: " << correo << "\n";
+    s << "Fecha de nacimiento: " << fecha_Nacimiento << "\n";
+    s << "Especialidades: \n" << listarEspecialidades();
+    s << "Sucursal: " << sucursal_asignada->getProvincia() << " - " << sucursal_asignada->getCanton() << endl;
+    return s.str();
 }

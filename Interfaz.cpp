@@ -125,7 +125,7 @@ bool Interfaz::pedirOpcionSN(const string& mensaje) {
 }
 
 void Interfaz::esperaEnter() {
-    imprimir("\n");
+    cout << endl;
     esperandoEnter();
 }
 
@@ -169,6 +169,11 @@ string Interfaz::mostrarEspecialidades() {
     s << "7. Yoga" << endl;
     s << "8. Zumba" << endl;
     return s.str();
+}
+
+void Interfaz::mostrarTitulo(const string& titulo) {
+    limpiarPantalla();
+    imprimir("=== " + titulo + " ===\n");
 }
 
 int Interfaz::pedirEspecialidad() {

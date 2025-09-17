@@ -2,9 +2,8 @@
 #include "Instructor.h"
 #include "Cliente.h"
 
-ClaseGrupal::ClaseGrupal(string codigo, string salon, string horario,Instructor * ins,int capacidad ): 
-codigo(codigo), salon(salon), horario(horario), ins1(ins), capacidad_maxima(capacidad), cantidad_matriculados(0) {
-
+ClaseGrupal::ClaseGrupal(string codigo, string salon, string horario,Instructor * ins,Sucursal* suc ,int capacidad ): 
+codigo(codigo), salon(salon), horario(horario), ins1(ins), sucursal_asignada(suc), capacidad_maxima(capacidad), cantidad_matriculados(0) {
 	clientes_inscritos = new Cliente * [capacidad_maxima]; 
 
 	for (int i = 0; i < capacidad_maxima; i++) {
@@ -33,31 +32,36 @@ Instructor* ClaseGrupal::getInstructor() { return nullptr; }
 
 Cliente** ClaseGrupal::getCliente() { return nullptr; } // Verificar metodo 
 
-bool ClaseGrupal::inscribirCliente(Cliente* c1) {
-	bool resultado = true;
+bool ClaseGrupal::inscribirCliente(Cliente* cliente) {
+	bool exitoso = true;
 
-	if (cantidad_matriculados >= capacidad_maxima) {
-		resultado = false;
+	if (cliente->getSucursalAsignada() != this->sucursal_asignada) {
+		exitoso = false;
 	}
 
-	for (int i = 0; i < cantidad_matriculados && resultado; i++) {
-		if (clientes_inscritos[i] != nullptr && clientes_inscritos[i]->getCedula() == c1->getCedula()) {
-			resultado = false;
+	if (exitoso && cantidad_matriculados >= capacidad_maxima) {
+		exitoso = false;
+	}
+
+	if (exitoso) {
+		for (int i = 0; i < cantidad_matriculados && exitoso; i++) {
+			if (clientes_inscritos[i] == cliente) {
+				exitoso = false;
+			}
 		}
 	}
 
-	if (resultado && !c1->puedeInscribirse()) {
-		resultado = false;
+	if (exitoso && !cliente->puedeInscribirse()) {
+		exitoso = false;
 	}
 
-	if (resultado) {
-		clientes_inscritos[cantidad_matriculados++] = c1;
-		c1->agregarClaseInscrita(this);
+	if (exitoso) {
+		clientes_inscritos[cantidad_matriculados++] = cliente;
+		cliente->agregarClaseInscrita(this);
 	}
 
-	return resultado;
+	return exitoso;
 }
-
 
 bool ClaseGrupal::retirarCliente(Cliente* c1) {
 
@@ -81,7 +85,7 @@ string ClaseGrupal::listarClientes() {
 	stringstream x;
 
 	for (int i = 0; i < cantidad_matriculados; i++) {
-		x << i+1 << "- "<< clientes_inscritos[i]->getCedula() << " " << clientes_inscritos[i]->getNombre() << "\n" << endl;
+		x << i+1 << "- "<< clientes_inscritos[i]->getCedula() << " " << clientes_inscritos[i]->getNombre() << endl;
 	}
 	return x.str(); 
 }
@@ -98,11 +102,11 @@ string ClaseGrupal::toString() {
 	s << "| Cupos: " << (capacidad_maxima - cantidad_matriculados) << "/" << capacidad_maxima << "\n";
 
 	if (ins1 != nullptr) {
-		s << "Instructor: " << ins1->toString() << endl;
+		s << "| Instructor: " << ins1->getNombre() << endl;
 	}
 
 	if (cantidad_matriculados > 0) {
-		s << "Clientes inscritos:\n " << listarClientes(); 
+		s << "Clientes inscritos:\n" << listarClientes(); 
 	}
 	else {
 		s << "Sin clientes inscritos actualmente \n"; 

@@ -3,6 +3,7 @@
 #include "ClaseGrupal.h"
 #include "Instructor.h"
 #include "Cliente.h"
+#include "Medicion.h"
 
 //Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono ("") {
 //}
@@ -144,22 +145,24 @@ ClaseGrupal* Sucursal::buscarClaseGrupalPorPosicion(int pos) {
 	return nullptr;
 }
 
-void Sucursal::mostrarInstructoresPorEspecialidad(int especialidad) {
+string Sucursal::mostrarInstructoresPorEspecialidad(int especialidad) {
+	stringstream s;
 	bool encontrado = false;
-
-	cout << "\n--- Instructores con la especialidad: "
-		<< nombreEspecialidad(especialidad) << " ---\n";
+	s << "\n--- Instructores con la especialidad: "
+		<< validarEspecialidad(especialidad) << " ---\n";
 
 	for (int i = 0; i < cantidad_instructores; i++) {
 		if (instructores[i] != nullptr && instructores[i]->tieneEspecialidad(especialidad)) {
-			cout << "Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
+			s << "Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
 			encontrado = true;
 		}
 	}
 
 	if (!encontrado) {
-		cout << "No existen instructores con esta especialidad en la sucursal.\n";
+		s << "No existen instructores con esta especialidad en la sucursal.\n";
 	}
+
+	return s.str();
 }
 
 
@@ -209,6 +212,70 @@ string Sucursal::listarClasesGrupales() {
 		}
 	}
 	return s.str();
+}
+
+string Sucursal::generarReporteIMC() {
+	stringstream reporte;
+	reporte << "REPORTE DE IMC – SUCURSAL " << provincia << " – " << canton << "\n\n";
+
+	stringstream* categoriasSS = new stringstream[8];
+	int* contadores = new int[8];
+	for (int i = 0; i < 8; i++) {
+		contadores[i] = 0;
+	}
+
+	string* nombresCategorias = new string[8]{
+		"Delgadez severa (<16.00):",
+		"Delgadez moderada (16.00 - 16.99):",
+		"Delgadez leve (17.00 - 18.49):",
+		"Normal (18.50 - 24.99):",
+		"Pre-obesidad (25.00 - 29.99):",
+		"Obesidad leve (30.00 - 34.99):",
+		"Obesidad media (35.00 - 39.99):",
+		"Obesidad mórbida (>=40.00):"
+	};
+
+	for (int i = 0; i < cantidad_clientes; ++i) {
+		Cliente* cliente = clientes[i];
+		Medicion* ultimaMedicion = cliente->getUltimaMedicion();
+
+		if (ultimaMedicion) {
+			double imc = ultimaMedicion->getIMC();
+
+			int categoria = -1;
+			if (imc < 16.00) categoria = 0;
+			else if (imc < 17.00) categoria = 1;
+			else if (imc < 18.50) categoria = 2;
+			else if (imc < 25.00) categoria = 3;
+			else if (imc < 30.00) categoria = 4;
+			else if (imc < 35.00) categoria = 5;
+			else if (imc < 40.00) categoria = 6;
+			else categoria = 7;
+
+			categoriasSS[categoria] << "   - " << cliente->getCedula() << "  "
+				<< cliente->getNombre() << "  IMC: "
+				<< fixed << setprecision(1) << imc << "\n";
+			contadores[categoria]++;
+		}
+	}
+
+	for (int i = 0; i < 8; i++) {
+		reporte << nombresCategorias[i] << "\n";
+		if (contadores[i] > 0) {
+			reporte << "  (Cantidad " << contadores[i] << ")\n";
+			reporte << categoriasSS[i].str();
+		}
+		else {
+			reporte << "   Ninguno\n";
+		}
+		reporte << "\n";
+	}
+
+	delete[] categoriasSS;
+	delete[] contadores;
+	delete[] nombresCategorias;
+
+	return reporte.str();
 }
 
 string Sucursal::getCodigo() {

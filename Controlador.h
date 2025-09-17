@@ -3,6 +3,9 @@
 
 class Interfaz;
 class Sistema;
+class Sucursal;
+class Cliente;
+class Instructor;
 
 class Controlador {
 private:
@@ -51,8 +54,12 @@ public:
     void matricularClienteEnClaseGrupal();
     void clasesMatriculadasPorCliente();
 
-    // Auxiliar
+    // Auxiliares
     void sinImplementar();
+    Sucursal* seleccionarSucursal();
+    Cliente* seleccionarCliente(Sucursal* sucursal);
+    Instructor* seleccionarInstructor(Sucursal* sucursal);
+    void rellenarDatosPrueba(); // Esta se elimina al final
 };
 
 #endif

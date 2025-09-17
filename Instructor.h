@@ -1,46 +1,48 @@
 ﻿#ifndef INSTRUCTOR_H
 #define INSTRUCTOR_H
-
 #include <string>
-using namespace std;
+using std::string;
 
-// Enumeraci�n de especialidades
-enum Especialidad {
-    CROSSFIT = 1,
-    HIIT,
-    TRX,
-    PESAS,
-    SPINNING,
-    CARDIO,
-    YOGA,
-    ZUMBA
-};
+class Cliente;
+class Sucursal;
+// Enumeración de especialidades
+const int MAX_CLIENTES_ASIGNADOS = 100;
 
 class Instructor {
 private:
-    // Datos b�sicos del instructor 
+    // Datos básicos del instructor 
     string numeroCed;
     string nombre;
     string telefono;
     string correo;
     string fecha_Nacimiento;
+    Sucursal* sucursal_asignada;
 
-    // Especialidades en forma de c�digos num�ricos
+    // Especialidades en forma de códigos numéricos
     int* especialidades;
     int numEspecialidades;
     int capacidad;
 
+    // Arreglo de punteros a Clientes
+    Cliente** clientes_asignados;
+    int cantidad_clientes_asignados;
+    int capacidad_clientes_asignados;
 public:
-    // Constructor sin par�metros
+    // Constructor sin parámetros
     Instructor();
 
-    // Constructor con par�metros b�sicos
-    Instructor(string ced, string nom, string tel, string cor, string fecha, int capacidad);
+    // Constructor con parámetros básicos
+    Instructor(string ced, string nom, string tel, string cor, string fecha, int capacidad_especialidades, Sucursal* suc);
 
     // Destructor
     ~Instructor();
 
-    // M�todos para especialidades
+    bool asignarCliente(Cliente* cliente);
+    bool eliminarCliente(Cliente* cliente);
+    string listarClientesAsignados();
+    int getCantidadClientesAsignados();
+
+    // Métodos para especialidades
     bool agregarEspecialidad(int codigo);
     bool tieneEspecialidad(int codigo);
     string listarEspecialidades();
@@ -57,8 +59,5 @@ public:
     // Utilidad
     string toString();
 };
-
-// Funci�n auxiliar global para traducir c�digo a texto
-string nombreEspecialidad(int codigo);
 
 #endif // INSTRUCTOR_H

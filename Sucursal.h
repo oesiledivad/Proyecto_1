@@ -53,11 +53,12 @@ public:
 	ClaseGrupal* buscarClaseGrupalPorCodigo(string codigo);
 	ClaseGrupal* buscarClaseGrupalPorPosicion(int pos);
 
-	void mostrarInstructoresPorEspecialidad(int especialidad);
+	string mostrarInstructoresPorEspecialidad(int especialidad);
 
 	string listarClientes();
 	string listarInstructores();
 	string listarClasesGrupales();
+	string generarReporteIMC();
 
 };
 

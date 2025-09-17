@@ -10,9 +10,7 @@ Cliente::Cliente(string ced, string nom, string tel, string corr, string fecha_n
     string fecha_i, Sucursal* suc) : cedula(ced), nombre(nom),
     telefono(tel), correo(corr), fecha_nacimiento(fecha_n),
     sexo(sex), fecha_inscripcion(fecha_i),rutina_asignada(nullptr), instructor_asignado(nullptr),
-    sucursal(suc), cantidad_clases_inscritas(0), cantidad_mediciones(0){
-
-    rutina_asignada = new Rutina(this, instructor_asignado); 
+    sucursal_asignada(suc), cantidad_clases_inscritas(0), cantidad_mediciones(0){
 
     for (int i = 0; i < MAX_MEDICIONES; i++) {
         historial_mediciones[i] = nullptr;
@@ -32,7 +30,7 @@ Cliente::~Cliente() {
 
     rutina_asignada = nullptr;
     instructor_asignado = nullptr;
-    sucursal = nullptr;
+    sucursal_asignada = nullptr;
 }
 
 bool Cliente::agregarMedicion(Medicion* medicion) {
@@ -78,8 +76,17 @@ Medicion* Cliente::getUltimaMedicion() {
     return nullptr;
 }
 
-void Cliente::asignarInstructor(Instructor* instructor) {
-    instructor_asignado = instructor;
+void Cliente::asignarInstructor(Instructor* nuevoInstructor) {
+
+    if (instructor_asignado != nullptr) {
+        instructor_asignado->eliminarCliente(this);
+    }
+
+    instructor_asignado = nuevoInstructor;
+
+    if (nuevoInstructor != nullptr) {
+        nuevoInstructor->asignarCliente(this);
+    }
 }
 
 void Cliente::asignarRutina(Rutina* rutina) {
@@ -117,6 +124,10 @@ Instructor* Cliente::getInstructorAsignado() {
     return instructor_asignado; 
 }
 
+Sucursal* Cliente::getSucursalAsignada() {
+    return sucursal_asignada;
+}
+
 string Cliente::mostrarClasesInscritas() {
     stringstream s;
     if (cantidad_clases_inscritas == 0) {
@@ -136,15 +147,25 @@ bool Cliente::puedeInscribirse() {
 }
 
 bool Cliente::agregarClaseInscrita(ClaseGrupal* clase) {
-    bool inscrito = false;
-    for (int i = 0; i < cantidad_clases_inscritas && !inscrito; i++) {
+    bool exito = true;
+
+    for (int i = 0; i < cantidad_clases_inscritas && exito; i++) {
         if (clases_inscritas[i] == clase) {
-            inscrito = true;
+            exito = false;
         }
     }
-    clases_inscritas[cantidad_clases_inscritas] = clase;
-    cantidad_clases_inscritas++;
-    return inscrito;
+
+    if (exito) {
+        if (cantidad_clases_inscritas < MAX_CLASES_INSCRITAS) {
+            clases_inscritas[cantidad_clases_inscritas] = clase;
+            cantidad_clases_inscritas++;
+        }
+        else {
+            exito = false;
+        }
+    }
+
+    return exito;
 }
 
 int Cliente::getCantidadClasesInscritas() {

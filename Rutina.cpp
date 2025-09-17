@@ -93,7 +93,7 @@ string Rutina::toString() {
     stringstream s;
 
     if (cliente != nullptr) {
-        s << "Rutina asignada a cliente: " << cliente->toString() << endl; 
+        s << "Rutina asignada a cliente: " << cliente->getNombre() << endl; 
     }
     else {
         s << "Rutina asignada a cliente: (sin cliente)" << endl; 
