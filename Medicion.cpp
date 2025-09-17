@@ -3,11 +3,11 @@
 #include "Cliente.h"
 #include "Instructor.h"
 
-Medicion::Medicion(string fecha, double peso, double estatura, double grasaCorp, double musculo, int metabolica, double cintura,
-    double cadera, double pecho, double muslo, double grasaVis, Cliente* c1, Instructor* ins1) :
+Medicion::Medicion(string fecha, float peso, float estatura, float grasaCorp, float musculo, int metabolica, float cintura,
+    float cadera, float pecho, float muslo, float grasaVis, Cliente* i) :
 
     fecha(fecha), peso(peso), estatura(estatura), grasaCorporal(grasaCorp), masaMuscular(musculo), edadMetabolica(metabolica),
-    cintura(cintura), cadera(cadera), pecho(pecho), muslo(muslo), grasaVisceral(grasaVis), cliente(c1), instructor(ins1)
+    cintura(cintura), cadera(cadera), pecho(pecho), muslo(muslo), grasaVisceral(grasaVis), cliente(i)
 {}
 
 string Medicion::getFecha()
@@ -15,22 +15,22 @@ string Medicion::getFecha()
     return string();
 }
 
-double Medicion::getPeso()
+float Medicion::getPeso()
 {
     return peso;
 }
 
-double Medicion::getEstatura()
+float Medicion::getEstatura()
 {
     return estatura;
 }
 
-double Medicion::getGrasaCorporal()
+float Medicion::getGrasaCorporal()
 {
     return grasaCorporal;
 }
 
-double Medicion::getMasaMuscular()
+float Medicion::getMasaMuscular()
 {
     return masaMuscular;
 }
@@ -40,27 +40,27 @@ int Medicion::getEdadMetabolica()
     return edadMetabolica;
 }
 
-double Medicion::getGrasaVisceral()
+float Medicion::getGrasaVisceral()
 {
     return grasaVisceral;
 }
 
-double Medicion::getCintura()
+float Medicion::getCintura()
 {
     return cintura;
 }
 
-double Medicion::getCadera()
+float Medicion::getCadera()
 {
     return 0.0;
 }
 
-double Medicion::getPecho()
+float Medicion::getPecho()
 {
     return pecho;
 }
 
-double Medicion::getMuslo()
+float Medicion::getMuslo()
 {
     return muslo;
 }
@@ -75,7 +75,7 @@ Instructor* Medicion::getInstructor()
     return nullptr;
 }
 
-double Medicion::calcularIMC() {
+float Medicion::calcularIMC() {
 
     return peso / (estatura * estatura); 
 }
@@ -125,7 +125,7 @@ string Medicion::clasificacionPaciente() {
     return "El paciente no es de alto riesgo"; 
 }
 
-double Medicion::calcularProteina(char sexo, bool haceEjercicio) {
+float Medicion::calcularProteina(char sexo, bool haceEjercicio) {
 
     if ((sexo == 'M' || sexo == 'm') && !haceEjercicio) {
         return peso * 0.8;
@@ -144,7 +144,7 @@ double Medicion::calcularProteina(char sexo, bool haceEjercicio) {
     }
 }
 
-double Medicion::calcularAgua() {
+float Medicion::calcularAgua() {
     return (peso / 7); 
 }
 
@@ -152,12 +152,12 @@ string Medicion::reporteMedicion() {
 
     stringstream x;
 
-    if (cliente != nullptr) {
-        x << "Datos del cliente: " << cliente->toString() << endl;
-    }
-    if (instructor != nullptr) {
-        x << "Datos del instructor: " << instructor->toString() << endl;
-    }
+    //if (cliente != nullptr) {
+      //  x << "Datos del cliente: " << cliente->toString() << endl;
+    //}
+   // if (instructor != nullptr) {
+        //x << "Datos del instructor: " << instructor->toString() << endl;
+    //}
     x << "Fecha de la medicion: " << fecha << endl;
 
     x << "Peso: " << peso << endl;
@@ -192,4 +192,46 @@ string Medicion::reporteMedicion() {
 
     return x.str();
 
+}
+
+string Medicion::reporteMedicionResumen(){
+
+    stringstream x;
+
+    x << fecha << "|" << peso << "|" << getIMC(); 
+
+    return x.str(); 
+}
+
+string Medicion::datosBasicosMedicion()
+{
+    stringstream x;
+
+    x << "Fecha de la medicion: " << fecha << endl;
+
+    x << "Peso: " << peso << endl;
+
+    x << "Estatura: " << estatura << endl;
+
+    x << "Grasa corporal: " << grasaCorporal << endl;
+
+    x << "Masa muscular: " << masaMuscular << endl;
+
+    x << "IMC: " << calcularIMC() << endl;
+
+    x << "Cantidad de vasos de agua recomendados: " << calcularAgua() << endl;
+
+    x << "Ingesta calorica recomendada: " << calcularProteina(cliente->getSexo(), cliente->getHaceEjercicio()) << endl;
+
+    x << "Riesgo del paciente segun su IMC: " << clasificacionPaciente() << endl;
+
+    x << "Clasificacion del paciente segun su IMC: " << clasificacionIMC() << endl;
+
+
+    return x.str(); 
+}
+
+float Medicion::getIMC()
+{
+    return calcularIMC(); 
 }

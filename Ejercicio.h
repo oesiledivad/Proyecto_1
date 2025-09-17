@@ -4,18 +4,26 @@
 
 class Ejercicio {
 private:
-	string tipo;
+	string nombre;
+	int series;
+	int repeticiones;
+	int zona; // 1, 2, 3, 4, 5 
 public:
+	Ejercicio(string nom, int, int, int);
 
-	Ejercicio(); 
+	Ejercicio(string nom);
 
-	Ejercicio(string nombreEjercicio);
+	~Ejercicio();
 
-	~Ejercicio(); // sin utilidad
-
-	string getTipo();
+	string getNombre();
 
 	string toString();
+
+	int getSeries();
+
+	int getRepeticiones();
+
+	int getZona(); 
 
 };
 

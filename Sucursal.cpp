@@ -144,6 +144,25 @@ ClaseGrupal* Sucursal::buscarClaseGrupalPorPosicion(int pos) {
 	return nullptr;
 }
 
+void Sucursal::mostrarInstructoresPorEspecialidad(int especialidad) {
+	bool encontrado = false;
+
+	cout << "\n--- Instructores con la especialidad: "
+		<< nombreEspecialidad(especialidad) << " ---\n";
+
+	for (int i = 0; i < cantidad_instructores; i++) {
+		if (instructores[i] != nullptr && instructores[i]->tieneEspecialidad(especialidad)) {
+			cout << "Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
+			encontrado = true;
+		}
+	}
+
+	if (!encontrado) {
+		cout << "No existen instructores con esta especialidad en la sucursal.\n";
+	}
+}
+
+
 string Sucursal::listarClientes() {
 	stringstream s;
 	if (cantidad_clientes == 0) {
@@ -189,26 +208,6 @@ string Sucursal::listarClasesGrupales() {
 			}
 		}
 	}
-	return s.str();
-}
-
-string Sucursal::mostrarInstructoresPorEspecialidad(int especialidad) {
-	stringstream s;
-	string especialidadValidada = validarEspecialidad(especialidad);
-	bool encontrado = false;
-	s << "\nInstructores con la especialidad " + especialidadValidada << endl;
-	
-	for (int i = 0; i < cantidad_instructores && !encontrado; i++) {
-		if (instructores[i] != nullptr && instructores[i]->tieneEspecialidad(especialidad)) {
-			s << instructores[i]->getNumeroCedula() << " " << instructores[i]->getNombre() << endl;
-			encontrado = true;
-		}
-	}
-	
-	if (!encontrado) {
-		s << "\nNo se encontraron instructores con esa especialidad" << endl;
-	}
-
 	return s.str();
 }
 

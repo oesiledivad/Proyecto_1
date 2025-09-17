@@ -178,7 +178,6 @@ int Interfaz::pedirEspecialidad() {
     return pedirEnteroRango("Digite la especialidad deseada: ", 0, 8);
 }
 
-
 int Interfaz::pedirZonaMuscular() { 
     cout << "Zonas musculares disponibles:" << endl;
     cout << "1. Pecho" << endl; 

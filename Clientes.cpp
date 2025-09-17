@@ -9,8 +9,10 @@
 Cliente::Cliente(string ced, string nom, string tel, string corr, string fecha_n, char sex,
     string fecha_i, Sucursal* suc) : cedula(ced), nombre(nom),
     telefono(tel), correo(corr), fecha_nacimiento(fecha_n),
-    sexo(sex), fecha_inscripcion(fecha_i), rutina_asignada(nullptr), instructor_asignado(nullptr),
-    sucursal(suc), cantidad_clases_inscritas(0), cantidad_mediciones(0) {
+    sexo(sex), fecha_inscripcion(fecha_i),rutina_asignada(nullptr), instructor_asignado(nullptr),
+    sucursal(suc), cantidad_clases_inscritas(0), cantidad_mediciones(0){
+
+    rutina_asignada = new Rutina(this, instructor_asignado); 
 
     for (int i = 0; i < MAX_MEDICIONES; i++) {
         historial_mediciones[i] = nullptr;
@@ -41,9 +43,33 @@ bool Cliente::agregarMedicion(Medicion* medicion) {
     return false;
 }
 
-void Cliente::mostrarHistorialMediciones() {
-    //TODO
+string Cliente::mostrarHistorialMediciones() {
+    stringstream x;
+
+    for (int i = 0; i < cantidad_mediciones; i++) {
+        x << (i+1) << "-" << historial_mediciones[i]->reporteMedicionResumen() << endl;
+    }
+    return x.str(); 
 }
+
+string Cliente::mostrarMedicionResumen(int num){
+    stringstream x;
+
+    if (num < 1 || num > cantidad_mediciones) {
+        x << "Error: numero de medicion invalido." << endl;
+        return x.str();
+    }
+
+    // Acceder directamente a la medicion correspondiente
+    Medicion* m = historial_mediciones[num - 1];
+
+
+    x << m->datosBasicosMedicion() << endl;
+    
+
+    return x.str();
+}
+
 
 Medicion* Cliente::getUltimaMedicion() {
     if (cantidad_mediciones > 0) {
