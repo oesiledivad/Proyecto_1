@@ -31,13 +31,6 @@ capacidad_clientes(MAX_CLIENTES), capacidad_instructores(MAX_INSTRUCTORES), capa
 }
 
 Sucursal::~Sucursal() {
-	for (int i = 0; i < cantidad_clientes; i++) {
-		if (clientes[i] != nullptr) {
-			delete clientes[i];
-		}
-	}
-	delete[] clientes;
-
 	for (int i = 0; i < cantidad_instructores; i++) {
 		if (instructores[i] != nullptr) {
 			delete instructores[i];
@@ -51,6 +44,13 @@ Sucursal::~Sucursal() {
 		}
 	}
 	delete[] clases_grupales;
+
+	for (int i = 0; i < cantidad_clientes; i++) {
+		if (clientes[i] != nullptr) {
+			delete clientes[i];
+		}
+	}
+	delete[] clientes;
 }
 
 bool Sucursal::agregarCliente(Cliente* cliente) {
