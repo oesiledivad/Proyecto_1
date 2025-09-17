@@ -22,7 +22,7 @@ public:
 
 	Rutina(); 
 
-	Rutina(Cliente*, Instructor*, int capacidad);
+	Rutina(Cliente*, Instructor*);
 
 	~Rutina();
 
@@ -36,7 +36,7 @@ public:
 
 	Instructor* getInstructor();
 
-	string listarRutina();
+	void listarRutina();
 
 	string toString();
 };

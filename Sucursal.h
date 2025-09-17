@@ -47,7 +47,6 @@ public:
 	bool agregarInstructor(Instructor* instructor);
 	bool agregarClaseGrupal(ClaseGrupal* clase);
 
-
 	Cliente* buscarClientePorCedula(string cedu);
 	Instructor* buscarInstructorPorCedula(string cedu);
 

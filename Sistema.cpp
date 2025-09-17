@@ -45,12 +45,21 @@ bool Sistema::agregarSucursal(Sucursal* sucursal) {
 	return false;
 }
 
-void Sistema::agregarEjercicio(Ejercicio* ejercicio) {
+bool Sistema::agregarEjercicio(Ejercicio* ejercicio) {
 	if (cantidad_ejercicios < capacidad_ejercicios) {
-		ejercicios[cantidad_ejercicios++] = ejercicio;
-	}
-}
+		// Verificar si ya existe
+		for (int i = 0; i < cantidad_ejercicios; i++) {
+			if (ejercicios[i]->getNombre() == ejercicio->getNombre()) {
+				return false; // ya existe, no agregar
+			}
+		}
 
+		// Si no existe, lo agregamos
+		ejercicios[cantidad_ejercicios++] = ejercicio;
+		return true;
+	}
+	return false; // no hay espacio
+}
 int Sistema::getCantidadSucursales() {
 	return cantidad_sucursales;
 }
@@ -95,7 +104,39 @@ string Sistema::listarSucursales() {
 	return s.str();
 }
 
-void Sistema::listarEjercicios() {
-	//TODO
+int Sistema::listarEjercicios(int zona) {
+	cout << "\nBATERÍA DE EJERCICIOS DISPONIBLES PARA ZONA: " << zonaMuscularNombre(zona) << endl;
+	cout << "===========================================\n";
+
+	int contador = 0;
+	for (int i = 0; i < cantidad_ejercicios; i++) {
+		if (ejercicios[i] != nullptr && ejercicios[i]->getZona() == zona) {
+			cout << ++contador << ". " << ejercicios[i]->getNombre() << endl;
+		}
+	}
+	return contador;
 }
 
+string Sistema::zonaMuscularNombre(int zona) {
+	switch (zona) {
+	case 1: return "Pecho";
+	case 2: return "Tríceps";
+	case 3: return "Bíceps";
+	case 4: return "Piernas";
+	case 5: return "Espalda";
+	default: return "Zona desconocida";
+	}
+}
+
+Ejercicio* Sistema::buscarEjercicioPorZona(int zona, int indiceUsuario) {
+	int contador = 0;
+	for (int i = 0; i < cantidad_ejercicios; i++) {
+		if (ejercicios[i] != nullptr && ejercicios[i]->getZona() == zona) {
+			contador++;
+			if (contador == indiceUsuario) {
+				return ejercicios[i];
+			}
+		}
+	}
+	return nullptr;
+}

@@ -25,8 +25,11 @@ public:
 	bool agregarSucursal(Sucursal*);
 	Sucursal* buscarSucursal(string codigo);
 	string listarSucursales();
-	void agregarEjercicio(Ejercicio*);
+	bool agregarEjercicio(Ejercicio*);
 	Ejercicio* buscarEjercicio(string nombre);
-	void listarEjercicios();
+	int listarEjercicios(int zona);
+	string zonaMuscularNombre(int zona); 
+
+	Ejercicio* buscarEjercicioPorZona(int zona, int indice);
 };
 #endif 

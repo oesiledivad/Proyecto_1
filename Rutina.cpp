@@ -18,7 +18,7 @@ Rutina::Rutina(){ // sin parametros
    
 }
 
-Rutina::Rutina(Cliente* c, Instructor* i, int capacidad){ // con parametros 
+Rutina::Rutina(Cliente* c, Instructor* i){ // con parametros 
 
     this->cliente = c; 
 
@@ -26,7 +26,7 @@ Rutina::Rutina(Cliente* c, Instructor* i, int capacidad){ // con parametros
 
     this->cant_ejercicios = 0;
 
-    this->cap_ejercicios = capacidad; 
+    this->cap_ejercicios = 100; 
 
     ejercicios = new Ejercicio * [cap_ejercicios]; 
 
@@ -58,7 +58,7 @@ bool Rutina::agregarEjercicio( Ejercicio * e1) {
   
     if (cant_ejercicios < cap_ejercicios) {
         for (int i = 0; i < cant_ejercicios; i++) {
-            if (ejercicios[i]->getTipo() == e1->getTipo()) {
+            if (ejercicios[i]->getNombre() == e1->getNombre()) {
                 return false; // encontro el mismo tipo de ejercicio
             }
         }
@@ -76,20 +76,15 @@ Instructor* Rutina :: getInstructor() {
     return instructor; 
 }
 
-string Rutina::listarRutina() {
+void Rutina::listarRutina() {
 
-    stringstream x;
+    cout << "\n==================================================================\n";
+    cout << "        RUTINA GENERADA \n";
+    cout << "==================================================================\n";
 
-    x << "Rutina actual del cliente: " << endl << endl;
-
-
-   for (int i = 0; i < cant_ejercicios; i++) {
-       x << ejercicios[i]->toString() << endl;
-    }
-
-
-     return x.str();
-
+    for (int i = 0; i < cant_ejercicios; i++) {
+        cout << ejercicios[i]->getNombre() << ", series: " << ejercicios[i]->getSeries() << ", repeticiones: " << ejercicios[i]->getRepeticiones() << endl;
+    };
 }
 
 
@@ -103,16 +98,18 @@ string Rutina::toString() {
     else {
         s << "Rutina asignada a cliente: (sin cliente)" << endl; 
     }
-    if (instructor != nullptr) {
-        s << "Rutina creada por el instructor: " << instructor->toString() << endl;
-    }
-    else {
-        s << "Rutina creada por el instructor: (sin instructor)" << endl;
-    }
+    //if (instructor != nullptr) {
+      //  s << "Rutina creada por el instructor: " << instructor->toString() << endl;
+   // }
+    //else { 
+     //   s << "Rutina creada por el instructor: (sin instructor)" << endl;
+    //}
+
+    // sin uso en la interfaz
 
     // reutilizo listarRutina
 
-    s << listarRutina() << endl; 
+    listarRutina(); 
 
 
     return s.str(); 

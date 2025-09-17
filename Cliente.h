@@ -38,7 +38,8 @@ public:
     ~Cliente();
 
     bool agregarMedicion(Medicion* medicion);
-    void mostrarHistorialMediciones();
+    string mostrarHistorialMediciones();
+    string mostrarMedicionResumen(int num);
     Medicion* getUltimaMedicion();
 
     void asignarInstructor(Instructor* instructor);

@@ -153,7 +153,7 @@ string Interfaz::pedirNombreCompleto() {
     return pedirTexto("Digite nombre completo: ");
 }
 
-int Interfaz::pedirEspecialidad() { 
+int Interfaz::pedirEspecialidad() {
     cout << "\n=== LISTA DE ESPECIALIDADES ===" << endl;
     cout << "1. CrossFit" << endl;
     cout << "2. HIIT" << endl;
@@ -164,11 +164,7 @@ int Interfaz::pedirEspecialidad() {
     cout << "7. Yoga" << endl;
     cout << "8. Zumba" << endl;
     cout << "0. Terminar seleccion" << endl;
-    cout << "Seleccione una opcion: ";
-
-    int opcion;
-    cin >> opcion;
-    return opcion; // el usuario ingresa un número (0..8)
+    return pedirEnteroRango("Digite la especialidad deseada: ", 0, 8);
 }
 
 
