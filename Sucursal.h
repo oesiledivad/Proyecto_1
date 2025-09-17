@@ -59,7 +59,6 @@ public:
 	string listarInstructores();
 	string listarClasesGrupales();
 
-	string mostrarInstructoresPorEspecialidad(int especialidad);
 };
 
 #endif // !SUCURSAL_H

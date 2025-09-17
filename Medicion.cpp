@@ -128,7 +128,7 @@ string Medicion::clasificacionPaciente() {
 float Medicion::calcularProteina(char sexo, bool haceEjercicio) {
 
     if ((sexo == 'M' || sexo == 'm') && !haceEjercicio) {
-        return peso * 0.8;
+        return peso           * 0.8;
     }
     else if ((sexo == 'M' || sexo == 'm') && haceEjercicio) {
         return peso * 2.5;

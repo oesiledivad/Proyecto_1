@@ -643,7 +643,7 @@ void Controlador::generarMedicionACliente() {
     ui->imprimir("\nIngresar datos de la Medicion:\n");
 
 
-    string fecha = ui->pedirFecha();
+    string fecha = ui->pedirFecha("Fecha de medicion(DD / MM / AAAA");
     float peso = ui->pedirFlotante("\nDigite peso(kg)\n");
     float estatura = ui->pedirFlotante("\nDigite estatura(m)\n");
     float grasaCorporal = ui->pedirFlotante("\nDigite % de grasa\n");
@@ -915,7 +915,7 @@ void Controlador::crearClaseGrupal() {
     string salonClase = ui->pedirSalon();
     string horarioClase = ui->pedirHorario();;
     ui->imprimir("\nLista de instructores con la especialidad " + especialidadValidada + ":\n");
-    ui->imprimir(sucursalSeleccionada->mostrarInstructoresPorEspecialidad(codClase));
+    sucursalSeleccionada->mostrarInstructoresPorEspecialidad(codClase);
 
     string cedInstructor = ui->pedirCedula();
     Instructor* instructorAsignado = sucursalSeleccionada->buscarInstructorPorCedula(cedInstructor);
