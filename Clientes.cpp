@@ -12,6 +12,9 @@ Cliente::Cliente(string ced, string nom, string tel, string corr, string fecha_n
     sexo(sex), fecha_inscripcion(fecha_i),rutina_asignada(nullptr), instructor_asignado(nullptr),
     sucursal_asignada(suc), cantidad_clases_inscritas(0), cantidad_mediciones(0){
 
+    historial_mediciones = new Medicion * [MAX_MEDICIONES];
+    clases_inscritas = new ClaseGrupal * [MAX_CLASES_INSCRITAS];
+
     for (int i = 0; i < MAX_MEDICIONES; i++) {
         historial_mediciones[i] = nullptr;
     }
@@ -21,13 +24,8 @@ Cliente::Cliente(string ced, string nom, string tel, string corr, string fecha_n
 }
 
 Cliente::~Cliente() {
-    for (int i = 0; i < cantidad_mediciones; i++) {
-        if (historial_mediciones[i] != nullptr) {
-            delete historial_mediciones[i];
-            historial_mediciones[i] = nullptr;
-        }
-    }
-
+    delete[] historial_mediciones;
+    delete[] clases_inscritas;
     rutina_asignada = nullptr;
     instructor_asignado = nullptr;
     sucursal_asignada = nullptr;
@@ -74,6 +72,10 @@ Medicion* Cliente::getUltimaMedicion() {
         return historial_mediciones[cantidad_mediciones - 1];
     }
     return nullptr;
+}
+
+Medicion* Cliente::getMedicionPos(int pos) {
+    return historial_mediciones[pos];
 }
 
 void Cliente::asignarInstructor(Instructor* nuevoInstructor) {
@@ -176,10 +178,8 @@ bool Cliente::haceEjercicio() {
     return cantidad_mediciones > 0;
 }
 
-void Cliente::matriculado() {
-    if (cantidad_clases_inscritas < MAX_CLASES_INSCRITAS) {
-        cantidad_clases_inscritas++;
-    }
+int Cliente::getCantidadMediciones() {
+    return cantidad_mediciones;
 }
 
 string Cliente::toString() {

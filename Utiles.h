@@ -24,5 +24,6 @@ bool leerOpcionSN(const string& mensaje);
 
 
 string validarEspecialidad(int codigo);
+string validarZonaMuscular(int zona);
 
 #endif

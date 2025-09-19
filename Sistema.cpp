@@ -105,7 +105,7 @@ string Sistema::listarSucursales() {
 }
 
 int Sistema::listarEjercicios(int zona) {
-	cout << "\nBATERÍA DE EJERCICIOS DISPONIBLES PARA ZONA: " << zonaMuscularNombre(zona) << endl;
+	cout << "\nBATERÍA DE EJERCICIOS DISPONIBLES PARA ZONA: " << validarZonaMuscular(zona) << endl;
 	cout << "===========================================\n";
 
 	int contador = 0;
@@ -115,17 +115,6 @@ int Sistema::listarEjercicios(int zona) {
 		}
 	}
 	return contador;
-}
-
-string Sistema::zonaMuscularNombre(int zona) {
-	switch (zona) {
-	case 1: return "Pecho";
-	case 2: return "Tríceps";
-	case 3: return "Bíceps";
-	case 4: return "Piernas";
-	case 5: return "Espalda";
-	default: return "Zona desconocida";
-	}
 }
 
 Ejercicio* Sistema::buscarEjercicioPorZona(int zona, int indiceUsuario) {

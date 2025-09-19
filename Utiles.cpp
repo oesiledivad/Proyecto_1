@@ -268,3 +268,27 @@ string validarEspecialidad(int codigo) {
 	}
 	return especialidad;
 }
+
+string validarZonaMuscular(int zona) {
+	string resultado;
+	switch (zona) {
+	case 1:
+		resultado = "Pecho";
+		break;
+	case 2:
+		resultado = "Tríceps";
+		break;
+	case 3:
+		resultado = "Bíceps";
+		break;
+	case 4:
+		resultado = "Piernas";
+		break;
+	case 5:
+		resultado = "Espalda";
+		break;
+	default:
+		resultado = "Zona desconocida";
+	}
+	return resultado;
+}

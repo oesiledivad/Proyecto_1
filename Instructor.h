@@ -3,9 +3,12 @@
 #include <string>
 using std::string;
 
-class Cliente;
+
 class Sucursal;
-// Enumeración de especialidades
+class Cliente;
+class Medicion;
+class Rutina;
+
 const int MAX_CLIENTES_ASIGNADOS = 100;
 
 class Instructor {
@@ -55,6 +58,10 @@ public:
     string getFechaNacimiento();
     int getNumEspecialidades();
     int getCapacidad();
+
+    // Para los clientes
+    Medicion* generarMedicion(Cliente* cliente, const string& fecha, float peso, float estatura, float grasaCorporal, float masaMuscular, int edadMetabolica, float grasaVisceral, float cintura, float cadera, float pecho, float muslo);
+    Rutina* generarRutina(Cliente* cliente);
 
     // Utilidad
     string toString();

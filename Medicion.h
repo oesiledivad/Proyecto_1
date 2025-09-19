@@ -5,13 +5,11 @@ class Cliente;
 class Instructor;
 
 class Medicion {
-
-
 private:
 
-    Cliente* cliente;     // quien recibe la medición
+    Cliente* cliente_asignado;     // quien recibe la medición
 
-    Instructor* instructor;    // quien la realiza
+    Instructor* instructor_asignado;    // quien la realiza
 
     // Identificadores
     string fecha;              // fecha de la medición (ej. "2025-08-17")
@@ -32,11 +30,10 @@ private:
     float pecho;              // en cm
     float muslo;              // en cm
 
-
-
 public:
     // Constructor
-    Medicion(string, float, float, float, float, int, float, float, float, float, float, Cliente*);
+    Medicion(string, float, float, float, float, int, float, float, float, float, float, Cliente*, Instructor*);
+    ~Medicion();
 
     // Getters
     string getFecha();
@@ -62,7 +59,7 @@ public:
 
     string clasificacionPaciente();
 
-    float calcularProteina(char, bool);
+    float calcularProteina();
 
     float calcularAgua();
 

@@ -7,6 +7,7 @@
 #include "Medicion.h"
 #include "Rutina.h"
 #include "Ejercicio.h"
+
 Controlador::Controlador() {
     sistema = new Sistema();
     ui = new Interfaz();
@@ -269,11 +270,11 @@ void Controlador::rellenarDatosPrueba() {
 
     ui->imprimir("Clientes creados\n");
 
-    Medicion* med1 = new Medicion("01/02/2024", 65.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente1);
-    Medicion* med2 = new Medicion("15/02/2024", 50.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente2);
-    Medicion* med3 = new Medicion("20/02/2024", 80.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente3);
-    Medicion* med4 = new Medicion("01/03/2024", 70.0f, 1.80f, 0, 0, 0, 0, 0, 0, 0, 0, cliente4);
-    Medicion* med5 = new Medicion("20/03/2024", 140.0f, 1.70f, 0, 0, 0, 0, 0, 0, 0, 0, cliente6);
+    Medicion* med1 = new Medicion("01/02/2024", 65.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente1, instructor1);
+    Medicion* med2 = new Medicion("15/02/2024", 50.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente2, instructor2);
+    Medicion* med3 = new Medicion("20/02/2024", 80.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente3, instructor3);
+    Medicion* med4 = new Medicion("01/03/2024", 70.0f, 1.80f, 0, 0, 0, 0, 0, 0, 0, 0, cliente4, instructor4);
+    Medicion* med5 = new Medicion("20/03/2024", 140.0f, 1.70f, 0, 0, 0, 0, 0, 0, 0, 0, cliente6, instructor5);
 
     cliente1->agregarMedicion(med1);
     cliente2->agregarMedicion(med2);
@@ -801,23 +802,19 @@ void Controlador::generarMedicionACliente() {
         return;
     }
 
-
     Cliente* clienteSeleccionado = seleccionarCliente(sucursalSeleccionada);
     if (!clienteSeleccionado) {
-        ui->imprimir("\nERROR: No se encontró un cliente con esa cédula.\n");
+        ui->imprimir("No se encontró cliente.\n");
         ui->esperaEnter();
         return;
     }
 
-    if (!clienteSeleccionado->getInstructorAsignado()) {
-        ui->imprimir("\nERROR: el cliente no tiene un instructor asignado.\n");
-        ui->imprimir("No se puede generar una medición sin instructor.\n");
+    Instructor* instructorDelCliente = clienteSeleccionado->getInstructorAsignado();
+    if (!instructorDelCliente) {
+        ui->imprimir("ERROR: El cliente no tiene instructor asignado.\n");
         ui->esperaEnter();
         return;
     }
-
-    ui->imprimir("\n--- Generación de medición ---\n");
-    ui->imprimir("Ingrese los datos de la medición:\n");
 
     string fecha = ui->pedirFecha("Fecha de medición (DD/MM/AAAA): ");
     float peso = ui->pedirFlotante("Peso (kg): ");
@@ -831,16 +828,14 @@ void Controlador::generarMedicionACliente() {
     float pecho = ui->pedirFlotante("Circunferencia de pecho: ");
     float muslo = ui->pedirFlotante("Circunferencia de muslo: ");
 
-    Medicion* medicion = new Medicion(fecha, peso, estatura, grasaCorporal, masaMuscular, edadMetabolica, grasaVisceral, cintura, cadera, pecho, muslo, clienteSeleccionado);
+    Medicion* medicion = instructorDelCliente->generarMedicion(clienteSeleccionado, fecha, peso, estatura, grasaCorporal, masaMuscular, edadMetabolica, grasaVisceral, cintura, cadera, pecho, muslo);
 
-    ui->imprimir(medicion->datosBasicosMedicion());
-
-    if (clienteSeleccionado->agregarMedicion(medicion)) {
-        ui->imprimir("\nMedición agregada correctamente.\n");
+    if (medicion) {
+        ui->imprimir("\nMedición registrada correctamente:\n");
+        ui->imprimir(medicion->datosBasicosMedicion());
     }
     else {
-        ui->imprimir("\nERROR: la medición ya existe o la sucursal ha alcanzado su capacidad máxima.\n");
-        delete medicion;
+        ui->imprimir("\nERROR: no se pudo registrar la medición.\n");
     }
 
     ui->esperaEnter();
@@ -886,14 +881,10 @@ void Controlador::historialMediciones() {
 }
 
 void Controlador::ingresarEjercicioBateria() {
-    ui->mostrarTitulo("INGRESAR EJERCICIO A LA BATERÍA");
-
     bool continuar = true;
 
     while (continuar) {
-        ui->limpiarPantalla();
-        ui->imprimir("INGRESANDO EJERCICIO A LA BATERÍA\n");
-        ui->imprimir("=== NUEVO EJERCICIO ===\n");
+        ui->mostrarTitulo("INGRESAR EJERCICIO A LA BATERÍA");
 
         int zona = ui->pedirZonaMuscular();
         string nombreEjercicio = ui->pedirTexto("Digite el nombre del ejercicio: ");
@@ -905,7 +896,7 @@ void Controlador::ingresarEjercicioBateria() {
             ui->imprimir("Ejercicio agregado correctamente a la batería.\n");
         }
         else {
-            ui->imprimir("Error: El ejercicio ya existe o se alcanzó la capacidad máxima.\n");
+            ui->imprimir("\nERROR: El ejercicio ya existe o se alcanzó la capacidad máxima.\n");
             delete nuevoEjercicio;
         }
 
@@ -919,72 +910,66 @@ void Controlador::generarRutina() {
 
     Sucursal* sucursalSeleccionada = seleccionarSucursal();
     if (!sucursalSeleccionada) {
-        ui->esperaEnter();
-        return;
+        ui->esperaEnter(); 
+        return; 
     }
 
     if (sucursalSeleccionada->getCantidadClientes() == 0) {
-        ui->imprimir("\nERROR: esta sucursal no tiene clientes.");
+        ui->imprimir("\nERROR: Esta sucursal no tiene clientes registrados.\n");
         ui->esperaEnter();
         return;
     }
 
     Cliente* clienteSeleccionado = seleccionarCliente(sucursalSeleccionada);
-    if (!clienteSeleccionado) {
-        ui->imprimir("\nERROR: no se encontró al cliente.\n");
+    if (!clienteSeleccionado) { 
+        ui->imprimir("\nERROR: No se encontró cliente.\n"); 
+        ui->esperaEnter(); 
+        return; 
+    }
+
+    Instructor* instructorDelCliente = clienteSeleccionado->getInstructorAsignado();
+    if (!instructorDelCliente) {
+        ui->imprimir("\nERROR: El cliente no tiene instructor asignado.\n");
         ui->esperaEnter();
         return;
     }
 
-    Instructor* instructor = clienteSeleccionado->getInstructorAsignado();
-    if (!instructor) {
-        ui->imprimir("\nERROR: El cliente no tiene un instructor asignado.\n");
-        ui->imprimir("No se puede generar una rutina sin instructor.\n");
-        ui->esperaEnter();
-        return;
-    }
-
-    ui->imprimir("\nCliente encontrado: " + clienteSeleccionado->getNombre());
-    ui->imprimir("\nInstructor asignado: " + instructor->getNombre() + "\n");
+    Rutina* rutina = instructorDelCliente->generarRutina(clienteSeleccionado);
 
     bool continuar = true;
-    while (continuar) {
-        int zona = ui->pedirZonaMuscular();
 
+    while (continuar) {
+        limpiaPantalla();
+        ui->mostrarTitulo("GENERANDO RUTINA");
+        int zona = ui->pedirZonaMuscular();
         int total = sistema->listarEjercicios(zona);
         if (total == 0) {
-            ui->imprimir("\nNo hay ejercicios en esta zona.\n");
+            ui->imprimir("No hay ejercicios en esta zona.\n");
             break;
         }
 
-        int elegido = ui->pedirEntero("\nDigite el número del ejercicio: ");
-        int series = ui->pedirEntero("Digite las series: ");
-        int repeticiones = ui->pedirEntero("Digite las repeticiones: ");
+        int elegido = ui->pedirEntero("Número del ejercicio: ");
+        int series = ui->pedirEntero("Series: ");
+        int repeticiones = ui->pedirEntero("Repeticiones: ");
 
         Ejercicio* base = sistema->buscarEjercicioPorZona(zona, elegido);
-        if (!base) {
-            ui->imprimir("\nError: No se encontró el ejercicio indicado\n");
-            continue;
+        if (!base) { 
+            ui->imprimir("Ejercicio no encontrado.\n"); 
+            continue; 
         }
 
         Ejercicio* nuevo = new Ejercicio(base->getNombre(), base->getZona(), series, repeticiones);
-
-        Rutina* rutina = clienteSeleccionado->getRutinaAsignada();
-        if (!rutina) {
-            rutina = new Rutina(clienteSeleccionado, instructor);
-            clienteSeleccionado->asignarRutina(rutina);
-        }
-
         if (rutina->agregarEjercicio(nuevo)) {
-            ui->imprimir("\nEjercicio agregado a la rutina!!!\n");
+            ui->imprimir("Ejercicio agregado a la rutina.\n");
         }
         else {
-            ui->imprimir("\nError: No se pudo agregar el ejercicio a la rutina\n");
+            ui->imprimir("Error al agregar ejercicio.\n");
             delete nuevo;
         }
 
         continuar = ui->pedirOpcionSN("¿Desea agregar otro ejercicio? (S/N): ");
     }
+
     ui->esperaEnter();
 }
 

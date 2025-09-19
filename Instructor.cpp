@@ -3,6 +3,8 @@
 #include "Sucursal.h"
 #include "Utiles.h"
 #include "Rutina.h"
+#include "Medicion.h"
+
 // ===== Constructores =====
 Instructor::Instructor() {
     numeroCed = "";
@@ -46,13 +48,17 @@ Instructor::Instructor(string ced, string nom, string tel, string cor, string fe
 // ===== Destructor =====
 Instructor::~Instructor() {
     for (int i = 0; i < MAX_CLIENTES_ASIGNADOS; i++) {
+        // Elimina las Mediciones y las Rutinas, no al Cliente
         if (clientes_asignados[i] != nullptr) {
-            delete clientes_asignados[i]->getRutinaAsignada(); // Instructor elimina la Rutina, no al Cliente 
+            for (int j = 0; j < clientes_asignados[i]->getCantidadMediciones(); j++) {
+                delete clientes_asignados[i]->getMedicionPos(j);
+            }
+            delete clientes_asignados[i]->getRutinaAsignada();
         }
     }
+
     delete[] clientes_asignados;
     delete[] especialidades;
-
     sucursal_asignada = nullptr;
 }
 
@@ -141,6 +147,35 @@ string Instructor::getCorreo() { return correo; }
 string Instructor::getFechaNacimiento() { return fecha_Nacimiento; }
 int Instructor::getNumEspecialidades() { return numEspecialidades; }
 int Instructor::getCapacidad() { return capacidad; }
+
+
+Medicion* Instructor::generarMedicion(Cliente* cliente, const string& fecha, float peso, float estatura, float grasaCorporal, float masaMuscular, int edadMetabolica, float grasaVisceral, float cintura, float cadera, float pecho, float muslo) {
+    Medicion* resultado = nullptr;
+    if (cliente) {
+        Medicion* nueva = new Medicion(fecha, peso, estatura, grasaCorporal, masaMuscular, edadMetabolica, cintura, cadera, pecho, muslo,grasaVisceral, cliente, this);
+
+        if (cliente->agregarMedicion(nueva)) {
+            resultado = nueva;
+        }
+        else {
+            delete nueva;
+            resultado = nullptr;
+        }
+    }
+    return resultado;
+}
+
+Rutina* Instructor::generarRutina(Cliente* cliente) {
+    Rutina* resultado = nullptr;
+    if (cliente) {
+        if (!cliente->getRutinaAsignada()) {
+            Rutina* nueva = new Rutina(cliente, this);
+            cliente->asignarRutina(nueva);
+        }
+        resultado = cliente->getRutinaAsignada();
+    }
+    return resultado;
+}
 
 // ===== toString =====
 string Instructor::toString() {

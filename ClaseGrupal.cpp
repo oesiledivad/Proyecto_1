@@ -13,7 +13,9 @@ codigo(codigo), salon(salon), horario(horario), ins1(ins), sucursal_asignada(suc
 }
 
 ClaseGrupal::~ClaseGrupal() {
-	delete[] clientes_inscritos; 
+	delete[] clientes_inscritos;
+	ins1 = nullptr;
+	sucursal_asignada = nullptr;
 }
 
 string ClaseGrupal::getCodigo() { return codigo; }

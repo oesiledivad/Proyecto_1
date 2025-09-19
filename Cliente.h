@@ -23,11 +23,11 @@ private:
     char sexo;
     string fecha_inscripcion;
 
-    Medicion* historial_mediciones[MAX_MEDICIONES];
+    Medicion** historial_mediciones;
     Rutina* rutina_asignada;
     Instructor* instructor_asignado;
     Sucursal* sucursal_asignada;
-    ClaseGrupal* clases_inscritas[MAX_CLASES_INSCRITAS];
+    ClaseGrupal** clases_inscritas;
 
     int cantidad_clases_inscritas;
     int cantidad_mediciones;
@@ -41,10 +41,10 @@ public:
     string mostrarHistorialMediciones();
     string mostrarMedicionResumen(int num);
     Medicion* getUltimaMedicion();
+    Medicion* getMedicionPos(int pos);
 
     void asignarInstructor(Instructor* instructor);
     void asignarRutina(Rutina* rutina);
-
 
     string toString();
     string getCedula();
@@ -56,7 +56,7 @@ public:
     string getFecha_inscripcion();
     bool getHaceEjercicio();
     int getCantidadClasesInscritas();
-    void matriculado();
+    int getCantidadMediciones();
 
     Rutina* getRutinaAsignada();
     Instructor* getInstructorAsignado();

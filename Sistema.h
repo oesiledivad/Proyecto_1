@@ -28,7 +28,6 @@ public:
 	bool agregarEjercicio(Ejercicio*);
 	Ejercicio* buscarEjercicio(string nombre);
 	int listarEjercicios(int zona);
-	string zonaMuscularNombre(int zona); 
 
 	Ejercicio* buscarEjercicioPorZona(int zona, int indice);
 };
