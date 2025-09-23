@@ -38,19 +38,19 @@ Sucursal::~Sucursal() {
 	}
 	delete[] instructores;
 
-	for (int i = 0; i < cantidad_clases; i++) {
-		if (clases_grupales[i] != nullptr) {
-			delete clases_grupales[i];
-		}
-	}
-	delete[] clases_grupales;
-
 	for (int i = 0; i < cantidad_clientes; i++) {
 		if (clientes[i] != nullptr) {
 			delete clientes[i];
 		}
 	}
 	delete[] clientes;
+
+	for (int i = 0; i < cantidad_clases; i++) {
+		if (clases_grupales[i] != nullptr) {
+			delete clases_grupales[i];
+		}
+	}
+	delete[] clases_grupales;
 }
 
 bool Sucursal::agregarCliente(Cliente* cliente) {

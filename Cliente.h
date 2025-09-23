@@ -10,8 +10,8 @@ class Sucursal;
 
 using std::string;
 
-const int MAX_MEDICIONES = 10;
-const int MAX_CLASES_INSCRITAS = 3;
+static const int MAX_MEDICIONES = 10;
+static const int MAX_CLASES_INSCRITAS = 3;
 
 class Cliente {
 private:
@@ -61,6 +61,7 @@ public:
     Rutina* getRutinaAsignada();
     Instructor* getInstructorAsignado();
     Sucursal* getSucursalAsignada();
+    Medicion** getMedicionArr();
 
     string mostrarClasesInscritas();
     bool puedeInscribirse();

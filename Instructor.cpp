@@ -12,9 +12,9 @@ Instructor::Instructor() {
     telefono = "";
     correo = "";
     fecha_Nacimiento = "";
-    capacidad = 8; // capacidad inicial para especialidades
+    capacidad_especialidades = MAX_ESPECIALIDADES; // capacidad inicial para especialidades
     numEspecialidades = 0;
-    especialidades = new int[capacidad];
+    especialidades = new int*[capacidad_especialidades];
     sucursal_asignada = nullptr;
     cantidad_clientes_asignados = 0;
     capacidad_clientes_asignados = MAX_CLIENTES_ASIGNADOS;
@@ -23,17 +23,20 @@ Instructor::Instructor() {
     for (int i = 0; i < capacidad_clientes_asignados; i++) {
         clientes_asignados[i] = nullptr;
     }
+    for (int i = 0; i < capacidad_especialidades; i++) {
+        especialidades[i] = nullptr;
+    }
 }
 
-Instructor::Instructor(string ced, string nom, string tel, string cor, string fecha, int cap_esp, Sucursal* suc) {
+Instructor::Instructor(string ced, string nom, string tel, string cor, string fecha, Sucursal* suc) {
     numeroCed = ced;
     nombre = nom;
     telefono = tel;
     correo = cor;
     fecha_Nacimiento = fecha;
-    capacidad = cap_esp;
+    capacidad_especialidades = MAX_ESPECIALIDADES;
     numEspecialidades = 0;
-    especialidades = new int[capacidad];
+    especialidades = new int*[capacidad_especialidades];
     sucursal_asignada = suc;
 
     cantidad_clientes_asignados = 0;
@@ -43,17 +46,27 @@ Instructor::Instructor(string ced, string nom, string tel, string cor, string fe
     for (int i = 0; i < capacidad_clientes_asignados; i++) {
         clientes_asignados[i] = nullptr;
     }
+
+    for (int i = 0; i < capacidad_especialidades; i++) {
+        especialidades[i] = nullptr;
+    }
 }
 
 // ===== Destructor =====
 Instructor::~Instructor() {
-    for (int i = 0; i < MAX_CLIENTES_ASIGNADOS; i++) {
+    for (int i = 0; i < capacidad_clientes_asignados; i++) {
         // Elimina las Mediciones y las Rutinas, no al Cliente
         if (clientes_asignados[i] != nullptr) {
             for (int j = 0; j < clientes_asignados[i]->getCantidadMediciones(); j++) {
                 delete clientes_asignados[i]->getMedicionPos(j);
             }
             delete clientes_asignados[i]->getRutinaAsignada();
+        }
+    }
+
+    for (int i = 0; i < capacidad_especialidades; i++) {
+        if (especialidades[i] != nullptr) {
+            delete especialidades[i];
         }
     }
 
@@ -110,13 +123,13 @@ int Instructor::getCantidadClientesAsignados() {
 bool Instructor::agregarEspecialidad(int codigo) {
     // Verificar si ya existe
     for (int i = 0; i < numEspecialidades; i++) {
-        if (especialidades[i] == codigo) {
+        if (*especialidades[i] == codigo) {
             return false; // ya la tiene
         }
     }
     // Agregar si hay espacio
-    if (numEspecialidades < capacidad) {
-        especialidades[numEspecialidades++] = codigo;
+    if (numEspecialidades < capacidad_especialidades) {
+        especialidades[numEspecialidades++] = new int(codigo);
         return true;
     }
     return false; // no hay espacio
@@ -124,7 +137,7 @@ bool Instructor::agregarEspecialidad(int codigo) {
 
 bool Instructor::tieneEspecialidad(int codigo) {
     for (int i = 0; i < numEspecialidades; i++) {
-        if (especialidades[i] == codigo) {
+        if (*especialidades[i] == codigo) {
             return true;
         }
     }
@@ -134,7 +147,7 @@ bool Instructor::tieneEspecialidad(int codigo) {
 string Instructor::listarEspecialidades() {
     stringstream x;
     for (int i = 0; i < numEspecialidades; i++) {
-        x << "- " << validarEspecialidad(especialidades[i]) << "\n";
+        x << "- " << validarEspecialidad(*especialidades[i]) << "\n";
     }
     return x.str();
 }
@@ -146,7 +159,7 @@ string Instructor::getTelefono() { return telefono; }
 string Instructor::getCorreo() { return correo; }
 string Instructor::getFechaNacimiento() { return fecha_Nacimiento; }
 int Instructor::getNumEspecialidades() { return numEspecialidades; }
-int Instructor::getCapacidad() { return capacidad; }
+int Instructor::getCapacidad() { return capacidad_especialidades; }
 
 
 Medicion* Instructor::generarMedicion(Cliente* cliente, const string& fecha, float peso, float estatura, float grasaCorporal, float masaMuscular, int edadMetabolica, float grasaVisceral, float cintura, float cadera, float pecho, float muslo) {
@@ -168,11 +181,16 @@ Medicion* Instructor::generarMedicion(Cliente* cliente, const string& fecha, flo
 Rutina* Instructor::generarRutina(Cliente* cliente) {
     Rutina* resultado = nullptr;
     if (cliente) {
-        if (!cliente->getRutinaAsignada()) {
-            Rutina* nueva = new Rutina(cliente, this);
-            cliente->asignarRutina(nueva);
+        Rutina* rutinaAnterior = cliente->getRutinaAsignada();
+
+        if (rutinaAnterior) {
+            cliente->asignarRutina(nullptr);
+            delete rutinaAnterior;
         }
-        resultado = cliente->getRutinaAsignada();
+
+        Rutina* nueva = new Rutina(cliente, this);
+        cliente->asignarRutina(nueva);
+        resultado = nueva;
     }
     return resultado;
 }

@@ -9,7 +9,8 @@ class Cliente;
 class Medicion;
 class Rutina;
 
-const int MAX_CLIENTES_ASIGNADOS = 100;
+static const int MAX_CLIENTES_ASIGNADOS = 100;
+static const int MAX_ESPECIALIDADES = 8;
 
 class Instructor {
 private:
@@ -22,9 +23,9 @@ private:
     Sucursal* sucursal_asignada;
 
     // Especialidades en forma de códigos numéricos
-    int* especialidades;
+    int** especialidades;
     int numEspecialidades;
-    int capacidad;
+    int capacidad_especialidades;
 
     // Arreglo de punteros a Clientes
     Cliente** clientes_asignados;
@@ -35,7 +36,7 @@ public:
     Instructor();
 
     // Constructor con parámetros básicos
-    Instructor(string ced, string nom, string tel, string cor, string fecha, int capacidad_especialidades, Sucursal* suc);
+    Instructor(string ced, string nom, string tel, string cor, string fecha, Sucursal* suc);
 
     // Destructor
     ~Instructor();

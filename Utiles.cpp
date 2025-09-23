@@ -292,3 +292,11 @@ string validarZonaMuscular(int zona) {
 	}
 	return resultado;
 }
+
+int convertirFechaAEntero(const string& fecha) {
+	int dia = (fecha[0] - '0') * 10 + (fecha[1] - '0');
+	int mes = (fecha[3] - '0') * 10 + (fecha[4] - '0');
+	int anio = (fecha[6] - '0') * 1000 + (fecha[7] - '0') * 100 + (fecha[8] - '0') * 10 + (fecha[9] - '0');
+
+	return anio * 10000 + mes * 100 + dia;
+}

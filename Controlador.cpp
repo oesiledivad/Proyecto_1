@@ -44,7 +44,7 @@ void Controlador::ejecutar() {
             }
             else {
                 ui->limpiarPantalla();
-                ui->imprimir("Primero debe ingresar al menos una sucursal para acceder a este menu.\n");
+                ui->imprimir("\nERROR: Primero debe ingresar al menos una sucursal para acceder a este menu.\n");
                 ui->esperaEnter();
             }
             break;
@@ -201,27 +201,27 @@ void Controlador::rellenarDatosPrueba() {
 
     ui->imprimir("Sucursales creadas\n");
 
-    Instructor* instructor1 = new Instructor("101110111", "Juan Pérez", "8888-8888", "juan@powerlab.com", "15/05/1985", 8, sucursal1);
+    Instructor* instructor1 = new Instructor("101110111", "Juan Pérez", "8888-8888", "juan@powerlab.com", "15/05/1985", sucursal1);
     instructor1->agregarEspecialidad(1); // CrossFit
     instructor1->agregarEspecialidad(7); // Yoga
 
-    Instructor* instructor2 = new Instructor("202220222", "María López", "8777-7777", "maria@powerlab.com", "20/08/1990", 8, sucursal1);
+    Instructor* instructor2 = new Instructor("202220222", "María López", "8777-7777", "maria@powerlab.com", "20/08/1990", sucursal1);
     instructor2->agregarEspecialidad(2); // HIIT
     instructor2->agregarEspecialidad(8); // Zumba
 
-    Instructor* instructor3 = new Instructor("303330333", "Carlos Rojas", "8666-6666", "carlos@powerlab.com", "10/12/1988", 8, sucursal1);
+    Instructor* instructor3 = new Instructor("303330333", "Carlos Rojas", "8666-6666", "carlos@powerlab.com", "10/12/1988", sucursal1);
     instructor3->agregarEspecialidad(5); // Spinning
     instructor3->agregarEspecialidad(6); // Cardio
 
-    Instructor* instructor4 = new Instructor("404440444", "Lucía García", "8555-5555", "lucia@powerlab.com", "22/02/1982", 8, sucursal2);
+    Instructor* instructor4 = new Instructor("404440444", "Lucía García", "8555-5555", "lucia@powerlab.com", "22/02/1982", sucursal2);
     instructor4->agregarEspecialidad(3); // TRX
     instructor4->agregarEspecialidad(4); // Pesas
 
-    Instructor* instructor5 = new Instructor("505550555", "Roberto Martínez", "8444-4444", "roberto@powerlab.com", "03/07/1987", 8, sucursal2);
+    Instructor* instructor5 = new Instructor("505550555", "Roberto Martínez", "8444-4444", "roberto@powerlab.com", "03/07/1987", sucursal2);
     instructor5->agregarEspecialidad(1); // CrossFit
     instructor5->agregarEspecialidad(3); // TRX
 
-    Instructor* instructor6 = new Instructor("606660666", "Ana Torres", "8333-3333", "ana2@powerlab.com", "11/09/1992", 8, sucursal2);
+    Instructor* instructor6 = new Instructor("606660666", "Ana Torres", "8333-3333", "ana2@powerlab.com", "11/09/1992", sucursal2);
     instructor6->agregarEspecialidad(2); // HIIT
     instructor6->agregarEspecialidad(8); // Zumba
 
@@ -342,7 +342,7 @@ void Controlador::rellenarDatosPrueba() {
     // Cliente de SJ01 (cliente1) intenta matricularse en clase de HE01 (clase4)
     ui->imprimir("Intentando matricular a " + cliente1->getNombre() + " (San José) en la clase de Zumba (Heredia)...\n");
     if (clase4->inscribirCliente(cliente1)) {
-        ui->imprimir("Error: El cliente se matriculó en una sucursal diferente.\n");
+        ui->imprimir("\nERROR: El cliente se matriculó en una sucursal diferente.\n");
     }
     else {
         ui->imprimir("**Cliente " + cliente1->getNombre() + " NO pudo matricularse. (Correcto)\n");
@@ -351,7 +351,7 @@ void Controlador::rellenarDatosPrueba() {
     // Cliente de HE01 (cliente9_otraSucursal) intenta matricularse en clase de SJ01 (clase1)
     ui->imprimir("Intentando matricular a " + cliente9_otraSucursal->getNombre() + " (Heredia) en la clase de Yoga (San José)...\n");
     if (clase1->inscribirCliente(cliente9_otraSucursal)) {
-        ui->imprimir("Error: El cliente se matriculó en una sucursal diferente.\n");
+        ui->imprimir("\nERROR: El cliente se matriculó en una sucursal diferente.\n");
     }
     else {
         ui->imprimir("**Cliente " + cliente9_otraSucursal->getNombre() + " NO pudo matricularse. (Correcto)\n");
@@ -367,7 +367,7 @@ void Controlador::rellenarDatosPrueba() {
     // Intentando inscribir a un tercer cliente en la clase llena
     ui->imprimir("Intentando matricular al cliente " + cliente7->getNombre() + " en la clase llena...\n");
     if (clase_llena->inscribirCliente(cliente7)) {
-        ui->imprimir("Error: Cliente " + cliente7->getNombre() + " se matriculó en clase llena.\n");
+        ui->imprimir("\nERROR: Cliente " + cliente7->getNombre() + " se matriculó en clase llena.\n");
     }
     else {
         ui->imprimir("**" + cliente7->getNombre() + " NO pudo matricularse, la clase está llena. (Correcto)\n");
@@ -385,7 +385,7 @@ void Controlador::rellenarDatosPrueba() {
     // Intentando matricular al cliente en una cuarta clase
     ui->imprimir("Intentando matricular a " + cliente8->getNombre() + " en una cuarta clase...\n");
     if (clase4->inscribirCliente(cliente8)) {
-        ui->imprimir("Error: Cliente " + cliente8->getNombre() + " se matriculó en más de 3 clases.\n");
+        ui->imprimir("\nERROR: Cliente " + cliente8->getNombre() + " se matriculó en más de 3 clases.\n");
     }
     else {
         ui->imprimir("**" + cliente8->getNombre() + " NO pudo matricularse, ya alcanzó el límite de 3 clases. (Correcto)\n");
@@ -453,10 +453,10 @@ void Controlador::ingresarSucursal() {
     }
     else {
         if (sistema->buscarSucursal(nueva->getCodigo()) != nullptr) {
-            ui->imprimir("Error: Ya existe una sucursal con ese codigo.\n");
+            ui->imprimir("\nERROR: Ya existe una sucursal con ese codigo.\n");
         }
         else {
-            ui->imprimir("Error: Capacidad maxima de sucursales alcanzada.\n");
+            ui->imprimir("\nERROR: Capacidad maxima de sucursales alcanzada.\n");
         }
         delete nueva;
     }
@@ -528,12 +528,12 @@ void Controlador::incluirCliente() {
         if (cedulaInstructor != "0") {
             instructorAsignado = sucursalSeleccionada->buscarInstructorPorCedula(cedulaInstructor);
             if (!instructorAsignado) {
-                ui->imprimir("\nAdvertencia: No se encontró un instructor con esa cédula. Se asignará 'Sin instructor'.\n");
+                ui->imprimir("\nADVERTENCIA: No se encontró un instructor con esa cédula. Se asignará 'Sin instructor'.\n");
             }
         }
     }
     else {
-        ui->imprimir("\nAdvertencia: No hay instructores disponibles en esta sucursal. Se asignará 'Sin instructor' por defecto.\n");
+        ui->imprimir("\nADVERTENCIA: No hay instructores disponibles en esta sucursal. Se asignará 'Sin instructor' por defecto.\n");
     }
 
     Cliente* nuevoCliente = new Cliente(cedula, nombre, telefono, correo, fechaNacimiento, sexo, fechaInscripcion, sucursalSeleccionada);
@@ -560,7 +560,7 @@ void Controlador::asignarInstructorACliente() {
     }
 
     if (sucursalSeleccionada->getCantidadClientes() == 0) {
-        ui->imprimir("ERROR: No hay clientes registrados en esta sucursal.\n");
+        ui->imprimir("\nERROR: No hay clientes registrados en esta sucursal.\n");
         ui->esperaEnter();
         return;
     }
@@ -590,7 +590,7 @@ void Controlador::asignarInstructorACliente() {
     if (cedulaInstructor != "0") {
         nuevoInstructor = sucursalSeleccionada->buscarInstructorPorCedula(cedulaInstructor);
         if (!nuevoInstructor) {
-            ui->imprimir("\nAdvertencia: No se encontró un instructor con esa cédula. No se le asignará un instructor.\n");
+            ui->imprimir("\nADVERTENCIA: No se encontró un instructor con esa cédula. No se le asignará un instructor.\n");
         }
     }
 
@@ -637,11 +637,11 @@ void Controlador::detalleCliente() {
                 ui->imprimir(clienteSeleccionado->toString());
             }
             else {
-                ui->imprimir("Error: No existe el cliente con esa cédula.");
+                ui->imprimir("\nERROR: No existe el cliente con esa cédula.");
             }
         }
         else {
-            ui->imprimir("Error: Esta sucursal no tiene clientes para mostrar.\n");
+            ui->imprimir("\nERROR: Esta sucursal no tiene clientes para mostrar.\n");
         }
     }
     ui->esperaEnter();
@@ -664,32 +664,24 @@ void Controlador::incluirInstructor() {
     string correo = ui->pedirEmail();
     string fechaNacimiento = ui->pedirFecha("Fecha de nacimiento (DD/MM/AAAA): ");
 
-    Instructor* nuevoInstructor = new Instructor(cedula, nombre, telefono, correo, fechaNacimiento, 8, sucursalSeleccionada);
+    Instructor* nuevoInstructor = new Instructor(cedula, nombre, telefono, correo, fechaNacimiento, sucursalSeleccionada);
 
-    ui->imprimir("\nSeleccione las especialidades del instructor (digite 0 para finalizar):\n");
+    int numEspecialidades = ui->pedirEnteroRango("\nCuantas especialidades tiene el instructor: ", 0, 8);
+    ui->imprimir("\nSeleccione las especialidades del instructor:\n");
     ui->imprimir(ui->mostrarEspecialidades());
-    bool terminar = false;
-
-    while (!terminar) {
-        int codigoEsp = ui->pedirEnteroRango("Digite la especialidad deseada: ", 0, 8);
-
-        if (codigoEsp == 0) {
-            if (ui->pedirOpcionSN("¿Desea terminar la selección de especialidades? (S/N): ")) {
-                terminar = true;
-            }
-            continue;
-        }
+    for (int i = 0; i < numEspecialidades; i++) {
+        int codigoEsp = ui->pedirEnteroRango("Digite especialidad #" + to_string(i + 1) + ": ", 1, 8);
 
         if (!nuevoInstructor->agregarEspecialidad(codigoEsp)) {
-            ui->imprimir("Advertencia: No se pudo agregar la especialidad (ya existe o no hay espacio).\n");
+            ui->imprimir("ADVERTENCIA: No se pudo agregar la especialidad (ya existe).\n");
         }
     }
 
     if (sucursalSeleccionada->agregarInstructor(nuevoInstructor)) {
-        ui->imprimir("Instructor registrado correctamente!\n");
+        ui->imprimir("\nInstructor registrado correctamente!\n");
     }
     else {
-        ui->imprimir("Error: El instructor ya existe o la sucursal ha alcanzado su capacidad máxima.\n");
+        ui->imprimir("\nERROR: El instructor ya existe o la sucursal ha alcanzado su capacidad máxima.\n");
         delete nuevoInstructor;
     }
 
@@ -725,11 +717,11 @@ void Controlador::detalleInstructor() {
                 ui->imprimir(instructorSeleccionado->toString());
             }
             else {
-                ui->imprimir("Error: No existe el instructor con esa cédula.");
+                ui->imprimir("\nERROR: No existe el instructor con esa cédula.");
             }
         }
         else {
-            ui->imprimir("Error: Esta sucursal no tiene instructores para mostrar.\n");
+            ui->imprimir("\nERROR: Esta sucursal no tiene instructores para mostrar.\n");
         }
     }
 
@@ -811,7 +803,7 @@ void Controlador::generarMedicionACliente() {
 
     Instructor* instructorDelCliente = clienteSeleccionado->getInstructorAsignado();
     if (!instructorDelCliente) {
-        ui->imprimir("ERROR: El cliente no tiene instructor asignado.\n");
+        ui->imprimir("\nERROR: El cliente no tiene instructor asignado.\n");
         ui->esperaEnter();
         return;
     }
@@ -910,8 +902,8 @@ void Controlador::generarRutina() {
 
     Sucursal* sucursalSeleccionada = seleccionarSucursal();
     if (!sucursalSeleccionada) {
-        ui->esperaEnter(); 
-        return; 
+        ui->esperaEnter();
+        return;
     }
 
     if (sucursalSeleccionada->getCantidadClientes() == 0) {
@@ -921,10 +913,10 @@ void Controlador::generarRutina() {
     }
 
     Cliente* clienteSeleccionado = seleccionarCliente(sucursalSeleccionada);
-    if (!clienteSeleccionado) { 
-        ui->imprimir("\nERROR: No se encontró cliente.\n"); 
-        ui->esperaEnter(); 
-        return; 
+    if (!clienteSeleccionado) {
+        ui->imprimir("\nERROR: No se encontró cliente.\n");
+        ui->esperaEnter();
+        return;
     }
 
     Instructor* instructorDelCliente = clienteSeleccionado->getInstructorAsignado();
@@ -934,16 +926,25 @@ void Controlador::generarRutina() {
         return;
     }
 
+    if (clienteSeleccionado->getRutinaAsignada()) {
+        ui->imprimir("\nADVERTENCIA: Esto eliminará la rutina actual del cliente y creará una nueva.\n");
+        bool continuar = ui->pedirOpcionSN("¿Desea continuar? (S/N): ");
+        if (!continuar) {
+            return;
+        }
+    }
+
     Rutina* rutina = instructorDelCliente->generarRutina(clienteSeleccionado);
 
     bool continuar = true;
-
     while (continuar) {
         limpiaPantalla();
         ui->mostrarTitulo("GENERANDO RUTINA");
         int zona = ui->pedirZonaMuscular();
-        int total = sistema->listarEjercicios(zona);
-        if (total == 0) {
+        int totalEjercicios;
+        string listaEjercicios = sistema->listarEjercicios(zona, totalEjercicios);
+        ui->imprimir(listaEjercicios);
+        if (totalEjercicios == 0) {
             ui->imprimir("No hay ejercicios en esta zona.\n");
             break;
         }
@@ -953,9 +954,11 @@ void Controlador::generarRutina() {
         int repeticiones = ui->pedirEntero("Repeticiones: ");
 
         Ejercicio* base = sistema->buscarEjercicioPorZona(zona, elegido);
-        if (!base) { 
-            ui->imprimir("Ejercicio no encontrado.\n"); 
-            continue; 
+        if (!base) {
+            ui->imprimir("ERROR: Ejercicio no encontrado.\n");
+            ui->imprimir("Vuelva a intentarlo.");
+            ui->esperaEnter();
+            continue;
         }
 
         Ejercicio* nuevo = new Ejercicio(base->getNombre(), base->getZona(), series, repeticiones);
@@ -968,6 +971,12 @@ void Controlador::generarRutina() {
         }
 
         continuar = ui->pedirOpcionSN("¿Desea agregar otro ejercicio? (S/N): ");
+    }
+
+    if (rutina && rutina->getCantidadEjercicios() == 0) {
+        ui->imprimir("\nNo se agregaron ejercicios. La rutina no fue guardada.\n");
+        clienteSeleccionado->asignarRutina(nullptr);
+        delete rutina;
     }
 
     ui->esperaEnter();
@@ -1005,6 +1014,7 @@ void Controlador::visualizacionRutina() {
     ui->imprimir(clienteSeleccionado->getNombre());
 
     Rutina* rutina = clienteSeleccionado->getRutinaAsignada();
+
     if (!rutina) {
         ui->imprimir("\nEl cliente no cuenta con una rutina asignada\n");
     }
@@ -1027,7 +1037,7 @@ void Controlador::crearClaseGrupal() {
     }
 
     if (sucursalSeleccionada->getCantidadInstructores() == 0) {
-        ui->imprimir("Error: No hay instructores en esta sucursal.\n");
+        ui->imprimir("\nERROR: No hay instructores en esta sucursal.\n");
         ui->imprimir("Debe ingresar al menos un instructor.\n");
         ui->esperaEnter();
         return;
@@ -1040,7 +1050,7 @@ void Controlador::crearClaseGrupal() {
         codClase = ui->pedirEnteroRango("Digite código de clase: ", 1, 8);
 
         if (!sucursalSeleccionada->existenInstructoresConEspecialidad(codClase)) {
-            ui->imprimir("Error: No hay instructores con esa especialidad.\n");
+            ui->imprimir("\nERROR: No hay instructores con esa especialidad.\n");
             ui->imprimir("Elija otra especialidad.\n");
         }
         else {
@@ -1064,7 +1074,7 @@ void Controlador::crearClaseGrupal() {
     }
 
     if (!instructorAsignado->tieneEspecialidad(codClase)) {
-        ui->imprimir("ERROR: El instructor no tiene la especialidad requerida.\n");
+        ui->imprimir("\nERROR: El instructor no tiene la especialidad requerida.\n");
         ui->esperaEnter();
         return;
     }
@@ -1075,7 +1085,7 @@ void Controlador::crearClaseGrupal() {
         ui->imprimir("Clase grupal registrada correctamente!!!\n");
     }
     else {
-        ui->imprimir("ERROR: La clase grupal ya existe o capacidad máxima alcanzada.\n");
+        ui->imprimir("\nERROR: La clase grupal ya existe o capacidad máxima alcanzada.\n");
         delete nuevaClase;
     }
 
@@ -1092,7 +1102,7 @@ void Controlador::mostrarClasesGrupales() {
     }
 
     if (sucursalSeleccionada->getCantidadClasesGrupales() == 0) {
-        ui->imprimir("ERROR: No existen clases grupales en esta sucursal.\n");
+        ui->imprimir("\nERROR: No existen clases grupales en esta sucursal.\n");
         ui->esperaEnter();
         return;
     }
@@ -1109,7 +1119,7 @@ void Controlador::mostrarClasesGrupales() {
         ui->imprimir(claseSeleccionada->toString());
     }
     else {
-        ui->imprimir("ERROR: No se encontró la clase en esa posición.\n");
+        ui->imprimir("\nERROR: No se encontró la clase en esa posición.\n");
     }
 
     ui->esperaEnter();
@@ -1125,7 +1135,7 @@ void Controlador::matricularClienteEnClaseGrupal() {
     }
 
     if (sucursalSeleccionada->getCantidadClasesGrupales() == 0) {
-        ui->imprimir("ERROR: No hay clases grupales en esta sucursal.\n");
+        ui->imprimir("\nERROR: No hay clases grupales en esta sucursal.\n");
         ui->esperaEnter();
         return;
     }
@@ -1145,7 +1155,7 @@ void Controlador::matricularClienteEnClaseGrupal() {
     ClaseGrupal* claseSeleccionada = sucursalSeleccionada->buscarClaseGrupalPorPosicion(posicionClase);
 
     if (!claseSeleccionada) {
-        ui->imprimir("ERROR: No se encontró la clase.\n");
+        ui->imprimir("\nERROR: No se encontró la clase.\n");
         ui->esperaEnter();
         return;
     }
@@ -1154,13 +1164,13 @@ void Controlador::matricularClienteEnClaseGrupal() {
     ui->imprimir(claseSeleccionada->toString());
 
     if (!clienteSeleccionado->puedeInscribirse()) {
-        ui->imprimir("ERROR: El cliente alcanzó el límite de clases.\n");
+        ui->imprimir("\nERROR: El cliente alcanzó el límite de clases.\n");
         ui->esperaEnter();
         return;
     }
 
     if (claseSeleccionada->getCupos_Disponibles() == 0) {
-        ui->imprimir("ERROR: La clase tiene cupo completo.\n");
+        ui->imprimir("\nERROR: La clase tiene cupo completo.\n");
         ui->esperaEnter();
         return;
     }
@@ -1170,7 +1180,7 @@ void Controlador::matricularClienteEnClaseGrupal() {
             ui->imprimir("Cliente matriculado correctamente!\n");
         }
         else {
-            ui->imprimir("ERROR: El cliente ya estaba matriculado.\n");
+            ui->imprimir("\nERROR: El cliente ya estaba matriculado.\n");
         }
     }
 
@@ -1187,7 +1197,7 @@ void Controlador::clasesMatriculadasPorCliente() {
     }
 
     if (sucursalSeleccionada->getCantidadClasesGrupales() == 0) {
-        ui->imprimir("ERROR: No existen clases grupales en esta sucursal.\n");
+        ui->imprimir("\nERROR: No existen clases grupales en esta sucursal.\n");
         ui->esperaEnter();
         return;
     }

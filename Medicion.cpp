@@ -190,7 +190,7 @@ string Medicion::reporteMedicionResumen(){
 
     stringstream x;
 
-    x << fecha << "|" << peso << "|" << getIMC(); 
+    x <<"Fecha: " << fecha << " | " << "Peso: " << peso << " kg" << " | " << "IMC: " << getIMC();
 
     return x.str(); 
 }
@@ -213,7 +213,7 @@ string Medicion::datosBasicosMedicion()
 
     x << "Cantidad de vasos de agua recomendados: " << calcularAgua() << endl;
 
-    x << "Ingesta calorica recomendada: " << calcularProteina() << endl;
+    x << "Ingesta calorica recomendada: " << calcularProteina() << " gramos" << endl;
 
     x << "Riesgo del paciente segun su IMC: " << clasificacionPaciente() << endl;
 

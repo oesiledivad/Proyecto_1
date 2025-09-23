@@ -36,7 +36,7 @@ public:
 
 	Instructor* getInstructor();
 
-	void listarRutina();
+	string listarRutina();
 
 	string toString();
 };

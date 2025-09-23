@@ -104,17 +104,19 @@ string Sistema::listarSucursales() {
 	return s.str();
 }
 
-int Sistema::listarEjercicios(int zona) {
-	cout << "\nBATERÍA DE EJERCICIOS DISPONIBLES PARA ZONA: " << validarZonaMuscular(zona) << endl;
-	cout << "===========================================\n";
+string Sistema::listarEjercicios(int zona, int& contador) {
+	stringstream s;
+	contador = 0;
 
-	int contador = 0;
+	s << "\nBATERÍA DE EJERCICIOS DISPONIBLES PARA ZONA: " << validarZonaMuscular(zona) << endl;
+	s << "===========================================\n";
+
 	for (int i = 0; i < cantidad_ejercicios; i++) {
 		if (ejercicios[i] != nullptr && ejercicios[i]->getZona() == zona) {
-			cout << ++contador << ". " << ejercicios[i]->getNombre() << endl;
+			s << ++contador << ". " << ejercicios[i]->getNombre() << endl;
 		}
 	}
-	return contador;
+	return s.str();
 }
 
 Ejercicio* Sistema::buscarEjercicioPorZona(int zona, int indiceUsuario) {

@@ -5,9 +5,9 @@ class Cliente;
 class Instructor;
 class ClaseGrupal;
 
-const int MAX_CLIENTES = 100;
-const int MAX_INSTRUCTORES = 20;
-const int MAX_CLASES = 8;
+static const int MAX_CLIENTES = 100;
+static const int MAX_INSTRUCTORES = 20;
+static const int MAX_CLASES = 8;
 
 class Sucursal {
 private:

@@ -53,7 +53,6 @@ int Rutina::getCapacidadEjercicios() {
     return cap_ejercicios; 
 }
 
-
 bool Rutina::agregarEjercicio( Ejercicio * e1) {
   
     if (cant_ejercicios < cap_ejercicios) {
@@ -76,41 +75,32 @@ Instructor* Rutina :: getInstructor() {
     return instructor; 
 }
 
-void Rutina::listarRutina() {
-
-    cout << "\n==================================================================\n";
-    cout << "        RUTINA GENERADA \n";
-    cout << "==================================================================\n";
+string Rutina::listarRutina() {
+    stringstream s;
+    s << "\n==================================================================\n";
+    s << "\tRUTINA GENERADA PARA " + getCliente()->getNombre() + "\n";
+    s << "==================================================================\n";
 
     for (int i = 0; i < cant_ejercicios; i++) {
-        cout << ejercicios[i]->getNombre() << ", series: " << ejercicios[i]->getSeries() << ", repeticiones: " << ejercicios[i]->getRepeticiones() << endl;
+        s << ejercicios[i]->getNombre() << ", series: " << ejercicios[i]->getSeries() << ", repeticiones: " << ejercicios[i]->getRepeticiones() << endl;
     };
+    return s.str();
 }
 
 
 string Rutina::toString() {
 
     stringstream s;
-
-    if (cliente != nullptr) {
+    if (!cliente->getRutinaAsignada()) {
+        s << "\nEl cliente no tiene rutina asignada\n";
+    }
+    else if (cliente != nullptr) {
         s << "Rutina asignada a cliente: " << cliente->getNombre() << endl; 
+        s << listarRutina();
     }
     else {
         s << "Rutina asignada a cliente: (sin cliente)" << endl; 
     }
-    //if (instructor != nullptr) {
-      //  s << "Rutina creada por el instructor: " << instructor->toString() << endl;
-   // }
-    //else { 
-     //   s << "Rutina creada por el instructor: (sin instructor)" << endl;
-    //}
-
-    // sin uso en la interfaz
-
-    // reutilizo listarRutina
-
-    listarRutina(); 
-
 
     return s.str(); 
 }

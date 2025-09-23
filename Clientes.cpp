@@ -24,7 +24,6 @@ Cliente::Cliente(string ced, string nom, string tel, string corr, string fecha_n
 }
 
 Cliente::~Cliente() {
-    delete[] historial_mediciones;
     delete[] clases_inscritas;
     rutina_asignada = nullptr;
     instructor_asignado = nullptr;
@@ -40,19 +39,33 @@ bool Cliente::agregarMedicion(Medicion* medicion) {
 }
 
 string Cliente::mostrarHistorialMediciones() {
-    stringstream x;
+    for (int i = 0; i < cantidad_mediciones - 1; i++) {
+        int min_idx = i;
+        for (int j = i + 1; j < cantidad_mediciones; j++) {
+            if (convertirFechaAEntero(historial_mediciones[j]->getFecha()) < convertirFechaAEntero(historial_mediciones[min_idx]->getFecha())) {
+                min_idx = j;
+            }
+        }
 
-    for (int i = 0; i < cantidad_mediciones; i++) {
-        x << (i+1) << "-" << historial_mediciones[i]->reporteMedicionResumen() << endl;
+        if (min_idx != i) {
+            Medicion* temp = historial_mediciones[i];
+            historial_mediciones[i] = historial_mediciones[min_idx];
+            historial_mediciones[min_idx] = temp;
+        }
     }
-    return x.str(); 
+
+    stringstream x;
+    for (int i = 0; i < cantidad_mediciones; i++) {
+        x << (i + 1) << ") " << historial_mediciones[i]->reporteMedicionResumen() << endl;
+    }
+    return x.str();
 }
 
 string Cliente::mostrarMedicionResumen(int num){
     stringstream x;
 
     if (num < 1 || num > cantidad_mediciones) {
-        x << "Error: numero de medicion invalido." << endl;
+        x << "ERROR: numero de medicion invalido." << endl;
         return x.str();
     }
 
@@ -128,6 +141,10 @@ Instructor* Cliente::getInstructorAsignado() {
 
 Sucursal* Cliente::getSucursalAsignada() {
     return sucursal_asignada;
+}
+
+Medicion** Cliente::getMedicionArr() {
+    return historial_mediciones;
 }
 
 string Cliente::mostrarClasesInscritas() {
