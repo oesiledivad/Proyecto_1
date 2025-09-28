@@ -54,16 +54,6 @@ Instructor::Instructor(string ced, string nom, string tel, string cor, string fe
 
 // ===== Destructor =====
 Instructor::~Instructor() {
-    for (int i = 0; i < capacidad_clientes_asignados; i++) {
-        // Elimina las Mediciones y las Rutinas, no al Cliente
-        if (clientes_asignados[i] != nullptr) {
-            for (int j = 0; j < clientes_asignados[i]->getCantidadMediciones(); j++) {
-                delete clientes_asignados[i]->getMedicionPos(j);
-            }
-            delete clientes_asignados[i]->getRutinaAsignada();
-        }
-    }
-
     for (int i = 0; i < capacidad_especialidades; i++) {
         if (especialidades[i] != nullptr) {
             delete especialidades[i];

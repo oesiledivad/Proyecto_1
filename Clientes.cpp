@@ -24,7 +24,16 @@ Cliente::Cliente(string ced, string nom, string tel, string corr, string fecha_n
 }
 
 Cliente::~Cliente() {
+    for (int i = 0; i < cantidad_mediciones; i++) {
+        if (historial_mediciones[i] != nullptr) {
+            delete historial_mediciones[i];
+        }
+    }
+
+    delete rutina_asignada;
+
     delete[] clases_inscritas;
+    delete[] historial_mediciones;
     rutina_asignada = nullptr;
     instructor_asignado = nullptr;
     sucursal_asignada = nullptr;
