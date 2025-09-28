@@ -78,7 +78,7 @@ Instructor* Rutina :: getInstructor() {
 string Rutina::listarRutina() {
     stringstream s;
     s << "\n==================================================================\n";
-    s << "\tRUTINA GENERADA PARA " + getCliente()->getNombre() + "\n";
+    s << "\tRUTINA GENERADA \n";
     s << "==================================================================\n";
 
     for (int i = 0; i < cant_ejercicios; i++) {
@@ -87,7 +87,6 @@ string Rutina::listarRutina() {
     return s.str();
 }
 
-
 string Rutina::toString() {
 
     stringstream s;
@@ -95,7 +94,8 @@ string Rutina::toString() {
         s << "\nEl cliente no tiene rutina asignada\n";
     }
     else if (cliente != nullptr) {
-        s << "Rutina asignada a cliente: " << cliente->getNombre() << endl; 
+        s << "Rutina generada por el instructor: " << instructor->getNombre() << endl;
+        s << "Rutina asignada a cliente: " << cliente->getNombre() << endl;
         s << listarRutina();
     }
     else {

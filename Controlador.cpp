@@ -481,20 +481,27 @@ void Controlador::mostrarSucursales() {
 void Controlador::reporteIMCPorSucursal() {
     ui->mostrarTitulo("REPORTE IMC POR SUCURSAL");
 
-    Sucursal* sucursal = seleccionarSucursal();
+    if (sistema->getCantidadSucursales() == 0) {
+        ui->imprimir("Debe de ingresar al menos una sucursal.\n");
+        ui->esperaEnter();
+        return; 
+    }
 
-    if (!sucursal) {
+    Sucursal* sucursalSeleccionada = seleccionarSucursal();
+
+    if (!sucursalSeleccionada) {
         ui->esperaEnter();
         return;
     }
 
-    if (sucursal->getCantidadClientes() == 0) {
+    if (sucursalSeleccionada->getCantidadClientes() == 0) {
         ui->imprimir("\nERROR: No hay clientes en esta sucursal.\n");
         ui->esperaEnter();
         return;
     }
+
     ui->limpiarPantalla();
-    ui->imprimir(sucursal->generarReporteIMC());
+    ui->imprimir(sucursalSeleccionada->generarReporteIMC());
 
     ui->esperaEnter();
 }
@@ -666,14 +673,19 @@ void Controlador::incluirInstructor() {
 
     Instructor* nuevoInstructor = new Instructor(cedula, nombre, telefono, correo, fechaNacimiento, sucursalSeleccionada);
 
-    int numEspecialidades = ui->pedirEnteroRango("\nCuantas especialidades tiene el instructor: ", 0, 8);
+    int numEspecialidadesDeseadas = ui->pedirEnteroRango("\nCuantas especialidades tiene el instructor: ", 1, 8);
     ui->imprimir("\nSeleccione las especialidades del instructor:\n");
     ui->imprimir(ui->mostrarEspecialidades());
-    for (int i = 0; i < numEspecialidades; i++) {
-        int codigoEsp = ui->pedirEnteroRango("Digite especialidad #" + to_string(i + 1) + ": ", 1, 8);
 
-        if (!nuevoInstructor->agregarEspecialidad(codigoEsp)) {
-            ui->imprimir("ADVERTENCIA: No se pudo agregar la especialidad (ya existe).\n");
+    int especialidadesAgregadas = 0;
+    while (especialidadesAgregadas < numEspecialidadesDeseadas) {
+        int codigoEsp = ui->pedirEnteroRango("Digite especialidad #" + std::to_string(especialidadesAgregadas + 1) + ": ", 1, 8);
+
+        if (nuevoInstructor->agregarEspecialidad(codigoEsp)) {
+            especialidadesAgregadas++;
+        }
+        else {
+            ui->imprimir("ADVERTENCIA: No se pudo agregar la especialidad (ya existe o es inválida). Por favor, ingrese una especialidad diferente.\n");
         }
     }
 
@@ -863,8 +875,8 @@ void Controlador::historialMediciones() {
 
     ui->imprimir("\n--- Historial de mediciones ---\n");
     ui->imprimir(clienteSeleccionado->mostrarHistorialMediciones());
-
-    int num = ui->pedirEntero("\nDigite el número de la medición a consultar: ");
+    int val = clienteSeleccionado->getCantidadMediciones();
+    int num = ui->pedirEnteroRango("\nDigite el número de la medición a consultar: ", 1, val);
 
     ui->imprimir("\n--- Detalle de la medición ---\n");
     ui->imprimir(clienteSeleccionado->mostrarMedicionResumen(num));
@@ -937,25 +949,49 @@ void Controlador::generarRutina() {
     Rutina* rutina = instructorDelCliente->generarRutina(clienteSeleccionado);
 
     bool continuar = true;
+    bool ejerciciosAgregados = false;
     while (continuar) {
         limpiaPantalla();
-        ui->mostrarTitulo("GENERANDO RUTINA");
+        ui->mostrarTitulo("GENERANDO RUTINA PARA " + clienteSeleccionado->getNombre());
         int zona = ui->pedirZonaMuscular();
         int totalEjercicios;
         string listaEjercicios = sistema->listarEjercicios(zona, totalEjercicios);
         ui->imprimir(listaEjercicios);
+
         if (totalEjercicios == 0) {
-            ui->imprimir("No hay ejercicios en esta zona.\n");
-            break;
+            ui->imprimir("No hay ejercicios disponibles en esta zona.\n");
+            ui->imprimir("Por favor, elija otra zona o ingrese 'N' para salir.\n");
+            continuar = ui->pedirOpcionSN("¿Desea agregar otro ejercicio? (S/N): ");
+            continue;
         }
 
-        int elegido = ui->pedirEntero("Número del ejercicio: ");
-        int series = ui->pedirEntero("Series: ");
-        int repeticiones = ui->pedirEntero("Repeticiones: ");
+        int elegido;
+        do {
+            elegido = ui->pedirEntero("Número del ejercicio: ");
+            if (elegido <= 0) {
+                ui->imprimir("ERROR: El número del ejercicio debe ser mayor a cero.\n");
+            }
+        } while (elegido <= 0);
+
+        int series;
+        do {
+            series = ui->pedirEntero("Series: ");
+            if (series <= 0) {
+                ui->imprimir("ERROR: El número de series debe ser mayor a cero.\n");
+            }
+        } while (series <= 0);
+
+        int repeticiones;
+        do {
+            repeticiones = ui->pedirEntero("Repeticiones: ");
+            if (repeticiones <= 0) {
+                ui->imprimir("ERROR: El número de repeticiones debe ser mayor a cero.\n");
+            }
+        } while (repeticiones <= 0);
 
         Ejercicio* base = sistema->buscarEjercicioPorZona(zona, elegido);
         if (!base) {
-            ui->imprimir("ERROR: Ejercicio no encontrado.\n");
+            ui->imprimir("ERROR: Ejercicio no encontrado. Por favor, asegúrese de ingresar un número de la lista.\n");
             ui->imprimir("Vuelva a intentarlo.");
             ui->esperaEnter();
             continue;
@@ -964,6 +1000,7 @@ void Controlador::generarRutina() {
         Ejercicio* nuevo = new Ejercicio(base->getNombre(), base->getZona(), series, repeticiones);
         if (rutina->agregarEjercicio(nuevo)) {
             ui->imprimir("Ejercicio agregado a la rutina.\n");
+            ejerciciosAgregados = true;
         }
         else {
             ui->imprimir("Error al agregar ejercicio.\n");
@@ -973,10 +1010,15 @@ void Controlador::generarRutina() {
         continuar = ui->pedirOpcionSN("¿Desea agregar otro ejercicio? (S/N): ");
     }
 
+    ui->limpiarPantalla();
+
     if (rutina && rutina->getCantidadEjercicios() == 0) {
         ui->imprimir("\nNo se agregaron ejercicios. La rutina no fue guardada.\n");
         clienteSeleccionado->asignarRutina(nullptr);
         delete rutina;
+    }
+    else if (ejerciciosAgregados) {
+        ui->imprimir("\nRutina generada y asignada exitosamente al cliente: " + clienteSeleccionado->getNombre() + ".\n");
     }
 
     ui->esperaEnter();
@@ -1069,6 +1111,7 @@ void Controlador::crearClaseGrupal() {
 
     Instructor* instructorAsignado = seleccionarInstructor(sucursalSeleccionada);
     if (!instructorAsignado) {
+        ui->imprimir("\nERROR: No se encontró al instructor.\n");
         ui->esperaEnter();
         return;
     }

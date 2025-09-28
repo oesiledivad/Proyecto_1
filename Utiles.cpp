@@ -21,11 +21,16 @@ int leerEntero() {
 	bool valido = false;
 	while (!valido) {
 		if (cin >> n) {
-			valido = true;
+			if (n >= 0) {
+				valido = true;
+			}
+			else {
+				cerr << "Valor incorrecto. Digite un numero entero positivo o cero: ";
+			}
 		}
 		else {
-			cerr << "Valor incorrecto. Digite un numero entero: ";
-			cin.clear();
+			cerr << "Valor incorrecto. Digite un numero entero positivo o cero: ";
+			cin.clear(); 
 		}
 		cin.ignore(1024, '\n');
 	}
@@ -57,11 +62,18 @@ float leerFlotante() {
 	bool valido = false;
 	while (!valido) {
 		if (cin >> ff) {
-			valido = true;
-		} else {
-			cerr << "Valor incorrecto. Digite un numero: ";
+			if (ff > 0.0f) {
+				valido = true;
+			}
+			else {
+				cerr << "Valor incorrecto. Digite un numero mayor a 0: ";
+			}
+		}
+		else {
+			cerr << "Valor incorrecto. Digite un numero mayor a 0: ";
 			cin.clear();
 		}
+
 		cin.ignore(1024, '\n');
 	}
 	return ff;
