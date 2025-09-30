@@ -11,6 +11,7 @@ public:
     void submenuClientes();
     void submenuInstructores();
     void submenuClasesGrupales();
+    void despedida();
 
     // ENTRADA DE DATOS
     int pedirOpcion(int min, int max);

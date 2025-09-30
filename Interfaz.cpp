@@ -2,49 +2,51 @@
 #include <iostream>
 using namespace std;
 
+const string BORDER(50, '=');
+
 void Interfaz::mostrarMenuPrincipal() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
     cout << "        GESTIÓN DE GIMNASIOS POWERLAB" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
     cout << "(1) Submenú de Sucursales" << endl;
     cout << "(2) Submenú de Clientes" << endl;
     cout << "(3) Submenú de Instructores" << endl;
     cout << "(4) Submenú de Clases Grupales" << endl;
     cout << "(0) Salir" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
 }
 
 void Interfaz::submenuSucursales() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
-    cout << "               SUBMENÚ SUCURSALES" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+    cout << "             SUBMENÚ SUCURSALES" << endl;
+    cout << BORDER << endl;
     cout << "(1) Ingresar Sucursal" << endl;
     cout << "(2) Mostrar Sucursales" << endl;
     cout << "(3) Reporte de IMC por sucursal" << endl;
     cout << "(0) Regresar Menú Principal" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
 }
 
 void Interfaz::submenuClientes() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
-    cout << "               SUBMENÚ CLIENTES" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+    cout << "              SUBMENÚ CLIENTES" << endl;
+    cout << BORDER << endl;
     cout << "(1) Incluir Cliente" << endl;
     cout << "(2) Asignar Instructor a Cliente" << endl;
     cout << "(3) Lista de Clientes por Sucursal" << endl;
     cout << "(4) Detalle de Cliente" << endl;
     cout << "(0) Regresar al Menú Principal" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
 }
 
 void Interfaz::submenuInstructores() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
-    cout << "              SUBMENÚ INSTRUCTORES" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+    cout << "             SUBMENÚ INSTRUCTORES" << endl;
+    cout << BORDER << endl;
     cout << "(1) Incluir Instructor" << endl;
     cout << "(2) Lista de Instructores por Sucursal" << endl;
     cout << "(3) Detalle de Instructor" << endl;
@@ -56,20 +58,30 @@ void Interfaz::submenuInstructores() {
     cout << "(9) Generar rutina" << endl;
     cout << "(10) Visualización de Rutina" << endl;
     cout << "(0) Regresar al Menú Principal" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
 }
 
 void Interfaz::submenuClasesGrupales() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
-    cout << "            SUBMENÚ CLASES GRUPALES" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+    cout << "           SUBMENÚ CLASES GRUPALES" << endl;
+    cout << BORDER << endl;
     cout << "(1) Crear Clase Grupal" << endl;
     cout << "(2) Mostrar Clases Grupales" << endl;
     cout << "(3) Matricular Cliente en Clase Grupal" << endl;
     cout << "(4) Clases Matriculadas por Cliente" << endl;
     cout << "(0) Regresar al Menú Principal" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+}
+
+void Interfaz::despedida() {
+    limpiarPantalla();
+    cout << "\n";
+    cout << BORDER << "\n";
+    cout << "  ¡Programa finalizado!\n";
+    cout << "  Gracias por usar el sistema PowerLab.\n";
+    cout << "  (Presiona Enter para cerrar...)\n";
+    cout << BORDER << "\n";
 }
 
 // ENTRADA Y SALIDA DE DATOS

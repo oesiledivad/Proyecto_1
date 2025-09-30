@@ -22,7 +22,7 @@ Controlador::~Controlador() {
 void Controlador::ejecutar() {
     while (ejecutando) {
         ui->mostrarMenuPrincipal();
-        int opcion = ui->pedirOpcion(0, 5);
+        int opcion = ui->pedirOpcion(0, 4);
 
         switch (opcion) {
         case 1:
@@ -48,14 +48,9 @@ void Controlador::ejecutar() {
                 ui->esperaEnter();
             }
             break;
-        case 5:
-            ui->limpiarPantalla();
-            rellenarDatosPrueba();
-            break;
         case 0:
             ejecutando = false;
-            ui->limpiarPantalla();
-            ui->imprimir("Gracias por usar el sistema PowerLab\n");
+            ui->despedida();
             break;
         default:
             ui->imprimir("Opcion invalida.\n");
@@ -182,227 +177,6 @@ void Controlador::gestionarClasesGrupales() {
             break;
         }
     }
-}
-
-void Controlador::sinImplementar() {
-    ui->limpiarPantalla();
-    cout << "Funcionalidad sin implementar" << endl;
-    ui->esperaEnter();
-}
-
-void Controlador::rellenarDatosPrueba() {
-    ui->mostrarTitulo("LLENANDO DATOS DE PRUEBA");
-
-    Sucursal* sucursal1 = new Sucursal("SJ01", "San José", "Aserrí", "sanjose.01@powerlab.com", "2222-2222");
-    Sucursal* sucursal2 = new Sucursal("HE01", "Heredia", "Heredia", "heredia.01@powerlab.com", "2442-2222");
-
-    sistema->agregarSucursal(sucursal1);
-    sistema->agregarSucursal(sucursal2);
-
-    ui->imprimir("Sucursales creadas\n");
-
-    Instructor* instructor1 = new Instructor("101110111", "Juan Pérez", "8888-8888", "juan@powerlab.com", "15/05/1985", sucursal1);
-    instructor1->agregarEspecialidad(1); // CrossFit
-    instructor1->agregarEspecialidad(7); // Yoga
-
-    Instructor* instructor2 = new Instructor("202220222", "María López", "8777-7777", "maria@powerlab.com", "20/08/1990", sucursal1);
-    instructor2->agregarEspecialidad(2); // HIIT
-    instructor2->agregarEspecialidad(8); // Zumba
-
-    Instructor* instructor3 = new Instructor("303330333", "Carlos Rojas", "8666-6666", "carlos@powerlab.com", "10/12/1988", sucursal1);
-    instructor3->agregarEspecialidad(5); // Spinning
-    instructor3->agregarEspecialidad(6); // Cardio
-
-    Instructor* instructor4 = new Instructor("404440444", "Lucía García", "8555-5555", "lucia@powerlab.com", "22/02/1982", sucursal2);
-    instructor4->agregarEspecialidad(3); // TRX
-    instructor4->agregarEspecialidad(4); // Pesas
-
-    Instructor* instructor5 = new Instructor("505550555", "Roberto Martínez", "8444-4444", "roberto@powerlab.com", "03/07/1987", sucursal2);
-    instructor5->agregarEspecialidad(1); // CrossFit
-    instructor5->agregarEspecialidad(3); // TRX
-
-    Instructor* instructor6 = new Instructor("606660666", "Ana Torres", "8333-3333", "ana2@powerlab.com", "11/09/1992", sucursal2);
-    instructor6->agregarEspecialidad(2); // HIIT
-    instructor6->agregarEspecialidad(8); // Zumba
-
-    sucursal1->agregarInstructor(instructor1);
-    sucursal1->agregarInstructor(instructor2);
-    sucursal1->agregarInstructor(instructor3);
-    sucursal2->agregarInstructor(instructor4);
-    sucursal2->agregarInstructor(instructor5);
-    sucursal2->agregarInstructor(instructor6);
-
-    ui->imprimir("Instructores creados\n");
-
-    Cliente* cliente1 = new Cliente("111111111", "Ana Mendoza", "8111-1111", "ana@email.com", "05/03/1990", 'F', "01/01/2024", sucursal1);
-    Cliente* cliente2 = new Cliente("222222222", "Luis Chaves", "8222-2222", "luis@email.com", "12/07/1985", 'M', "15/01/2024", sucursal1);
-    Cliente* cliente3 = new Cliente("333333333", "Sofía Vega", "8333-3333", "sofia@email.com", "25/11/1995", 'F', "20/01/2024", sucursal2);
-    Cliente* cliente4 = new Cliente("444444444", "Carlos Jiménez", "8444-4444", "carlos2@email.com", "18/02/1992", 'M', "05/03/2024", sucursal1);
-    Cliente* cliente5 = new Cliente("555555555", "María Pérez", "8555-5555", "maria2@email.com", "07/09/1987", 'F', "10/02/2024", sucursal1);
-    Cliente* cliente6 = new Cliente("666666666", "José González", "8666-6666", "jose@email.com", "15/01/1994", 'M', "20/03/2024", sucursal2);
-
-    // --- NUEVOS CLIENTES PARA PRUEBAS ADICIONALES ---
-    Cliente* cliente7 = new Cliente("777777777", "Prueba Capacidad", "8777-7777", "capacidad@email.com", "01/01/2000", 'M', "01/04/2024", sucursal1);
-    Cliente* cliente8 = new Cliente("888888888", "Prueba Clases", "8888-8888", "clases@email.com", "01/01/2000", 'F', "01/04/2024", sucursal1);
-
-    // Cliente para probar matriculación en otra sucursal
-    Cliente* cliente9_otraSucursal = new Cliente("999999999", "Marta Soto", "8999-9999", "marta@email.com", "01/01/1995", 'F', "01/05/2024", sucursal2);
-
-    cliente1->asignarInstructor(instructor1);
-    cliente2->asignarInstructor(instructor2);
-    cliente3->asignarInstructor(instructor3);
-    cliente4->asignarInstructor(instructor1);
-    cliente5->asignarInstructor(instructor2);
-    cliente6->asignarInstructor(instructor4);
-    cliente7->asignarInstructor(instructor1);
-    cliente8->asignarInstructor(instructor2);
-    cliente9_otraSucursal->asignarInstructor(instructor4);
-
-    sucursal1->agregarCliente(cliente1);
-    sucursal1->agregarCliente(cliente2);
-    sucursal1->agregarCliente(cliente4);
-    sucursal1->agregarCliente(cliente5);
-    sucursal2->agregarCliente(cliente3);
-    sucursal2->agregarCliente(cliente6);
-    sucursal1->agregarCliente(cliente7);
-    sucursal1->agregarCliente(cliente8);
-    sucursal2->agregarCliente(cliente9_otraSucursal);
-
-    ui->imprimir("Clientes creados\n");
-
-    Medicion* med1 = new Medicion("01/02/2024", 65.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente1, instructor1);
-    Medicion* med2 = new Medicion("15/02/2024", 50.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente2, instructor2);
-    Medicion* med3 = new Medicion("20/02/2024", 80.0f, 1.75f, 0, 0, 0, 0, 0, 0, 0, 0, cliente3, instructor3);
-    Medicion* med4 = new Medicion("01/03/2024", 70.0f, 1.80f, 0, 0, 0, 0, 0, 0, 0, 0, cliente4, instructor4);
-    Medicion* med5 = new Medicion("20/03/2024", 140.0f, 1.70f, 0, 0, 0, 0, 0, 0, 0, 0, cliente6, instructor5);
-
-    cliente1->agregarMedicion(med1);
-    cliente2->agregarMedicion(med2);
-    cliente3->agregarMedicion(med3);
-    cliente4->agregarMedicion(med4);
-    cliente6->agregarMedicion(med5);
-
-    ui->imprimir("Mediciones creadas\n");
-
-    ui->imprimir("\n--- Probando la reasignación de instructor ---\n");
-    ui->imprimir("Cliente Ana Mendoza está asignada a Juan Pérez.\n");
-    ui->imprimir("Reasignando Ana Mendoza a Carlos Rojas...\n");
-    cliente1->asignarInstructor(instructor3);
-    ui->imprimir("Verificando... Carlos Rojas ahora tiene " + to_string(instructor3->getCantidadClientesAsignados()) + " clientes.\n");
-    ui->imprimir("Verificando... Juan Pérez ahora tiene " + to_string(instructor1->getCantidadClientesAsignados()) + " clientes.\n");
-    ui->imprimir("Asignación y reasignación de instructores probada\n");
-
-    Ejercicio* ej1 = new Ejercicio("Flexiones de pecho", 1, 3, 12);
-    Ejercicio* ej2 = new Ejercicio("Sentadillas", 2, 4, 15);
-    Ejercicio* ej3 = new Ejercicio("Curl de bíceps", 3, 3, 10);
-    Ejercicio* ej4 = new Ejercicio("Dominadas", 1, 4, 8);
-    Ejercicio* ej5 = new Ejercicio("Prensa de pierna", 2, 4, 12);
-
-    sistema->agregarEjercicio(ej1);
-    sistema->agregarEjercicio(ej2);
-    sistema->agregarEjercicio(ej3);
-    sistema->agregarEjercicio(ej4);
-    sistema->agregarEjercicio(ej5);
-
-    ui->imprimir("Ejercicios creados\n");
-
-    Rutina* rutina1 = new Rutina(cliente1, instructor3);
-    rutina1->agregarEjercicio(new Ejercicio("Flexiones de pecho", 1, 3, 12));
-    rutina1->agregarEjercicio(new Ejercicio("Sentadillas", 2, 4, 15));
-    cliente1->asignarRutina(rutina1);
-
-    Rutina* rutina2 = new Rutina(cliente2, instructor2);
-    rutina2->agregarEjercicio(new Ejercicio("Curl de bíceps", 3, 3, 10));
-    rutina2->agregarEjercicio(new Ejercicio("Prensa de pierna", 2, 4, 12));
-    cliente2->asignarRutina(rutina2);
-
-    ui->imprimir("Rutinas creadas\n");
-
-    // --- CLASES GRUPALES ---
-
-    ClaseGrupal* clase1 = new ClaseGrupal("Yoga", "Salón A", "Lunes 9:00 AM", instructor1, sucursal1, 15);
-    ClaseGrupal* clase2 = new ClaseGrupal("Pilates", "Salón B", "Martes 10:00 AM", instructor2, sucursal1, 12);
-    ClaseGrupal* clase3 = new ClaseGrupal("CrossFit", "Salón C", "Miércoles 5:00 PM", instructor3, sucursal1, 10);
-    ClaseGrupal* clase4 = new ClaseGrupal("Zumba", "Salón D", "Jueves 7:00 PM", instructor6, sucursal2, 10);
-
-    // NUEVO: Clase con solo 2 cupos para probar capacidad
-    ClaseGrupal* clase_llena = new ClaseGrupal("TRX", "Salón G", "Martes 5:00 PM", instructor5, sucursal2, 2);
-
-    sucursal1->agregarClaseGrupal(clase1);
-    sucursal1->agregarClaseGrupal(clase2);
-    sucursal1->agregarClaseGrupal(clase3);
-    sucursal2->agregarClaseGrupal(clase4);
-    sucursal2->agregarClaseGrupal(clase_llena);
-
-    ui->imprimir("Clases grupales creadas\n");
-
-    // --- MATRICULACIONES DE PRUEBA ---
-    ui->imprimir("\n--- Probando matriculaciones ---\n");
-    ui->imprimir("\n--- Prueba de matriculación entre sucursales ---\n");
-    // Cliente de SJ01 (cliente1) intenta matricularse en clase de HE01 (clase4)
-    ui->imprimir("Intentando matricular a " + cliente1->getNombre() + " (San José) en la clase de Zumba (Heredia)...\n");
-    if (clase4->inscribirCliente(cliente1)) {
-        ui->imprimir("\nERROR: El cliente se matriculó en una sucursal diferente.\n");
-    }
-    else {
-        ui->imprimir("**Cliente " + cliente1->getNombre() + " NO pudo matricularse. (Correcto)\n");
-    }
-
-    // Cliente de HE01 (cliente9_otraSucursal) intenta matricularse en clase de SJ01 (clase1)
-    ui->imprimir("Intentando matricular a " + cliente9_otraSucursal->getNombre() + " (Heredia) en la clase de Yoga (San José)...\n");
-    if (clase1->inscribirCliente(cliente9_otraSucursal)) {
-        ui->imprimir("\nERROR: El cliente se matriculó en una sucursal diferente.\n");
-    }
-    else {
-        ui->imprimir("**Cliente " + cliente9_otraSucursal->getNombre() + " NO pudo matricularse. (Correcto)\n");
-    }
-
-    ui->imprimir("\n--- Prueba de capacidad de clase ---\n");
-    // Inscribiendo clientes en la clase de 2 cupos
-    clase_llena->inscribirCliente(cliente1);
-    ui->imprimir("Cliente " + cliente1->getNombre() + " se matriculó en " + clase_llena->getCodigo() + "\n");
-    clase_llena->inscribirCliente(cliente2);
-    ui->imprimir("Cliente " + cliente2->getNombre() + " se matriculó en " + clase_llena->getCodigo() + "\n");
-
-    // Intentando inscribir a un tercer cliente en la clase llena
-    ui->imprimir("Intentando matricular al cliente " + cliente7->getNombre() + " en la clase llena...\n");
-    if (clase_llena->inscribirCliente(cliente7)) {
-        ui->imprimir("\nERROR: Cliente " + cliente7->getNombre() + " se matriculó en clase llena.\n");
-    }
-    else {
-        ui->imprimir("**" + cliente7->getNombre() + " NO pudo matricularse, la clase está llena. (Correcto)\n");
-    }
-
-    ui->imprimir("\n--- Prueba de límite de clases por cliente ---\n");
-    // Matricular a un cliente en 3 clases
-    clase1->inscribirCliente(cliente8);
-    ui->imprimir("Cliente " + cliente8->getNombre() + " matriculado en " + clase1->getCodigo() + "\n");
-    clase2->inscribirCliente(cliente8);
-    ui->imprimir("Cliente " + cliente8->getNombre() + " matriculado en " + clase2->getCodigo() + "\n");
-    clase3->inscribirCliente(cliente8);
-    ui->imprimir("Cliente " + cliente8->getNombre() + " matriculado en " + clase3->getCodigo() + "\n");
-
-    // Intentando matricular al cliente en una cuarta clase
-    ui->imprimir("Intentando matricular a " + cliente8->getNombre() + " en una cuarta clase...\n");
-    if (clase4->inscribirCliente(cliente8)) {
-        ui->imprimir("\nERROR: Cliente " + cliente8->getNombre() + " se matriculó en más de 3 clases.\n");
-    }
-    else {
-        ui->imprimir("**" + cliente8->getNombre() + " NO pudo matricularse, ya alcanzó el límite de 3 clases. (Correcto)\n");
-    }
-
-    ui->imprimir("\nPruebas de capacidad y límite de clases completadas.\n");
-
-    ui->imprimir("\nDATOS DE PRUEBA CARGADOS EXITOSAMENTE!\n");
-    ui->imprimir("* 2 Sucursales\n");
-    ui->imprimir("* 6 Instructores\n");
-    ui->imprimir("* 9 Clientes\n");
-    ui->imprimir("* 5 Mediciones\n");
-    ui->imprimir("* 5 Ejercicios\n");
-    ui->imprimir("* 2 Rutinas\n");
-    ui->imprimir("* 5 Clases grupales\n");
-
-    ui->esperaEnter();
 }
 
 Sucursal* Controlador::seleccionarSucursal() {
@@ -679,7 +453,7 @@ void Controlador::incluirInstructor() {
 
     int especialidadesAgregadas = 0;
     while (especialidadesAgregadas < numEspecialidadesDeseadas) {
-        int codigoEsp = ui->pedirEnteroRango("Digite especialidad #" + std::to_string(especialidadesAgregadas + 1) + ": ", 1, 8);
+        int codigoEsp = ui->pedirEnteroRango("Digite especialidad #" + to_string(especialidadesAgregadas + 1) + ": ", 1, 8);
 
         if (nuevoInstructor->agregarEspecialidad(codigoEsp)) {
             especialidadesAgregadas++;
@@ -1046,23 +820,25 @@ void Controlador::visualizacionRutina() {
         return;
     }
 
-    if (!clienteSeleccionado->getInstructorAsignado()) {
-        ui->imprimir("\nERROR: el cliente no tiene instructor asignado.\n");
-        ui->esperaEnter();
-        return;
-    }
-
     ui->imprimir("\n--- Cliente encontrado ---\n");
     ui->imprimir(clienteSeleccionado->getNombre());
 
     Rutina* rutina = clienteSeleccionado->getRutinaAsignada();
 
     if (!rutina) {
-        ui->imprimir("\nEl cliente no cuenta con una rutina asignada\n");
+        ui->imprimir("\nEl cliente no cuenta con una rutina asignada.\n");
+
+        if (!clienteSeleccionado->getInstructorAsignado()) {
+            ui->imprimir("ADVERTENCIA: el cliente tampoco tiene instructor asignado.\n");
+        }
     }
     else {
         ui->imprimir("\n--- Rutina asignada ---\n");
         ui->imprimir(rutina->toString());
+
+        if (!clienteSeleccionado->getInstructorAsignado()) {
+            ui->imprimir("Nota: el instructor que asignó esta rutina ya no está asociado al cliente.\n");
+        }
     }
 
     ui->esperaEnter();
@@ -1107,7 +883,7 @@ void Controlador::crearClaseGrupal() {
     string salon = ui->pedirSalon();
     string horario = ui->pedirHorario();
 
-    ui->imprimir("\nInstructores con especialidad " + especialidadValidada + ":\n");
+    //ui->imprimir("\nInstructores con especialidad " + especialidadValidada + ":\n");
 
     Instructor* instructorAsignado = seleccionarInstructor(sucursalSeleccionada);
     if (!instructorAsignado) {

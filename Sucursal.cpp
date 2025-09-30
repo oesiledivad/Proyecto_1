@@ -185,7 +185,7 @@ string Sucursal::listarClientes() {
 string Sucursal::listarInstructores() {
 	stringstream s;
 	if (cantidad_instructores == 0) {
-		s << "No hay instructores en esta sucursal. Puedes seleccionar la opcion de 'Sin instructor'.\n";
+		s << "No hay instructores en esta sucursal.\n";
 	}
 	else {
 		s << "=== LISTADO DE INSTRUCTORES ===\n";

@@ -26,7 +26,6 @@ public:
 	Sucursal* buscarSucursal(string codigo);
 	string listarSucursales();
 	bool agregarEjercicio(Ejercicio*);
-	Ejercicio* buscarEjercicio(string nombre);
 	string listarEjercicios(int zona, int& cuenta);
 
 	Ejercicio* buscarEjercicioPorZona(int zona, int indice);

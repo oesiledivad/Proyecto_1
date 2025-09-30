@@ -82,11 +82,6 @@ Sucursal* Sistema::buscarSucursal(string codigo) {
 	return nullptr;
 }
 
-Ejercicio* Sistema::buscarEjercicio(string nombre) {
-	//TODO
-	return nullptr;
-}
-
 string Sistema::listarSucursales() {
 	stringstream s;
 	if (cantidad_sucursales == 0) {

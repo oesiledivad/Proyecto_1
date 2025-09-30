@@ -55,11 +55,9 @@ public:
     void clasesMatriculadasPorCliente();
 
     // Auxiliares
-    void sinImplementar();
     Sucursal* seleccionarSucursal();
     Cliente* seleccionarCliente(Sucursal* sucursal);
     Instructor* seleccionarInstructor(Sucursal* sucursal);
-    void rellenarDatosPrueba(); // Esta se elimina al final
 };
 
 #endif

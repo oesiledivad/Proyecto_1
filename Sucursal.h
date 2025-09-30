@@ -5,7 +5,7 @@ class Cliente;
 class Instructor;
 class ClaseGrupal;
 
-static const int MAX_CLIENTES = 100;
+static const int MAX_CLIENTES = 1000;
 static const int MAX_INSTRUCTORES = 20;
 static const int MAX_CLASES = 8;
 

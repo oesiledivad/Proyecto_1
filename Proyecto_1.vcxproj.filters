@@ -30,7 +30,7 @@
     <ClCompile Include="Ejercicio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Clientes.cpp">
+    <ClCompile Include="Cliente.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Instructor.cpp">
