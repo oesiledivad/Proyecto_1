@@ -29,7 +29,7 @@ private:
 	int capacidad_clases;
 public:
 	Sucursal(string cod, string prov, string canto, string corr, string tel);
-	//Sucursal(); 
+	Sucursal(); 
 	~Sucursal();
 
 	string getCodigo();
