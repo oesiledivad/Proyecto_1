@@ -13,36 +13,24 @@ private:
 
 	Instructor* instructor;  // Quien la da 
 
-	Ejercicio** pecho; // Arreglo dinamico para guardar ejercicios de pecho
+	Ejercicio** ejercicios; // Arreglo dinamico para guardar ejercicios
 
-	int cant_Pecho;
-	int cap_Pecho;
-
-	Ejercicio** tricep;// Arreglo dinamico para guardar ejercicios de pecho
-
-	int cant_Tricep;
-	int cap_Tricep;
-
-	Ejercicio** bicep;// Arreglo dinamico para guardar ejercicios de pecho
-	int cant_Bicep;
-	int cap_Bicep;
-
-	Ejercicio** piernas;// Arreglo dinamico para guardar ejercicios de pecho
-	int cant_Piernas;
-	int cap_Piernas;
-
-	Ejercicio** espalda; // Arreglo dinamico para guardar ejercicios de pecho
-	int cant_Espalda;
-	int cap_Espalda;
-
+	int cant_ejercicios;
+	int cap_ejercicios;
 
 public:
+
+	Rutina(); 
 
 	Rutina(Cliente*, Instructor*);
 
 	~Rutina();
 
-	bool agregarEjercicio(string, Ejercicio*);
+	int getCantidadEjercicios();
+
+	int getCapacidadEjercicios(); 
+
+	bool agregarEjercicio(Ejercicio * ejercicio);
 
 	Cliente* getCliente();
 

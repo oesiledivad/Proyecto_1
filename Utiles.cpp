@@ -21,11 +21,16 @@ int leerEntero() {
 	bool valido = false;
 	while (!valido) {
 		if (cin >> n) {
-			valido = true;
+			if (n >= 0) {
+				valido = true;
+			}
+			else {
+				cerr << "Valor incorrecto. Digite un numero entero positivo o cero: ";
+			}
 		}
 		else {
-			cerr << "Valor incorrecto. Digite un numero entero: ";
-			cin.clear();
+			cerr << "Valor incorrecto. Digite un numero entero positivo o cero: ";
+			cin.clear(); 
 		}
 		cin.ignore(1024, '\n');
 	}
@@ -57,11 +62,18 @@ float leerFlotante() {
 	bool valido = false;
 	while (!valido) {
 		if (cin >> ff) {
-			valido = true;
-		} else {
-			cerr << "Valor incorrecto. Digite un numero: ";
+			if (ff > 0.0f) {
+				valido = true;
+			}
+			else {
+				cerr << "Valor incorrecto. Digite un numero mayor a 0: ";
+			}
+		}
+		else {
+			cerr << "Valor incorrecto. Digite un numero mayor a 0: ";
 			cin.clear();
 		}
+
 		cin.ignore(1024, '\n');
 	}
 	return ff;
@@ -126,11 +138,11 @@ string leerEmail() {
 	return email;
 }
 
-string leerFecha() {
+string leerFecha(const string& mensaje) {
 	string fecha;
 	bool valido = false;
 	while (!valido) {
-		imprimeCadena("Fecha (DD/MM/AAAA): ");
+		imprimeCadena(mensaje);
 		fecha = leerCadena();
 		valido = true;
 
@@ -152,4 +164,151 @@ string leerFecha() {
 		}
 	}
 	return fecha;
+}
+
+string leerCedula(const string& mensaje) {
+	string cedula;
+	bool valido = false;
+
+	while (!valido) {
+		imprimeCadena(mensaje);
+		cedula = leerCadena();
+
+		valido = true;
+
+		if (cedula.length() > 9 || cedula.empty()) {
+			valido = false;
+		}
+
+		for (char c : cedula) {
+			if (!isdigit(c)) {
+				valido = false;
+				break;
+			}
+		}
+
+		if (!valido) {
+			cerr << "Cedula invalida. Debe contener solo digitos (max 9).\n";
+		}
+	}
+
+	return cedula;
+}
+
+string leerNumeroTelefono(const string& mensaje) {
+	string numero;
+	bool valido = false;
+
+	while (!valido) {
+		imprimeCadena(mensaje);
+		numero = leerCadena();
+
+		valido = true;
+
+		if (numero.length() > 11 || numero.empty()) {
+			valido = false;
+		}
+
+		for (char c : numero) {
+			if (!isdigit(c)) {
+				valido = false;
+				break;
+			}
+		}
+
+		if (!valido) {
+			cerr << "Numero invalido. Debe contener solo digitos (max 11).\n";
+		}
+	}
+
+	return numero;
+}
+
+bool leerOpcionSN(const string& mensaje) {
+	string entrada;
+	bool valido = false;
+	char opcion;
+
+	while (!valido) {
+		imprimeCadena(mensaje);
+		entrada = leerCadena();
+
+		if (entrada.length() == 1) {
+			opcion = toupper(entrada[0]);
+			if (opcion == 'S' || opcion == 'N') {
+				valido = true;
+			}
+		}
+
+		if (!valido) {
+			cerr << "Entrada invalida. Solo se acepta 'S' o 'N'.\n";
+		}
+	}
+
+	return opcion == 'S';
+}
+
+string validarEspecialidad(int codigo) {
+	string especialidad = "";
+	switch (codigo) {
+	case 1:
+		especialidad = "CrossFit";
+		break;
+	case 2:
+		especialidad = "HIIT";
+		break;
+	case 3:
+		especialidad = "TRX";
+		break;
+	case 4:
+		especialidad = "Pesas";
+		break;
+	case 5:
+		especialidad = "Spinning";
+		break;
+	case 6:
+		especialidad = "Cardio";
+		break;
+	case 7:
+		especialidad = "Yoga";
+		break;
+	case 8:
+		especialidad = "Zumba";
+		break;
+	default:
+		especialidad = "Sin Definir";
+	}
+	return especialidad;
+}
+
+string validarZonaMuscular(int zona) {
+	string resultado;
+	switch (zona) {
+	case 1:
+		resultado = "Pecho";
+		break;
+	case 2:
+		resultado = "Tríceps";
+		break;
+	case 3:
+		resultado = "Bíceps";
+		break;
+	case 4:
+		resultado = "Piernas";
+		break;
+	case 5:
+		resultado = "Espalda";
+		break;
+	default:
+		resultado = "Zona desconocida";
+	}
+	return resultado;
+}
+
+int convertirFechaAEntero(const string& fecha) {
+	int dia = (fecha[0] - '0') * 10 + (fecha[1] - '0');
+	int mes = (fecha[3] - '0') * 10 + (fecha[4] - '0');
+	int anio = (fecha[6] - '0') * 1000 + (fecha[7] - '0') * 100 + (fecha[8] - '0') * 10 + (fecha[9] - '0');
+
+	return anio * 10000 + mes * 100 + dia;
 }

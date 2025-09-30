@@ -4,8 +4,8 @@
 #include "Sucursal.h"
 #include "Ejercicio.h"
 
-const int MAX_SUCURSALES = 30;
-const int MAX_EJERCICIOS = 100;
+static const int MAX_SUCURSALES = 30;
+static const int MAX_EJERCICIOS = 100;
 
 class Sistema {
 private:
@@ -25,8 +25,9 @@ public:
 	bool agregarSucursal(Sucursal*);
 	Sucursal* buscarSucursal(string codigo);
 	string listarSucursales();
-	void agregarEjercicio(Ejercicio*);
-	Ejercicio* buscarEjercicio(string nombre);
-	void listarEjercicios();
+	bool agregarEjercicio(Ejercicio*);
+	string listarEjercicios(int zona, int& cuenta);
+
+	Ejercicio* buscarEjercicioPorZona(int zona, int indice);
 };
 #endif 

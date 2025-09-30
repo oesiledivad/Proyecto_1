@@ -45,12 +45,21 @@ bool Sistema::agregarSucursal(Sucursal* sucursal) {
 	return false;
 }
 
-void Sistema::agregarEjercicio(Ejercicio* ejercicio) {
+bool Sistema::agregarEjercicio(Ejercicio* ejercicio) {
 	if (cantidad_ejercicios < capacidad_ejercicios) {
-		ejercicios[cantidad_ejercicios++] = ejercicio;
-	}
-}
+		// Verificar si ya existe
+		for (int i = 0; i < cantidad_ejercicios; i++) {
+			if (ejercicios[i]->getNombre() == ejercicio->getNombre()) {
+				return false; // ya existe, no agregar
+			}
+		}
 
+		// Si no existe, lo agregamos
+		ejercicios[cantidad_ejercicios++] = ejercicio;
+		return true;
+	}
+	return false; // no hay espacio
+}
 int Sistema::getCantidadSucursales() {
 	return cantidad_sucursales;
 }
@@ -73,11 +82,6 @@ Sucursal* Sistema::buscarSucursal(string codigo) {
 	return nullptr;
 }
 
-Ejercicio* Sistema::buscarEjercicio(string nombre) {
-	//TODO
-	return nullptr;
-}
-
 string Sistema::listarSucursales() {
 	stringstream s;
 	if (cantidad_sucursales == 0) {
@@ -95,7 +99,30 @@ string Sistema::listarSucursales() {
 	return s.str();
 }
 
-void Sistema::listarEjercicios() {
-	//TODO
+string Sistema::listarEjercicios(int zona, int& contador) {
+	stringstream s;
+	contador = 0;
+
+	s << "\nBATERÍA DE EJERCICIOS DISPONIBLES PARA ZONA: " << validarZonaMuscular(zona) << endl;
+	s << "===========================================\n";
+
+	for (int i = 0; i < cantidad_ejercicios; i++) {
+		if (ejercicios[i] != nullptr && ejercicios[i]->getZona() == zona) {
+			s << ++contador << ". " << ejercicios[i]->getNombre() << endl;
+		}
+	}
+	return s.str();
 }
 
+Ejercicio* Sistema::buscarEjercicioPorZona(int zona, int indiceUsuario) {
+	int contador = 0;
+	for (int i = 0; i < cantidad_ejercicios; i++) {
+		if (ejercicios[i] != nullptr && ejercicios[i]->getZona() == zona) {
+			contador++;
+			if (contador == indiceUsuario) {
+				return ejercicios[i];
+			}
+		}
+	}
+	return nullptr;
+}

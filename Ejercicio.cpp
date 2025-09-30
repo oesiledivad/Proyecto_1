@@ -1,7 +1,14 @@
 #include "Ejercicio.h"
 #include "Instructor.h"
 
-Ejercicio::Ejercicio(string nom, int series, int repeticiones, double peso): nombre(nom), series(series), repeticiones(repeticiones), peso(peso) {}
+Ejercicio::Ejercicio(string nom, int series, int repeticiones, int zona) : nombre(nom), series(series), repeticiones(repeticiones), zona(zona) {}
+
+Ejercicio::Ejercicio(string nom){
+	this->nombre = nom; 
+	series = 0;
+	repeticiones = 0;
+	zona = 0; 
+}
 
 Ejercicio::~Ejercicio() {}
 
@@ -16,9 +23,9 @@ int Ejercicio::getSeries() {
 int Ejercicio::getRepeticiones() {
 	return repeticiones;
 }
-
-double Ejercicio::getPeso() {
-	return peso; 
+int Ejercicio::getZona()
+{
+	return zona; 
 }
 string Ejercicio::toString() {
 
@@ -26,10 +33,7 @@ string Ejercicio::toString() {
 
 	s << nombre << " - " << endl;
 
-	s << series << "x" << repeticiones <<endl;
+	s << series << "x" << repeticiones << endl;
 
-	if (peso > 0) {
-		s << " (" << peso << "kg)" << endl;
-	}
 	return s.str();
 }

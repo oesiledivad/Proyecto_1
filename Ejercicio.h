@@ -7,9 +7,11 @@ private:
 	string nombre;
 	int series;
 	int repeticiones;
-	double peso;
+	int zona; // 1, 2, 3, 4, 5 
 public:
-	Ejercicio(string, int, int, double);
+	Ejercicio(string nom, int, int, int);
+
+	Ejercicio(string nom);
 
 	~Ejercicio();
 
@@ -17,11 +19,12 @@ public:
 
 	string toString();
 
-	int getSeries(); 
+	int getSeries();
 
 	int getRepeticiones();
 
-	double getPeso();
+	int getZona(); 
+
 };
 
 #endif // !EJERCICIO_H

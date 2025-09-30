@@ -5,9 +5,9 @@ class Cliente;
 class Instructor;
 class ClaseGrupal;
 
-const int MAX_CLIENTES = 100;
-const int MAX_INSTRUCTORES = 20;
-const int MAX_CLASES = 8;
+static const int MAX_CLIENTES = 1000;
+static const int MAX_INSTRUCTORES = 20;
+static const int MAX_CLASES = 8;
 
 class Sucursal {
 private:
@@ -46,13 +46,20 @@ public:
 	bool agregarCliente(Cliente* cliente);
 	bool agregarInstructor(Instructor* instructor);
 	bool agregarClaseGrupal(ClaseGrupal* clase);
-
+	bool existenInstructoresConEspecialidad(int codigoEspecialidad);
 
 	Cliente* buscarClientePorCedula(string cedu);
 	Instructor* buscarInstructorPorCedula(string cedu);
+	ClaseGrupal* buscarClaseGrupalPorCodigo(string codigo);
+	ClaseGrupal* buscarClaseGrupalPorPosicion(int pos);
+
+	string mostrarInstructoresPorEspecialidad(int especialidad);
 
 	string listarClientes();
 	string listarInstructores();
+	string listarClasesGrupales();
+	string generarReporteIMC();
+
 };
 
 #endif // !SUCURSAL_H

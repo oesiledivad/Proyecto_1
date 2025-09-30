@@ -5,67 +5,38 @@ using namespace std;
 
 class Instructor;
 class Cliente;
+class Sucursal;
 
 class ClaseGrupal {
 private:
-
-	string codigo; // Codigo de la clase
-
-	string salon; // Salon en que se recibe
-
-	string horario; // Horario en que se imparte
-
-	Instructor* ins1; // Instructor que la realiza 
-
-	Cliente** clientes_inscritos; // Arreglo dinamico de clientes inscritos 
-
-	int capacidad_maxima; // Capacidad maxima de alumnos
-
-	int cantidad_matriculados; // cantidad de alumnos inscritos actualmente 
-
-
-
+	string codigo; 
+	string salon;
+	string horario;
+	Instructor* ins1;
+	Cliente** clientes_inscritos;
+	Sucursal* sucursal_asignada;
+	int capacidad_maxima;
+	int cantidad_matriculados;
 
 public:
 
-	// Constructor sin parametros 
-	//ClaseGrupal(); // No se ha implementado en el cpp
-
-	// Constructor con parametros
-
-	ClaseGrupal(string, string, string, Instructor*, int);
-
-	// Descructor
+	ClaseGrupal(string, string, string, Instructor*,Sucursal*, int);
 	~ClaseGrupal();
 
-	// Getters
 	string getCodigo();
-
 	string getSalon();
-
 	string getHorario();
-
 	Instructor* getInstructor();
-
-	Cliente** getCliente(); // Verificar si es posible declarlo asi 
-
+	Cliente** getCliente();
 	int getCapacidad_Maxima();
-
 	int getCupos_Disponibles();
-
 	int getCantidad_Matriculados();
 
-	// Metodos varios 
-
 	bool inscribirCliente(Cliente*);
-
 	bool retirarCliente(Cliente*);
 
 	string listarClientes();
-
 	string toString();
-
-
 };
 
 #endif // !"CLASEGRUPAL_H"

@@ -124,7 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClaseGrupal.cpp" />
-    <ClCompile Include="Clientes.cpp" />
+    <ClCompile Include="Cliente.cpp" />
     <ClCompile Include="Controlador.cpp" />
     <ClCompile Include="Ejercicio.cpp" />
     <ClCompile Include="Instructor.cpp" />

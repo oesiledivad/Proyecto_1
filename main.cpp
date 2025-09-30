@@ -1,8 +1,6 @@
 #include <iostream>
 #include <windows.h> 
 #include "Controlador.h"
-using namespace std;
-
 int main() {
 	SetConsoleCP(1252);          // Para las tildes
 	SetConsoleOutputCP(1252);
@@ -10,4 +8,4 @@ int main() {
 	app->ejecutar();
 	delete app;
 	return 0;
-}  
+}

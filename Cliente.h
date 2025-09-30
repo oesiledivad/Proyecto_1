@@ -10,8 +10,8 @@ class Sucursal;
 
 using std::string;
 
-const int MAX_MEDICIONES = 10;
-const int MAX_CLASES_INSCRITAS = 3;
+static const int MAX_MEDICIONES = 10;
+static const int MAX_CLASES_INSCRITAS = 3;
 
 class Cliente {
 private:
@@ -23,11 +23,11 @@ private:
     char sexo;
     string fecha_inscripcion;
 
-    Medicion* historial_mediciones[MAX_MEDICIONES];
+    Medicion** historial_mediciones;
     Rutina* rutina_asignada;
     Instructor* instructor_asignado;
-    Sucursal* sucursal;
-    ClaseGrupal* clases_inscritas[MAX_CLASES_INSCRITAS];
+    Sucursal* sucursal_asignada;
+    ClaseGrupal** clases_inscritas;
 
     int cantidad_clases_inscritas;
     int cantidad_mediciones;
@@ -38,12 +38,13 @@ public:
     ~Cliente();
 
     bool agregarMedicion(Medicion* medicion);
-    void mostrarHistorialMediciones();
+    string mostrarHistorialMediciones();
+    string mostrarMedicionResumen(int num);
     Medicion* getUltimaMedicion();
+    Medicion* getMedicionPos(int pos);
 
     void asignarInstructor(Instructor* instructor);
     void asignarRutina(Rutina* rutina);
-
 
     string toString();
     string getCedula();
@@ -54,9 +55,17 @@ public:
     char getSexo();
     string getFecha_inscripcion();
     bool getHaceEjercicio();
+    int getCantidadClasesInscritas();
+    int getCantidadMediciones();
 
     Rutina* getRutinaAsignada();
     Instructor* getInstructorAsignado();
+    Sucursal* getSucursalAsignada();
+    Medicion** getMedicionArr();
+
+    string mostrarClasesInscritas();
+    bool puedeInscribirse();
+    bool agregarClaseInscrita(ClaseGrupal* clase);
 };
 
 #endif // CLIENTE_H

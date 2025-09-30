@@ -1,61 +1,71 @@
-#ifndef INSTRUCTOR_H
+﻿#ifndef INSTRUCTOR_H
 #define INSTRUCTOR_H
-#include "Sucursal.h"
-// Punto h del instructor 
+#include <string>
+using std::string;
+
+
 class Sucursal;
+class Cliente;
+class Medicion;
+class Rutina;
+
+static const int MAX_CLIENTES_ASIGNADOS = 100;
+static const int MAX_ESPECIALIDADES = 8;
 
 class Instructor {
 private:
+    // Datos básicos del instructor 
+    string numeroCed;
+    string nombre;
+    string telefono;
+    string correo;
+    string fecha_Nacimiento;
+    Sucursal* sucursal_asignada;
 
-	//Datos basicos del instructor 
-	string numeroCed;
-	string nombre;
-	int telefono;
-	string correo;
-	string fecha_Nacimiento;
-	string* especialidades;
-	int numEspecialides;
-	const int capacidad;
+    // Especialidades en forma de códigos numéricos
+    int** especialidades;
+    int numEspecialidades;
+    int capacidad_especialidades;
 
+    // Arreglo de punteros a Clientes
+    Cliente** clientes_asignados;
+    int cantidad_clientes_asignados;
+    int capacidad_clientes_asignados;
 public:
+    // Constructor sin parámetros
+    Instructor();
 
-	// Constructor sin parametros
-	Instructor();
+    // Constructor con parámetros básicos
+    Instructor(string ced, string nom, string tel, string cor, string fecha, Sucursal* suc);
 
-	//Desctructor
-	~Instructor();
+    // Destructor
+    ~Instructor();
 
+    bool asignarCliente(Cliente* cliente);
+    bool eliminarCliente(Cliente* cliente);
+    string listarClientesAsignados();
+    int getCantidadClientesAsignados();
 
-	// Constructor con parametros 
-	Instructor(string, string, int, string, string, string);
+    // Métodos para especialidades
+    bool agregarEspecialidad(int codigo);
+    bool tieneEspecialidad(int codigo);
+    string listarEspecialidades();
 
-	// Metodos varios
-	bool agregarEspecialidad(string);
+    // Getters
+    string getNombre();
+    string getNumeroCedula();
+    string getTelefono();
+    string getCorreo();
+    string getFechaNacimiento();
+    int getNumEspecialidades();
+    int getCapacidad();
 
-	bool tieneEspecialidad(string);
+    // Para los clientes
+    Medicion* generarMedicion(Cliente* cliente, const string& fecha, float peso, float estatura, float grasaCorporal, float masaMuscular, int edadMetabolica, float grasaVisceral, float cintura, float cadera, float pecho, float muslo);
+    Rutina* generarRutina(Cliente* cliente);
 
-	string listarEspecialidades();
-
-	// Getters y toString
-
-	string getNombre();
-
-	string getNumeroCedula();
-
-	int getTelefono();
-
-	string getCorreo();
-
-	string getfecha_Nacimiento();
-
-	string getEspecialidades();
-
-	int getNumEspecialidades();
-
-	int getCapacidad();
-
-	string toString();
+    // Utilidad
+    string toString();
 };
 
-
-#endif // !INSTRUCTOR_H
+#endif // INSTRUCTOR_H

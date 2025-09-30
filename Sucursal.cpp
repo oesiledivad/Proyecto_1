@@ -3,6 +3,7 @@
 #include "ClaseGrupal.h"
 #include "Instructor.h"
 #include "Cliente.h"
+#include "Medicion.h"
 
 Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono (""),cantidad_clientes(0),
 cantidad_instructores(0), cantidad_clases(0),
@@ -48,19 +49,19 @@ capacidad_clientes(MAX_CLIENTES), capacidad_instructores(MAX_INSTRUCTORES), capa
 }
 
 Sucursal::~Sucursal() {
-	for (int i = 0; i < cantidad_clientes; i++) {
-		if (clientes[i] != nullptr) {
-			delete clientes[i];
-		}
-	}
-	delete[] clientes;
-
 	for (int i = 0; i < cantidad_instructores; i++) {
 		if (instructores[i] != nullptr) {
 			delete instructores[i];
 		}
 	}
 	delete[] instructores;
+
+	for (int i = 0; i < cantidad_clientes; i++) {
+		if (clientes[i] != nullptr) {
+			delete clientes[i];
+		}
+	}
+	delete[] clientes;
 
 	for (int i = 0; i < cantidad_clases; i++) {
 		if (clases_grupales[i] != nullptr) {
@@ -102,6 +103,12 @@ bool Sucursal::agregarInstructor(Instructor* instructor) {
 }
 
 bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
+	for (int i = 0; i < cantidad_clases; i++) {
+		if (clases_grupales[i] != nullptr && clases_grupales[i]->getCodigo() == clase->getCodigo()) {
+			return false;
+		}
+	}
+
     if (cantidad_clases < capacidad_clases) {
         clases_grupales[cantidad_clases++] = clase;
         return true;
@@ -110,6 +117,15 @@ bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
     }
 }
 
+bool Sucursal::existenInstructoresConEspecialidad(int codigoEspecialidad) {
+	bool existe = false;
+	for (int i = 0; i < cantidad_instructores && !existe; i++) {
+		if (instructores[i]->tieneEspecialidad(codigoEspecialidad)) {
+			existe = true;
+		}
+	}
+	return existe;
+}
 
 Cliente* Sucursal::buscarClientePorCedula(string cedu) {
 
@@ -131,6 +147,43 @@ Instructor* Sucursal::buscarInstructorPorCedula(string cedu) {
 	return nullptr;
 }
 
+ClaseGrupal* Sucursal::buscarClaseGrupalPorCodigo(string codigo) {
+	for (int i = 0; i < cantidad_clases; i++) {
+		if (clases_grupales[i] != nullptr && clases_grupales[i]->getCodigo() == codigo) {
+			return clases_grupales[i];
+		}
+	}
+	return nullptr;
+}
+
+ClaseGrupal* Sucursal::buscarClaseGrupalPorPosicion(int pos) {
+	if (pos > 0 && pos <= cantidad_clases) {
+		return clases_grupales[pos - 1];
+	}
+	return nullptr;
+}
+
+string Sucursal::mostrarInstructoresPorEspecialidad(int especialidad) {
+	stringstream s;
+	bool encontrado = false;
+	s << "\n--- Instructores con la especialidad: "
+		<< validarEspecialidad(especialidad) << " ---\n";
+
+	for (int i = 0; i < cantidad_instructores; i++) {
+		if (instructores[i] != nullptr && instructores[i]->tieneEspecialidad(especialidad)) {
+			s << "Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
+			encontrado = true;
+		}
+	}
+
+	if (!encontrado) {
+		s << "No existen instructores con esta especialidad en la sucursal.\n";
+	}
+
+	return s.str();
+}
+
+
 string Sucursal::listarClientes() {
 	stringstream s;
 	if (cantidad_clientes == 0) {
@@ -150,17 +203,97 @@ string Sucursal::listarClientes() {
 string Sucursal::listarInstructores() {
 	stringstream s;
 	if (cantidad_instructores == 0) {
-		s << "No hay instructores en esta sucursal. Puedes seleccionar la opcion de 'Sin instructor'.\n";
+		s << "No hay instructores en esta sucursal.\n";
 	}
 	else {
 		s << "=== LISTADO DE INSTRUCTORES ===\n";
 		for (int i = 0; i < cantidad_instructores; i++) {
 			if (instructores[i] != nullptr) {
-				s << (i + 1) << "- Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
+				s << "Cedula: " << instructores[i]->getNumeroCedula() << " | Nombre: " << instructores[i]->getNombre() << "\n";
 			}
 		}
 	}
 	return s.str();
+}
+
+string Sucursal::listarClasesGrupales() {
+	stringstream s;
+	if (cantidad_clases == 0) {
+		s << "\nNo hay clases grupales en esta sucursal.\n";
+	}
+	else {
+		s << "\n=== LISTA DE CLASES EXISTENTES EN LA SUCURSAL ===\n";
+		for (int i = 0; i < cantidad_clases; i++) {
+			if (clases_grupales[i] != nullptr) {
+				s << (i + 1) << ". " << clases_grupales[i]->getCodigo() << "\n";
+			}
+		}
+	}
+	return s.str();
+}
+
+string Sucursal::generarReporteIMC() {
+	stringstream reporte;
+	reporte << "REPORTE DE IMC – SUCURSAL " << provincia << " – " << canton << "\n\n";
+
+	stringstream* categoriasSS = new stringstream[8];
+	int* contadores = new int[8];
+	for (int i = 0; i < 8; i++) {
+		contadores[i] = 0;
+	}
+
+	string* nombresCategorias = new string[8]{
+		"Delgadez severa (<16.00):",
+		"Delgadez moderada (16.00 - 16.99):",
+		"Delgadez leve (17.00 - 18.49):",
+		"Normal (18.50 - 24.99):",
+		"Pre-obesidad (25.00 - 29.99):",
+		"Obesidad leve (30.00 - 34.99):",
+		"Obesidad media (35.00 - 39.99):",
+		"Obesidad mórbida (>=40.00):"
+	};
+
+	for (int i = 0; i < cantidad_clientes; ++i) {
+		Cliente* cliente = clientes[i];
+		Medicion* ultimaMedicion = cliente->getUltimaMedicion();
+
+		if (ultimaMedicion) {
+			double imc = ultimaMedicion->getIMC();
+
+			int categoria = -1;
+			if (imc < 16.00) categoria = 0;
+			else if (imc < 17.00) categoria = 1;
+			else if (imc < 18.50) categoria = 2;
+			else if (imc < 25.00) categoria = 3;
+			else if (imc < 30.00) categoria = 4;
+			else if (imc < 35.00) categoria = 5;
+			else if (imc < 40.00) categoria = 6;
+			else categoria = 7;
+
+			categoriasSS[categoria] << "   - " << cliente->getCedula() << "  "
+				<< cliente->getNombre() << "  IMC: "
+				<< fixed << setprecision(1) << imc << "\n";
+			contadores[categoria]++;
+		}
+	}
+
+	for (int i = 0; i < 8; i++) {
+		reporte << nombresCategorias[i] << "\n";
+		if (contadores[i] > 0) {
+			reporte << "  (Cantidad " << contadores[i] << ")\n";
+			reporte << categoriasSS[i].str();
+		}
+		else {
+			reporte << "   Ninguno\n";
+		}
+		reporte << "\n";
+	}
+
+	delete[] categoriasSS;
+	delete[] contadores;
+	delete[] nombresCategorias;
+
+	return reporte.str();
 }
 
 string Sucursal::getCodigo() {

@@ -11,6 +11,7 @@ public:
     void submenuClientes();
     void submenuInstructores();
     void submenuClasesGrupales();
+    void despedida();
 
     // ENTRADA DE DATOS
     int pedirOpcion(int min, int max);
@@ -21,7 +22,8 @@ public:
     float pedirFlotanteRango(const string& mensaje, float min, float max);
     char pedirSexo();
     string pedirEmail();
-    string pedirFecha();
+    string pedirFecha(const string& mensaje);
+    bool pedirOpcionSN(const string& mensaje);
     void esperaEnter();
     void limpiarPantalla();
     void imprimir(const string& mensaje);
@@ -40,6 +42,9 @@ public:
     int pedirCapacidad();
     int pedirCantidadEspecialidades();
     string pedirDescripcionEjercicio();
+
+    string mostrarEspecialidades();
+    void mostrarTitulo(const string& titulo);
 };
 
 #endif

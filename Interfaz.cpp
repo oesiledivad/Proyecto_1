@@ -2,49 +2,51 @@
 #include <iostream>
 using namespace std;
 
+const string BORDER(50, '=');
+
 void Interfaz::mostrarMenuPrincipal() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
     cout << "        GESTIÓN DE GIMNASIOS POWERLAB" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
     cout << "(1) Submenú de Sucursales" << endl;
     cout << "(2) Submenú de Clientes" << endl;
     cout << "(3) Submenú de Instructores" << endl;
     cout << "(4) Submenú de Clases Grupales" << endl;
     cout << "(0) Salir" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
 }
 
 void Interfaz::submenuSucursales() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
-    cout << "               SUBMENÚ SUCURSALES" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+    cout << "             SUBMENÚ SUCURSALES" << endl;
+    cout << BORDER << endl;
     cout << "(1) Ingresar Sucursal" << endl;
     cout << "(2) Mostrar Sucursales" << endl;
     cout << "(3) Reporte de IMC por sucursal" << endl;
     cout << "(0) Regresar Menú Principal" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
 }
 
 void Interfaz::submenuClientes() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
-    cout << "               SUBMENÚ CLIENTES" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+    cout << "              SUBMENÚ CLIENTES" << endl;
+    cout << BORDER << endl;
     cout << "(1) Incluir Cliente" << endl;
     cout << "(2) Asignar Instructor a Cliente" << endl;
     cout << "(3) Lista de Clientes por Sucursal" << endl;
     cout << "(4) Detalle de Cliente" << endl;
     cout << "(0) Regresar al Menú Principal" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
 }
 
 void Interfaz::submenuInstructores() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
-    cout << "              SUBMENÚ INSTRUCTORES" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+    cout << "             SUBMENÚ INSTRUCTORES" << endl;
+    cout << BORDER << endl;
     cout << "(1) Incluir Instructor" << endl;
     cout << "(2) Lista de Instructores por Sucursal" << endl;
     cout << "(3) Detalle de Instructor" << endl;
@@ -56,20 +58,30 @@ void Interfaz::submenuInstructores() {
     cout << "(9) Generar rutina" << endl;
     cout << "(10) Visualización de Rutina" << endl;
     cout << "(0) Regresar al Menú Principal" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
 }
 
 void Interfaz::submenuClasesGrupales() {
     limpiarPantalla();
-    cout << "==================================================" << endl;
-    cout << "            SUBMENÚ CLASES GRUPALES" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+    cout << "           SUBMENÚ CLASES GRUPALES" << endl;
+    cout << BORDER << endl;
     cout << "(1) Crear Clase Grupal" << endl;
     cout << "(2) Mostrar Clases Grupales" << endl;
     cout << "(3) Matricular Cliente en Clase Grupal" << endl;
     cout << "(4) Clases Matriculadas por Cliente" << endl;
     cout << "(0) Regresar al Menú Principal" << endl;
-    cout << "==================================================" << endl;
+    cout << BORDER << endl;
+}
+
+void Interfaz::despedida() {
+    limpiarPantalla();
+    cout << "\n";
+    cout << BORDER << "\n";
+    cout << "  ¡Programa finalizado!\n";
+    cout << "  Gracias por usar el sistema PowerLab.\n";
+    cout << "  (Presiona Enter para cerrar...)\n";
+    cout << BORDER << "\n";
 }
 
 // ENTRADA Y SALIDA DE DATOS
@@ -116,11 +128,16 @@ string Interfaz::pedirEmail() {
     return leerEmail();
 }
 
-string Interfaz::pedirFecha() {
-    return leerFecha();
+string Interfaz::pedirFecha(const string& mensaje) {
+    return leerFecha(mensaje);
+}
+
+bool Interfaz::pedirOpcionSN(const string& mensaje) {
+    return leerOpcionSN(mensaje);
 }
 
 void Interfaz::esperaEnter() {
+    cout << endl;
     esperandoEnter();
 }
 
@@ -134,7 +151,7 @@ string Interfaz::pedirCodigoSucursal() {
 }
 
 string Interfaz::pedirCedula() {
-    return pedirTexto("Digite cédula: ");
+    return leerCedula("Digite la cédula: ");
 }
 
 string Interfaz::pedirProvincia() {
@@ -146,42 +163,54 @@ string Interfaz::pedirCanton() {
 }
 
 string Interfaz::pedirTelefono() {
-    return pedirTexto("Digite teléfono: ");
+    return leerNumeroTelefono("Digite el número de télefono: ");
 }
 
 string Interfaz::pedirNombreCompleto() {
     return pedirTexto("Digite nombre completo: ");
 }
 
-int Interfaz::pedirEspecialidad() {
-    cout << "Especialidades disponibles:" << endl;
-    cout << "1. CrossFit" << endl;
-    cout << "2. HIIT" << endl;
-    cout << "3. TRX" << endl;
-    cout << "4. Pesas" << endl;
-    cout << "5. Spinning" << endl;
-    cout << "6. Cardio" << endl;
-    cout << "7. Yoga" << endl;
-    cout << "8. Zumba" << endl;
-    return pedirEnteroRango("Digite la especialidad deseada: ", 1, 8);
+string Interfaz::mostrarEspecialidades() {
+    stringstream s;
+    s << "1. CrossFit" << endl;
+    s << "2. HIIT" << endl;
+    s << "3. TRX" << endl;
+    s << "4. Pesas" << endl;
+    s << "5. Spinning" << endl;
+    s << "6. Cardio" << endl;
+    s << "7. Yoga" << endl;
+    s << "8. Zumba" << endl;
+    return s.str();
 }
 
-int Interfaz::pedirZonaMuscular() {
+void Interfaz::mostrarTitulo(const string& titulo) {
+    limpiarPantalla();
+    imprimir("=== " + titulo + " ===\n");
+}
+
+int Interfaz::pedirEspecialidad() {
+    cout << "Especialidades disponibles:" << endl;
+    cout << mostrarEspecialidades();
+    cout << "0. Terminar seleccion" << endl;
+    return pedirEnteroRango("Digite la especialidad deseada: ", 0, 8);
+}
+
+int Interfaz::pedirZonaMuscular() { 
     cout << "Zonas musculares disponibles:" << endl;
-    cout << "1. Pecho" << endl;
-    cout << "2. Tríceps" << endl;
+    cout << "1. Pecho" << endl; 
+    cout << "2. Tríceps" << endl; 
     cout << "3. Bíceps" << endl;
-    cout << "4. Piernas" << endl;
-    cout << "5. Espalda" << endl;
-    return pedirEnteroRango("Digite zona muscular: ", 1, 5);
+    cout << "4. Piernas" << endl; 
+    cout << "5. Espalda" << endl; 
+    return pedirEnteroRango("Digite zona muscular: ", 1, 5); 
 }
 
 string Interfaz::pedirHorario() {
-    return pedirTexto("Digite horario: _");
+    return pedirTexto("Digite horario: ");
 }
 
 string Interfaz::pedirSalon() {
-    return pedirTexto("Digite salón: _");
+    return pedirTexto("Digite salón: ");
 }
 
 int Interfaz::pedirCapacidad() {
