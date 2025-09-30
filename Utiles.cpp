@@ -37,6 +37,21 @@ int leerEntero() {
 	return n;
 }
 
+int leerEnteroMayorACero() {
+	int n = 0;
+	bool valido = false;
+	while (!valido) {
+		n = leerEntero();
+		if (n > 0) {
+			valido = true;
+		}
+		else {
+			cerr << "Valor incorrecto. El numero debe ser estrictamente mayor a cero: ";
+		}
+	}
+	return n;
+}
+
 void esperandoEnter() {
 	imprimeCadena("Presione ENTER para continuar...\n");
 	cin.ignore(1024, '\n');

@@ -17,6 +17,7 @@ public:
     int pedirOpcion(int min, int max);
     string pedirTexto(const string& mensaje);
     int pedirEntero(const string& mensaje);
+    int pedirEnteroMayorACero(const string& mensaje);
     int pedirEnteroRango(const string& mensaje, int min, int max);
     float pedirFlotante(const string& mensaje);
     float pedirFlotanteRango(const string& mensaje, float min, float max);

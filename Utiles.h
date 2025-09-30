@@ -10,6 +10,7 @@ void imprimeCadena(string cadena);
 void limpiaPantalla();
 string leerCadena();
 int leerEntero(); // Marcado
+int leerEnteroMayorACero();
 void esperandoEnter();
 
 int leerEnteroRango(int min, int max); // Marcado

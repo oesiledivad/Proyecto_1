@@ -105,6 +105,11 @@ int Interfaz::pedirEntero(const string& mensaje) {
     return leerEntero();
 }
 
+int Interfaz::pedirEnteroMayorACero(const string& mensaje) {
+    cout << mensaje;
+    return leerEnteroMayorACero();
+}
+
 int Interfaz::pedirEnteroRango(const string& mensaje, int min, int max) {
     cout << mensaje;
     return leerEnteroRango(min, max);
@@ -214,11 +219,11 @@ string Interfaz::pedirSalon() {
 }
 
 int Interfaz::pedirCapacidad() {
-    return pedirEntero("Digite capacidad máxima: ");
+    return pedirEnteroMayorACero("Digite la capacidad máxima (mínimo 1): ");
 }
 
 int Interfaz::pedirCantidadEspecialidades() {
-    return pedirEntero("Cuantas especialidades tiene el instructor: ");
+    return pedirEnteroRango("Cuantas especialidades tiene el instructor: ", 1, 8);
 }
 
 string Interfaz::pedirDescripcionEjercicio() {

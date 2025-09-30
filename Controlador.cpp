@@ -51,6 +51,7 @@ void Controlador::ejecutar() {
         case 0:
             ejecutando = false;
             ui->despedida();
+            ui->esperaEnter();
             break;
         default:
             ui->imprimir("Opcion invalida.\n");
@@ -447,7 +448,7 @@ void Controlador::incluirInstructor() {
 
     Instructor* nuevoInstructor = new Instructor(cedula, nombre, telefono, correo, fechaNacimiento, sucursalSeleccionada);
 
-    int numEspecialidadesDeseadas = ui->pedirEnteroRango("\nCuantas especialidades tiene el instructor: ", 1, 8);
+    int numEspecialidadesDeseadas = ui->pedirCantidadEspecialidades();
     ui->imprimir("\nSeleccione las especialidades del instructor:\n");
     ui->imprimir(ui->mostrarEspecialidades());
 
@@ -739,29 +740,11 @@ void Controlador::generarRutina() {
             continue;
         }
 
-        int elegido;
-        do {
-            elegido = ui->pedirEntero("Número del ejercicio: ");
-            if (elegido <= 0) {
-                ui->imprimir("ERROR: El número del ejercicio debe ser mayor a cero.\n");
-            }
-        } while (elegido <= 0);
+        int elegido = ui->pedirEnteroMayorACero("Número del ejercicio: ");
 
-        int series;
-        do {
-            series = ui->pedirEntero("Series: ");
-            if (series <= 0) {
-                ui->imprimir("ERROR: El número de series debe ser mayor a cero.\n");
-            }
-        } while (series <= 0);
+        int series = ui->pedirEnteroMayorACero("Series: ");
 
-        int repeticiones;
-        do {
-            repeticiones = ui->pedirEntero("Repeticiones: ");
-            if (repeticiones <= 0) {
-                ui->imprimir("ERROR: El número de repeticiones debe ser mayor a cero.\n");
-            }
-        } while (repeticiones <= 0);
+        int repeticiones = ui->pedirEnteroMayorACero("Repeticiones: ");
 
         Ejercicio* base = sistema->buscarEjercicioPorZona(zona, elegido);
         if (!base) {
