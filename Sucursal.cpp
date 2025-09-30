@@ -5,8 +5,26 @@
 #include "Cliente.h"
 #include "Medicion.h"
 
-//Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono ("") {
-//}
+Sucursal::Sucursal() : codigo (""), provincia (""), canton(""), correo(""), telefono (""),cantidad_clientes(0),
+cantidad_instructores(0), cantidad_clases(0),
+capacidad_clientes(MAX_CLIENTES), capacidad_instructores(MAX_INSTRUCTORES), capacidad_clases(MAX_CLASES){
+	clientes = new Cliente * [capacidad_clientes];
+	instructores = new Instructor * [capacidad_instructores];
+	clases_grupales = new ClaseGrupal * [capacidad_clases];
+
+	for (int i = 0; i < capacidad_clientes; i++) {
+		clientes[i] = nullptr;
+	}
+
+	for (int i = 0; i < capacidad_instructores; i++) {
+		instructores[i] = nullptr;
+	}
+
+	for (int i = 0; i < capacidad_clases; i++) {
+		clases_grupales[i] = nullptr;
+	}
+
+}
 
 Sucursal::Sucursal(string cod, string prov, string canto, string corr, string tel):
 codigo(cod), provincia(prov), canton(canto), correo(corr), telefono(tel), 
