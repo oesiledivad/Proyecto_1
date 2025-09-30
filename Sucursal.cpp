@@ -120,7 +120,7 @@ bool Sucursal::agregarClaseGrupal(ClaseGrupal* clase) {
 bool Sucursal::existenInstructoresConEspecialidad(int codigoEspecialidad) {
 	bool existe = false;
 	for (int i = 0; i < cantidad_instructores && !existe; i++) {
-		if (instructores[i]->tieneEspecialidad(codigoEspecialidad)) {
+		if (instructores[i] != nullptr && instructores[i]->tieneEspecialidad(codigoEspecialidad)) {
 			existe = true;
 		}
 	}

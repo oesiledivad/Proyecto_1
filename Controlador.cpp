@@ -9,6 +9,8 @@
 #include "Ejercicio.h"
 
 Controlador::Controlador() {
+    SetConsoleCP(1252);
+    SetConsoleOutputCP(1252);
     sistema = new Sistema();
     ui = new Interfaz();
     ejecutando = true;

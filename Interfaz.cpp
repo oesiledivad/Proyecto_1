@@ -80,7 +80,6 @@ void Interfaz::despedida() {
     cout << BORDER << "\n";
     cout << "  ¡Programa finalizado!\n";
     cout << "  Gracias por usar el sistema PowerLab.\n";
-    cout << "  (Presiona Enter para cerrar...)\n";
     cout << BORDER << "\n";
 }
 

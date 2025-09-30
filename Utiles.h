@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <windows.h>
 using namespace std;
 
 void imprimeCadena(string cadena);

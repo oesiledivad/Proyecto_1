@@ -36,13 +36,16 @@ Rutina::Rutina(Cliente* c, Instructor* i){ // con parametros
 }
 
 Rutina::~Rutina(){
-    
     if (ejercicios != nullptr) {
         for (int i = 0; i < cap_ejercicios; i++) {
-            delete ejercicios[i];
+            if (ejercicios[i] != nullptr) {
+                delete ejercicios[i];
+            }
         }
     }
-    delete[]ejercicios; 
+    delete[]ejercicios;
+    cliente = nullptr;
+    instructor = nullptr;
 }
 
 int Rutina::getCantidadEjercicios() {
